@@ -1,0 +1,30 @@
+@import './vars.scss';
+@import './fonts.scss';
+
+html {
+  font-family: 'Source Serif Pro', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  height: 100%;
+  scroll-behavior: smooth;
+  background: $lightGrey;
+}
+
+body {
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  height: 100%;
+}
+
+main {
+  min-height: calc(100vh - 170px);
+}
+
+img {
+  max-width: 100%;
+}

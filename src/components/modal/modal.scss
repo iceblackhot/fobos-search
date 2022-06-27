@@ -1,0 +1,63 @@
+@import '../../../scss/vars.scss';
+
+.modal {
+  z-index: 4;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  transition: all ease-in-out 0.3s;
+  pointer-events: none;
+
+  &.active {
+    opacity: 1;
+    z-index: 4;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.3s;
+    pointer-events: all;
+  }
+
+  &__content {
+    opacity: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 0 30px;
+    border-radius: 10px;
+    background: $white;
+    height: 400px;
+    width: 400px;
+    transform: perspective(400px) translateY(0%) rotateX(-45deg);
+    transition: all ease-in-out 0.5s;
+
+    &.active {
+      opacity: 1;
+      transform: perspective(400px) translateY(0%) rotateX(0deg);
+    }
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .modal {
+      &__content {
+        background: $darkBlack;
+        border: 2px solid $darkText;
+      }
+    }
+  }
+}
