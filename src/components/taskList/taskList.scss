@@ -1,0 +1,69 @@
+@import '../scss/vars';
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px 30px 30px;
+  border-radius: $radius;
+  background: $white;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    padding: 0 0 15px;
+
+    & h1 {
+      padding-right: 13px;
+    }
+
+    & span {
+      font-size: 18px;
+      font-weight: 700;
+    }
+  }
+
+  &__table-head {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: $white;
+    box-shadow: 0 0 5pt 0.5pt $grey;
+    border-radius: $midRadius;
+    margin-bottom: 15px;
+  }
+
+  &__list {
+    width: 100%;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 15px 0;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    width: 98%;
+    margin: 0 auto;
+    border-radius: $minRadius;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+
+    &:hover {
+      background: $lightGrey;
+    }
+  }
+
+  &__table-title {
+    display: flex;
+    font-weight: 400;
+    font-size: 15px;
+    padding: 10px;
+    color: $grey;
+    width: 100%;
+    max-width: 220px;
+  }
+}

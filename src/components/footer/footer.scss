@@ -3,11 +3,11 @@
 .search-footer {
   display: flex;
   align-items: center;
-  max-width: 960px;
   width: 100%;
   height: 70px;
   padding: 0 20px;
   border-radius: $midRadius;
   margin: 0 auto;
-  background-color: $grey;
+  background: $white;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
 }
