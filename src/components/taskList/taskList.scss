@@ -28,6 +28,28 @@
     }
   }
 
+  &__add-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+
+    & button {
+      border: none;
+      background: $lightFobos;
+      color: $white;
+      border-radius: $minRadius;
+      box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.3);
+      padding: 5px 15px;
+      cursor: pointer;
+      transition: all ease-in-out 0.3s;
+
+      &:hover {
+        opacity: 0.9;
+        box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+
   &__table-head {
     display: flex;
     align-items: center;

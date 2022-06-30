@@ -7,6 +7,21 @@ import './App.scss';
 
 function App() {
   const [task, setTask] = useState([]);
+  const [modalActive, setModalActive] = useState(false);
+
+  const [fio, setFio] = useState('');
+  const [mobileNum, setMobileNum] = useState('');
+  const [sity, setSity] = useState('');
+  const [street, setStreet] = useState('');
+  const [house, setHouse] = useState('');
+  const [section, setSection] = useState('');
+  const [flat, setFlat] = useState('');
+  const [entrance, setEntrance] = useState('');
+  const [floor, setFloor] = useState('');
+  const [optionStatus, setOptionStatus] = useState('');
+  const [date, setDate] = useState('');
+  const [note, setNote] = useState('');
+  const [optionWorker, setOptionWorker] = useState('');
 
   // console.log(task);
 
@@ -14,8 +29,56 @@ function App() {
     <div className="wrapper">
       <Header />
       <main>
-        <AddTask task={task} setTask={setTask} />
-        <TaskList task={task} setTask={setTask} />
+        <AddTask
+          task={task}
+          setTask={setTask}
+          modalActive={modalActive}
+          setModalActive={setModalActive}
+          fio={fio}
+          setFio={setFio}
+          mobileNum={mobileNum}
+          setMobileNum={setMobileNum}
+          sity={sity}
+          setSity={setSity}
+          street={street}
+          setStreet={setStreet}
+          house={house}
+          setHouse={setHouse}
+          section={section}
+          setSection={setSection}
+          flat={flat}
+          setFlat={setFlat}
+          entrance={entrance}
+          setEntrance={setEntrance}
+          floor={floor}
+          setFloor={setFloor}
+          optionStatus={optionStatus}
+          setOptionStatus={setOptionStatus}
+          date={date}
+          setDate={setDate}
+          note={note}
+          setNote={setNote}
+          optionWorker={optionWorker}
+          setOptionWorker={setOptionWorker}
+        />
+        <TaskList
+          task={task}
+          setTask={setTask}
+          setModalActive={setModalActive}
+          setFio={setFio}
+          setMobileNum={setMobileNum}
+          setSity={setSity}
+          setStreet={setStreet}
+          setHouse={setHouse}
+          setSection={setSection}
+          setFlat={setFlat}
+          setEntrance={setEntrance}
+          setFloor={setFloor}
+          setOptionStatus={setOptionStatus}
+          setDate={setDate}
+          setNote={setNote}
+          setOptionWorker={setOptionWorker}
+        />
       </main>
       <Footer />
     </div>

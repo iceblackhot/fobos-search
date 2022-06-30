@@ -1,22 +1,40 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Modal from '../modal/modal';
 import './addTask.scss';
 
-export const AddTask = ({task, setTask}) => {
-  const [modalActive, setModalActive] = useState(false);
-  const [fio, setFio] = useState('');
-  const [mobileNum, setMobileNum] = useState('');
-  const [sity, setSity] = useState('');
-  const [street, setStreet] = useState('');
-  const [house, setHouse] = useState('');
-  const [section, setSection] = useState('');
-  const [flat, setFlat] = useState('');
-  const [entrance, setEntrance] = useState('');
-  const [floor, setFloor] = useState('');
-  const [optionStatus, setOptionStatus] = useState('');
-  const [date, setDate] = useState('');
-  const [note, setNote] = useState('');
-  const [optionWorker, setOptionWorker] = useState('');
+export const AddTask = ({
+  task,
+  setTask,
+  modalActive,
+  setModalActive,
+  fio,
+  setFio,
+  mobileNum,
+  setMobileNum,
+  sity,
+  setSity,
+  street,
+  setStreet,
+  house,
+  setHouse,
+  section,
+  setSection,
+  flat,
+  setFlat,
+  entrance,
+  setEntrance,
+  floor,
+  setFloor,
+  optionStatus,
+  setOptionStatus,
+  date,
+  setDate,
+  note,
+  setNote,
+  optionWorker,
+  setOptionWorker,
+}) => {
+  let dateNow = new Date().toLocaleString();
 
   function saveTask() {
     if (!fio) {
@@ -25,6 +43,7 @@ export const AddTask = ({task, setTask}) => {
       setTask([
         ...task,
         {
+          dateNow: dateNow,
           id: Math.random().toString(36).substring(2, 9),
           fio: fio,
           mobile: mobileNum,
@@ -64,10 +83,6 @@ export const AddTask = ({task, setTask}) => {
     saveTask();
   }
 
-  function handleClick() {
-    setModalActive(true);
-  }
-
   function handleCancel() {
     setModalActive(false);
   }
@@ -84,7 +99,6 @@ export const AddTask = ({task, setTask}) => {
 
   return (
     <div className="add-task">
-      <button onClick={handleClick}>Создать заявку</button>
       <Modal active={modalActive} setActive={setModalActive}>
         <div className="add-task__title">
           <h1>Новая запись</h1>
