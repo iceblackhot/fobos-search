@@ -6,23 +6,7 @@ import {TaskList} from '../taskList/TaskList';
 import './App.scss';
 
 function App() {
-  const [task, setTask] = useState([
-    {
-      id: 1,
-      title: 'first task',
-      status: true,
-    },
-    {
-      id: 2,
-      title: 'second task',
-      status: true,
-    },
-    {
-      id: 3,
-      title: 'third task',
-      status: false,
-    },
-  ]);
+  const [task, setTask] = useState([]);
 
   // console.log(task);
 

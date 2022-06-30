@@ -76,7 +76,8 @@
   }
 
   input,
-  select {
+  select,
+  textarea {
     margin-bottom: 20px;
     padding: 10px;
     border: none;
@@ -88,6 +89,11 @@
     &:focus {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
+  }
+
+  textarea {
+    resize: none;
+    width: 100%;
   }
 
   &__inputs-adress {
