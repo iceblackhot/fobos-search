@@ -80,9 +80,10 @@
       background: $lightGrey;
     }
   }
-  .close {
-    color: $grey;
-    text-decoration: line-through;
+  .edit {
+    // color: $grey;
+    // text-decoration: line-through;
+    background: $lightFobos;
   }
 
   &__table-title {

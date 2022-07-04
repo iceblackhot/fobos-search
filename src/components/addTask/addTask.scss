@@ -32,26 +32,38 @@
 
   &__options-type {
     width: 40%;
+  }
 
-    & button:first-child {
-      background: $lightFobos;
+  &__options-btn {
+    background: $lightGrey;
+
+    &.connection {
+      background: $lightFobos !important;
+    }
+
+    &.faq {
+      background: $lightFobos !important;
     }
   }
 
   &__options-priority {
     margin-right: 0px;
     width: 60%;
+  }
 
-    & button:first-child {
+  &__priority-btn {
+    background: $lightGrey;
+
+    &.critical {
       background: #e76f51;
     }
 
-    & button:nth-child(2) {
+    &.important {
       background: #f4a261;
     }
 
-    & button:last-child {
-      background: $lightFobos;
+    &.regular {
+      background: #86db04;
     }
   }
 

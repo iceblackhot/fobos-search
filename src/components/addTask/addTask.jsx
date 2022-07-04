@@ -33,6 +33,16 @@ export const AddTask = ({
   setNote,
   optionWorker,
   setOptionWorker,
+  connection,
+  setConnection,
+  faq,
+  setFaq,
+  critical,
+  setCritical,
+  important,
+  setImportant,
+  regular,
+  setRegular,
 }) => {
   let dateNow = new Date().toLocaleString();
 
@@ -58,7 +68,12 @@ export const AddTask = ({
           date: date,
           note: note,
           worker: optionWorker,
-          status: true,
+          editNote: false,
+          newConnection: false,
+          faq: false,
+          statCritical: false,
+          statImportant: false,
+          statRegular: false,
         },
       ]);
     }
@@ -85,6 +100,7 @@ export const AddTask = ({
 
   function handleCancel() {
     setModalActive(false);
+    handleClear();
   }
 
   function handleChangeStatus(e) {
@@ -95,7 +111,75 @@ export const AddTask = ({
     setOptionWorker(e.currentTarget.value);
   }
 
-  console.log(task);
+  function handleClear() {
+    setFio('');
+    setMobileNum('');
+    setSity('');
+    setStreet('');
+    setHouse('');
+    setSection('');
+    setFlat('');
+    setEntrance('');
+    setFloor('');
+    setOptionStatus('');
+    setDate('');
+    setNote('');
+    setOptionWorker('');
+    setConnection(false);
+    setFaq(false);
+    setCritical(false);
+    setImportant(false);
+    setRegular(false);
+  }
+
+  function newConnectionTask(e) {
+    e.preventDefault();
+    setConnection(true);
+    setFaq(false);
+  }
+
+  const classNameConnection = connection
+    ? 'add-task__options-btn connection'
+    : 'add-task__options-btn ';
+
+  function newConnectionFaq(e) {
+    e.preventDefault();
+    setConnection(false);
+    setFaq(true);
+  }
+
+  const classNameFaq = faq ? 'add-task__options-btn faq' : 'add-task__options-btn';
+
+  function priorityCritical(e) {
+    e.preventDefault();
+    setCritical(true);
+    setImportant(false);
+    setRegular(false);
+  }
+
+  const classNameCritical = critical ? 'add-task__priority-btn critical' : 'add-task__priority-btn';
+
+  function priorityImportant(e) {
+    e.preventDefault();
+    setCritical(false);
+    setImportant(true);
+    setRegular(false);
+  }
+
+  const classNameImportant = important
+    ? 'add-task__priority-btn important'
+    : 'add-task__priority-btn';
+
+  function priorityRegular(e) {
+    e.preventDefault();
+    setCritical(false);
+    setImportant(false);
+    setRegular(true);
+  }
+
+  const classNameRegular = regular ? 'add-task__priority-btn regular' : 'add-task__priority-btn';
+
+  // console.log(task);
 
   return (
     <div className="add-task">
@@ -106,13 +190,23 @@ export const AddTask = ({
         <form onSubmit={handleSubmit}>
           <div className="add-task__options">
             <div className="add-task__options-type">
-              <button className="add-task__options-btn">Подключение</button>
-              <button className="add-task__options-btn">Фак</button>
+              <button className={classNameConnection} onClick={newConnectionTask}>
+                Подключение
+              </button>
+              <button className={classNameFaq} onClick={newConnectionFaq}>
+                Фак
+              </button>
             </div>
             <div className="add-task__options-priority">
-              <button className="add-task__options-btn">Критично</button>
-              <button className="add-task__options-btn">Важно</button>
-              <button className="add-task__options-btn">Обычная</button>
+              <button className={classNameCritical} onClick={priorityCritical}>
+                Критично
+              </button>
+              <button className={classNameImportant} onClick={priorityImportant}>
+                Важно
+              </button>
+              <button className={classNameRegular} onClick={priorityRegular}>
+                Обычная
+              </button>
             </div>
           </div>
           <div className="add-task__inputs">
@@ -197,7 +291,10 @@ export const AddTask = ({
             />
           </div>
           <div>
-            <select className="add-task__select" value={optionWorker} onChange={handleChangeWorker}>
+            <select
+              className="add-task__select"
+              value={optionWorker}
+              onChange={(e) => handleChangeWorker(e)}>
               <option value="Не выбран">Сотрудник</option>
               <option value="Алешка">Алешка</option>
               <option value="Василий">Василий</option>
@@ -207,6 +304,7 @@ export const AddTask = ({
           <div className="add-task__action-btn">
             <button onClick={saveTask}>Сохранить</button>
             <button onClick={handleCancel}>Отмена</button>
+            <button onClick={handleClear}>Сброс</button>
           </div>
         </form>
       </Modal>

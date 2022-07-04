@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
-import Modal from '../modal/modal';
 import './taskList.scss';
 
 export const TaskList = ({
@@ -23,8 +22,7 @@ export const TaskList = ({
   setNote,
   setOptionWorker,
 }) => {
-  const [edit, setEdit] = useState(null);
-  const [value, setValue] = useState('');
+  // const [edit, setEdit] = useState(false);
 
   function deleteTask(e, id) {
     e.stopPropagation();
@@ -32,25 +30,38 @@ export const TaskList = ({
     setTask(newTask);
   }
 
-  function saveTask(e, id) {
-    e.stopPropagation();
+  // function saveTask(e, id) {
+  //   e.stopPropagation();
 
-    let newTask = [...task].map((item) => {
-      if (item.id === id) {
-        item.fio = value;
-        console.log(value);
-      }
-      return item;
-    });
-    setTask(newTask);
-    setEdit(null);
-  }
+  //   let newTask = [...task].map((item) => {
+  //     if (item.id === id) {
+  //       setValue([
+  //         ...value,
+  //         item.fio,
+  //         item.mobile,
+  //         item.sity,
+  //         item.street,
+  //         item.house,
+  //         item.section,
+  //         item.flat,
+  //         item.entrance,
+  //         item.floor,
+  //         item.option,
+  //         item.date,
+  //         item.note,
+  //         item.optionWorker,
+  //       ]);
+  //     }
+  //   });
+  //   setTask(newTask);
+  //   setEdit(null);
+  // }
 
   function statusTask(e, id) {
     e.stopPropagation();
     let newTask = [...task].filter((item) => {
       if (item.id === id) {
-        item.status = !item.status;
+        item.editNote = !item.editNote;
       }
       return item;
     });
@@ -58,7 +69,6 @@ export const TaskList = ({
   }
 
   function editTask(
-    id,
     fio,
     mobile,
     sity,
@@ -74,7 +84,6 @@ export const TaskList = ({
     optionWorker,
   ) {
     setModalActive(true);
-    setEdit(id);
     setFio(fio);
     setMobileNum(mobile);
     setSity(sity);
@@ -94,7 +103,7 @@ export const TaskList = ({
     setModalActive(true);
   }
 
-  // console.log(task);
+  console.log(task);
 
   return (
     <div className="task-list">
@@ -119,65 +128,53 @@ export const TaskList = ({
         {task.map((item) => (
           <li
             key={item.id}
-            className={!item.status ? 'task-list__item close' : 'task-list__item'}
-            onClick={() =>
-              editTask(
-                item.id,
-                item.fio,
-                item.mobile,
-                item.sity,
-                item.street,
-                item.house,
-                item.section,
-                item.flat,
-                item.entrance,
-                item.floor,
-                item.optionStatus,
-                item.date,
-                item.note,
-                item.optionWorker,
-              )
-            }>
-            {edit === item.id ? (
-              <Modal>
-                <div>
-                  <button onClick={(e) => saveTask(e, item.id)}>Сохранить</button>
-                </div>
-              </Modal>
-            ) : (
-              <>
-                <div className="task-list__item-cell">{item.dateNow}</div>
-                <div className="task-list__item-cell">{item.sity}</div>
-                <div className="task-list__item-cell">
-                  {item.street}
-                  {'д.' + item.house}
-                  {'секц.' + item.section}
-                  {'кв.' + item.flat}
-                  {'под.' + item.entrance}
-                  {'эт.' + item.floor}
-                </div>
-                <div className="task-list__item-cell">
-                  {item.option} {item.date}
-                </div>
-                <div className="task-list__item-cell">{item.fio}</div>
-                <div className="task-list__item-cell">{item.mobile}</div>
-                <div className="task-list__item-cell">{item.note}</div>
-                <div className="task-list__item-cell">{item.worker}</div>
-              </>
-            )}
-
-            {edit === item.id ? (
-              ''
-            ) : (
+            className={!item.editNote ? 'task-list__item ' : 'task-list__item edit'}
+            onClick={() => {
+              if (item.editNote) {
+                editTask(
+                  item.fio,
+                  item.mobile,
+                  item.sity,
+                  item.street,
+                  item.house,
+                  item.section,
+                  item.flat,
+                  item.entrance,
+                  item.floor,
+                  item.optionStatus,
+                  item.date,
+                  item.note,
+                  item.optionWorker,
+                );
+              }
+            }}>
+            <>
+              <div className="task-list__item-cell">{item.dateNow}</div>
+              <div className="task-list__item-cell">{item.sity}</div>
+              <div className="task-list__item-cell">
+                {item.street}
+                {'д.' + item.house}
+                {'секц.' + item.section}
+                {'кв.' + item.flat}
+                {'под.' + item.entrance}
+                {'эт.' + item.floor}
+              </div>
+              <div className="task-list__item-cell">
+                {item.option} {item.date}
+              </div>
+              <div className="task-list__item-cell">{item.fio}</div>
+              <div className="task-list__item-cell">{item.mobile}</div>
+              <div className="task-list__item-cell">{item.note}</div>
+              <div className="task-list__item-cell">{item.worker}</div>
               <div style={{display: 'flex'}}>
                 <DeleteForeverOutlinedIcon onClick={(e) => deleteTask(e, item.id)}>
                   Удалить
                 </DeleteForeverOutlinedIcon>
                 <div onClick={(e) => statusTask(e, item.id)}>
-                  {item.status ? <LockOpenRoundedIcon /> : <LockRoundedIcon />}
+                  {item.editNote ? <LockOpenRoundedIcon /> : <LockRoundedIcon />}
                 </div>
               </div>
-            )}
+            </>
           </li>
         ))}
       </ul>

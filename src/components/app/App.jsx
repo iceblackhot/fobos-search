@@ -9,6 +9,13 @@ function App() {
   const [task, setTask] = useState([]);
   const [modalActive, setModalActive] = useState(false);
 
+  const [connection, setConnection] = useState(false);
+  const [faq, setFaq] = useState(false);
+
+  const [critical, setCritical] = useState(false);
+  const [important, setImportant] = useState(false);
+  const [regular, setRegular] = useState(false);
+
   const [fio, setFio] = useState('');
   const [mobileNum, setMobileNum] = useState('');
   const [sity, setSity] = useState('');
@@ -60,6 +67,16 @@ function App() {
           setNote={setNote}
           optionWorker={optionWorker}
           setOptionWorker={setOptionWorker}
+          connection={connection}
+          setConnection={setConnection}
+          faq={faq}
+          setFaq={setFaq}
+          critical={critical}
+          setCritical={setCritical}
+          important={important}
+          setImportant={setImportant}
+          regular={regular}
+          setRegular={setRegular}
         />
         <TaskList
           task={task}
