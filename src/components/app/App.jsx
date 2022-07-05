@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {AddTask} from '../addTask/addTask';
 import {Footer} from '../footer/footer';
 import {Header} from '../header/header';
@@ -29,6 +29,17 @@ function App() {
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
   const [optionWorker, setOptionWorker] = useState('');
+
+  const [editMode, setEditMode] = useState(false);
+
+  // useEffect(() => {
+  //   if (task.editNote === true) {
+  //     setEditMode(true);
+  //   } else {
+  //     setEditMode(false);
+  //   }
+  //   console.log(task.editNote);
+  // }, [task.editNote]);
 
   // console.log(task);
 
@@ -77,6 +88,7 @@ function App() {
           setImportant={setImportant}
           regular={regular}
           setRegular={setRegular}
+          editMode={editMode}
         />
         <TaskList
           task={task}
@@ -95,6 +107,8 @@ function App() {
           setDate={setDate}
           setNote={setNote}
           setOptionWorker={setOptionWorker}
+          editMode={editMode}
+          setEditMode={setEditMode}
         />
       </main>
       <Footer />

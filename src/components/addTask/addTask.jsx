@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Modal from '../modal/modal';
 import './addTask.scss';
 
@@ -43,7 +43,10 @@ export const AddTask = ({
   setImportant,
   regular,
   setRegular,
+  editMode,
 }) => {
+  const [value, setValue] = useState('');
+
   let dateNow = new Date().toLocaleString();
 
   function saveTask() {
@@ -91,6 +94,31 @@ export const AddTask = ({
     setNote('');
     setOptionWorker('');
     setModalActive(false);
+  }
+
+  function editTask() {
+    let newTask = [...task].filter((item) => {
+      if (item.editNote === true) {
+        console.log(item.editNote);
+        setTask([
+          ...task,
+          fio.fio,
+          item.mobile,
+          item.sity,
+          item.street,
+          item.house,
+          item.section,
+          item.flat,
+          item.entrance,
+          item.floor,
+          item.option,
+          item.date,
+          item.note,
+          item.optionWorker,
+        ]);
+        setTask(newTask);
+      }
+    });
   }
 
   function handleSubmit(e) {
@@ -302,7 +330,11 @@ export const AddTask = ({
             </select>
           </div>
           <div className="add-task__action-btn">
-            <button onClick={saveTask}>Сохранить</button>
+            {editMode ? (
+              <button onClick={editTask}>Редактировать</button>
+            ) : (
+              <button onClick={saveTask}>Сохранить</button>
+            )}
             <button onClick={handleCancel}>Отмена</button>
             <button onClick={handleClear}>Сброс</button>
           </div>

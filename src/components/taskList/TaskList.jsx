@@ -21,41 +21,14 @@ export const TaskList = ({
   setDate,
   setNote,
   setOptionWorker,
+  editMode,
+  setEditMode,
 }) => {
-  // const [edit, setEdit] = useState(false);
-
   function deleteTask(e, id) {
     e.stopPropagation();
     let newTask = [...task].filter((item) => item.id !== id);
     setTask(newTask);
   }
-
-  // function saveTask(e, id) {
-  //   e.stopPropagation();
-
-  //   let newTask = [...task].map((item) => {
-  //     if (item.id === id) {
-  //       setValue([
-  //         ...value,
-  //         item.fio,
-  //         item.mobile,
-  //         item.sity,
-  //         item.street,
-  //         item.house,
-  //         item.section,
-  //         item.flat,
-  //         item.entrance,
-  //         item.floor,
-  //         item.option,
-  //         item.date,
-  //         item.note,
-  //         item.optionWorker,
-  //       ]);
-  //     }
-  //   });
-  //   setTask(newTask);
-  //   setEdit(null);
-  // }
 
   function statusTask(e, id) {
     e.stopPropagation();
@@ -84,6 +57,7 @@ export const TaskList = ({
     optionWorker,
   ) {
     setModalActive(true);
+    setEditMode(true);
     setFio(fio);
     setMobileNum(mobile);
     setSity(sity);
@@ -101,6 +75,7 @@ export const TaskList = ({
 
   function handleClick() {
     setModalActive(true);
+    setEditMode(false);
   }
 
   console.log(task);
