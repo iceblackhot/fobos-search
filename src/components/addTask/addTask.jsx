@@ -97,28 +97,11 @@ export const AddTask = ({
   }
 
   function editTask() {
-    let newTask = [...task].filter((item) => {
-      if (item.editNote === true) {
-        console.log(item.editNote);
-        setTask([
-          ...task,
-          fio.fio,
-          item.mobile,
-          item.sity,
-          item.street,
-          item.house,
-          item.section,
-          item.flat,
-          item.entrance,
-          item.floor,
-          item.option,
-          item.date,
-          item.note,
-          item.optionWorker,
-        ]);
-        setTask(newTask);
-      }
-    });
+    let newTask = [...task].filter((item) => !item.editNote);
+
+    console.log(task);
+    setTask(newTask);
+    setModalActive(false);
   }
 
   function handleSubmit(e) {

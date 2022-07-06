@@ -35,6 +35,7 @@ function App() {
   // useEffect(() => {
   //   if (task.editNote === true) {
   //     setEditMode(true);
+  //     console.log(editMode);
   //   } else {
   //     setEditMode(false);
   //   }

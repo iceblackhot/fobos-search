@@ -41,7 +41,7 @@ export const TaskList = ({
     setTask(newTask);
   }
 
-  function editTask(
+  function showEditModal(
     fio,
     mobile,
     sity,
@@ -78,7 +78,7 @@ export const TaskList = ({
     setEditMode(false);
   }
 
-  console.log(task);
+  // console.log(task);
 
   return (
     <div className="task-list">
@@ -106,7 +106,7 @@ export const TaskList = ({
             className={!item.editNote ? 'task-list__item ' : 'task-list__item edit'}
             onClick={() => {
               if (item.editNote) {
-                editTask(
+                showEditModal(
                   item.fio,
                   item.mobile,
                   item.sity,
