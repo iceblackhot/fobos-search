@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {AddTask} from '../addTask/addTask';
+import {Filters} from '../filters/filters';
 import {Footer} from '../footer/footer';
 import {Header} from '../header/header';
 import {TaskList} from '../taskList/TaskList';
@@ -30,7 +31,7 @@ function App() {
   const [note, setNote] = useState('');
   const [optionWorker, setOptionWorker] = useState('');
 
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(null);
 
   // useEffect(() => {
   //   if (task.editNote === true) {
@@ -48,6 +49,7 @@ function App() {
     <div className="wrapper">
       <Header />
       <main>
+        <Filters />
         <AddTask
           task={task}
           setTask={setTask}

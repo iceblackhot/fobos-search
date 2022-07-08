@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Modal from '../modal/modal';
 import './addTask.scss';
 
@@ -45,8 +45,6 @@ export const AddTask = ({
   setRegular,
   editMode,
 }) => {
-  const [value, setValue] = useState('');
-
   let dateNow = new Date().toLocaleString();
 
   function saveTask() {
@@ -72,11 +70,11 @@ export const AddTask = ({
           note: note,
           worker: optionWorker,
           editNote: false,
-          newConnection: false,
-          faq: false,
-          statCritical: false,
-          statImportant: false,
-          statRegular: false,
+          newConnection: connection,
+          faq: faq,
+          statCritical: critical,
+          statImportant: important,
+          statRegular: regular,
         },
       ]);
     }
@@ -96,10 +94,34 @@ export const AddTask = ({
     setModalActive(false);
   }
 
-  function editTask() {
-    let newTask = [...task].filter((item) => !item.editNote);
-
-    console.log(task);
+  function editTask(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    let newTask = [...task].filter((item) => {
+      if (item.id === editMode) {
+        item.dateNow = dateNow;
+        item.fio = fio;
+        item.mobile = mobileNum;
+        item.sity = sity;
+        item.street = street;
+        item.house = house;
+        item.section = section;
+        item.flat = flat;
+        item.entrance = entrance;
+        item.floor = floor;
+        item.option = optionStatus;
+        item.date = date;
+        item.note = note;
+        item.worker = optionWorker;
+        item.editNote = editMode;
+        item.newConnection = connection;
+        item.faq = faq;
+        item.statCritical = critical;
+        item.statImportant = important;
+        item.statRegular = regular;
+      }
+      return item;
+    });
     setTask(newTask);
     setModalActive(false);
   }
@@ -147,6 +169,13 @@ export const AddTask = ({
     e.preventDefault();
     setConnection(true);
     setFaq(false);
+    let newTask = [...task].filter((item) => {
+      if (item.id === editMode) {
+        item.newConnection = !item.newConnection;
+      }
+      return item;
+    });
+    setTask(newTask);
   }
 
   const classNameConnection = connection
@@ -157,6 +186,13 @@ export const AddTask = ({
     e.preventDefault();
     setConnection(false);
     setFaq(true);
+    let newTask = [...task].filter((item) => {
+      if (item.id === editMode) {
+        item.faq = !item.faq;
+      }
+      return item;
+    });
+    setTask(newTask);
   }
 
   const classNameFaq = faq ? 'add-task__options-btn faq' : 'add-task__options-btn';
@@ -166,6 +202,13 @@ export const AddTask = ({
     setCritical(true);
     setImportant(false);
     setRegular(false);
+    let newTask = [...task].filter((item) => {
+      if (item.id === editMode) {
+        item.statCritical = !item.statCritical;
+      }
+      return item;
+    });
+    setTask(newTask);
   }
 
   const classNameCritical = critical ? 'add-task__priority-btn critical' : 'add-task__priority-btn';
@@ -175,6 +218,13 @@ export const AddTask = ({
     setCritical(false);
     setImportant(true);
     setRegular(false);
+    let newTask = [...task].filter((item) => {
+      if (item.id === editMode) {
+        item.important = !item.important;
+      }
+      return item;
+    });
+    setTask(newTask);
   }
 
   const classNameImportant = important
@@ -186,11 +236,18 @@ export const AddTask = ({
     setCritical(false);
     setImportant(false);
     setRegular(true);
+    let newTask = [...task].filter((item) => {
+      if (item.id === editMode) {
+        item.regular = !item.regular;
+      }
+      return item;
+    });
+    setTask(newTask);
   }
 
   const classNameRegular = regular ? 'add-task__priority-btn regular' : 'add-task__priority-btn';
 
-  // console.log(task);
+  console.log(task);
 
   return (
     <div className="add-task">
@@ -314,7 +371,7 @@ export const AddTask = ({
           </div>
           <div className="add-task__action-btn">
             {editMode ? (
-              <button onClick={editTask}>Редактировать</button>
+              <button onClick={(e) => editTask(e)}>Редактировать</button>
             ) : (
               <button onClick={saveTask}>Сохранить</button>
             )}

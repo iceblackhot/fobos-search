@@ -57,7 +57,6 @@ export const TaskList = ({
     optionWorker,
   ) {
     setModalActive(true);
-    setEditMode(true);
     setFio(fio);
     setMobileNum(mobile);
     setSity(sity);
@@ -103,9 +102,11 @@ export const TaskList = ({
         {task.map((item) => (
           <li
             key={item.id}
-            className={!item.editNote ? 'task-list__item ' : 'task-list__item edit'}
+            className={editMode === item.id ? 'task-list__item edit' : 'task-list__item '}
             onClick={() => {
-              if (item.editNote) {
+              if (editMode === item.id) {
+                setEditMode(item.id);
+                console.log(editMode);
                 showEditModal(
                   item.fio,
                   item.mobile,
@@ -145,8 +146,12 @@ export const TaskList = ({
                 <DeleteForeverOutlinedIcon onClick={(e) => deleteTask(e, item.id)}>
                   Удалить
                 </DeleteForeverOutlinedIcon>
-                <div onClick={(e) => statusTask(e, item.id)}>
-                  {item.editNote ? <LockOpenRoundedIcon /> : <LockRoundedIcon />}
+                <div
+                  onClick={(e) => {
+                    setEditMode(item.id);
+                    statusTask(e, item.id);
+                  }}>
+                  {editMode === item.id ? <LockOpenRoundedIcon /> : <LockRoundedIcon />}
                 </div>
               </div>
             </>
