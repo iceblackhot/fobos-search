@@ -1,4 +1,7 @@
 import React from 'react';
+import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/themes/material_blue.css';
+import {Russian} from 'flatpickr/dist/l10n/ru.js';
 import Modal from '../modal/modal';
 import './addTask.scss';
 
@@ -44,8 +47,18 @@ export const AddTask = ({
   regular,
   setRegular,
   editMode,
+  setEditMode,
 }) => {
-  let dateNow = new Date().toLocaleString();
+  let year = new Date().getFullYear();
+  let month = new Date().getMonth();
+  let day = new Date().getDate();
+  let hours = new Date().getHours();
+
+  let current_date = new Date().getMinutes();
+  let minutes = ('0' + current_date).slice(-2);
+
+  let seconds = new Date().getSeconds();
+  let dateNow = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 
   function saveTask() {
     if (!fio) {
@@ -124,6 +137,7 @@ export const AddTask = ({
     });
     setTask(newTask);
     setModalActive(false);
+    setEditMode(false);
   }
 
   function handleSubmit(e) {
@@ -133,6 +147,7 @@ export const AddTask = ({
 
   function handleCancel() {
     setModalActive(false);
+    setEditMode(false);
     handleClear();
   }
 
@@ -344,11 +359,25 @@ export const AddTask = ({
               <option value="Отменено заказчиком">Отменено заказчиком</option>
               <option value="Сайт">Сайт</option>
             </select>
-            <input
+
+            <Flatpickr
               placeholder="Дата"
-              type="text"
+              data-enable-time
               value={date}
-              onChange={(e) => setDate(e.target.value)}
+              options={{
+                defaultDate: 'today',
+                minDate: '01.01.2020',
+                maxDate: '01.01.2025',
+                dateFormat: 'Y-m-d h:i:ss',
+                locale: Russian,
+              }}
+              onChange={(selectedDates, dateStr, instance) => {
+                date = dateStr;
+                console.log(selectedDates === null);
+                // console.log(dateStr);
+                console.log(instance);
+                setDate(date);
+              }}
             />
           </div>
           <div>

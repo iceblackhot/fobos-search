@@ -22,6 +22,16 @@ export const TaskList = ({
   setNote,
   setOptionWorker,
   editMode,
+  connection,
+  setConnection,
+  faq,
+  setFaq,
+  critical,
+  setCritical,
+  important,
+  setImportant,
+  regular,
+  setRegular,
   setEditMode,
 }) => {
   function deleteTask(e, id) {
@@ -75,6 +85,24 @@ export const TaskList = ({
   function handleClick() {
     setModalActive(true);
     setEditMode(false);
+    setFio('');
+    setMobileNum('');
+    setSity('');
+    setStreet('');
+    setHouse('');
+    setSection('');
+    setFlat('');
+    setEntrance('');
+    setFloor('');
+    setOptionStatus('');
+    setDate('');
+    setNote('');
+    setOptionWorker('');
+    setConnection(false);
+    setFaq(false);
+    setCritical(false);
+    setImportant(false);
+    setRegular(false);
   }
 
   // console.log(task);
@@ -128,15 +156,23 @@ export const TaskList = ({
               <div className="task-list__item-cell">{item.dateNow}</div>
               <div className="task-list__item-cell">{item.sity}</div>
               <div className="task-list__item-cell">
-                {item.street}
-                {'д.' + item.house}
-                {'секц.' + item.section}
-                {'кв.' + item.flat}
-                {'под.' + item.entrance}
-                {'эт.' + item.floor}
+                <span>
+                  {item.street +
+                    ' д.' +
+                    item.house +
+                    ' секц.' +
+                    item.section +
+                    ' кв.' +
+                    item.flat +
+                    ' под.' +
+                    item.entrance +
+                    ' эт.' +
+                    item.floor}
+                </span>
               </div>
               <div className="task-list__item-cell">
-                {item.option} {item.date}
+                <span> {item.option}</span>
+                <span>{item.date}</span>
               </div>
               <div className="task-list__item-cell">{item.fio}</div>
               <div className="task-list__item-cell">{item.mobile}</div>

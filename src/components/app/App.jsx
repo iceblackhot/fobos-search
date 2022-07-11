@@ -92,6 +92,7 @@ function App() {
           regular={regular}
           setRegular={setRegular}
           editMode={editMode}
+          setEditMode={setEditMode}
         />
         <TaskList
           task={task}
@@ -110,6 +111,16 @@ function App() {
           setDate={setDate}
           setNote={setNote}
           setOptionWorker={setOptionWorker}
+          connection={connection}
+          setConnection={setConnection}
+          faq={faq}
+          setFaq={setFaq}
+          critical={critical}
+          setCritical={setCritical}
+          important={important}
+          setImportant={setImportant}
+          regular={regular}
+          setRegular={setRegular}
           editMode={editMode}
           setEditMode={setEditMode}
         />
