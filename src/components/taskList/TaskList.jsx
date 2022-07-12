@@ -61,10 +61,15 @@ export const TaskList = ({
     flat,
     entrance,
     floor,
-    optionStatus,
+    option,
     date,
     note,
-    optionWorker,
+    worker,
+    faq,
+    newConnection,
+    critical,
+    important,
+    regular,
   ) {
     setModalActive(true);
     setFio(fio);
@@ -76,10 +81,15 @@ export const TaskList = ({
     setFlat(flat);
     setEntrance(entrance);
     setFloor(floor);
-    setOptionStatus(optionStatus);
+    setOptionStatus(option);
     setDate(date);
     setNote(note);
-    setOptionWorker(optionWorker);
+    setOptionWorker(worker);
+    setFaq(faq);
+    setConnection(newConnection);
+    setCritical(critical);
+    setImportant(important);
+    setRegular(regular);
   }
 
   function handleClick() {
@@ -134,7 +144,7 @@ export const TaskList = ({
             onClick={() => {
               if (editMode === item.id) {
                 setEditMode(item.id);
-                console.log(editMode);
+                // console.log(editMode === item.id);
                 showEditModal(
                   item.fio,
                   item.mobile,
@@ -145,10 +155,15 @@ export const TaskList = ({
                   item.flat,
                   item.entrance,
                   item.floor,
-                  item.optionStatus,
+                  item.option,
                   item.date,
                   item.note,
-                  item.optionWorker,
+                  item.worker,
+                  item.faq,
+                  item.newConnection,
+                  item.statCritical,
+                  item.statImportant,
+                  item.statRegular,
                 );
               }
             }}>

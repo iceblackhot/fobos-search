@@ -57,17 +57,17 @@
     background: $lightGrey;
 
     &.critical {
-      background: #e76f51;
+      background: $critical;
       color: $white;
     }
 
     &.important {
-      background: #f4a261;
+      background: $important;
       color: $white;
     }
 
     &.regular {
-      background: #2dcf40;
+      background: $green;
       color: $white;
     }
   }

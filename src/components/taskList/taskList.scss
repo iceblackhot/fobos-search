@@ -98,6 +98,10 @@
       background: $lightGrey;
       border-radius: $midRadius;
     }
+
+    &.faq {
+      background: $grey;
+    }
   }
   .edit {
     background: $lightFobos;
