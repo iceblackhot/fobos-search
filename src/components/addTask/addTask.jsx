@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
 import {Russian} from 'flatpickr/dist/l10n/ru.js';
@@ -49,6 +49,8 @@ export const AddTask = ({
   editMode,
   setEditMode,
 }) => {
+  const [open, setOpen] = useState(false);
+
   let year = new Date().getFullYear();
   let month = new Date().getMonth();
   let day = new Date().getDate();
@@ -155,10 +157,6 @@ export const AddTask = ({
     setOptionStatus(e.currentTarget.value);
   }
 
-  function handleChangeWorker(e) {
-    setOptionWorker(e.currentTarget.value);
-  }
-
   function handleClear() {
     setFio('');
     setMobileNum('');
@@ -261,6 +259,36 @@ export const AddTask = ({
   }
 
   const classNameRegular = regular ? 'add-task__priority-btn regular' : 'add-task__priority-btn';
+
+  let WorkerNames = [
+    {name: 'Котэ'},
+    {name: 'Хакир'},
+    {name: 'Евгений'},
+    {name: 'Дэнчик'},
+    {name: 'Мишаня'},
+  ];
+
+  let filtredWorker = WorkerNames.filter((worker) => {
+    return worker.name.toLowerCase().includes(optionWorker.toLowerCase());
+  });
+
+  let workerList = filtredWorker.map((worker, index) => {
+    function handleChangeWorker() {
+      setOptionWorker(worker.name);
+      setOpen(false);
+    }
+
+    if (optionWorker) {
+      return (
+        <div
+          className={open ? 'optionWorker' : 'optionWorker hidden'}
+          onClick={handleChangeWorker}
+          key={index}>
+          <span style={{color: 'grey', fontSize: '15px'}}>{worker.name}</span>
+        </div>
+      );
+    }
+  });
 
   console.log(task);
 
@@ -388,15 +416,16 @@ export const AddTask = ({
             />
           </div>
           <div>
-            <select
-              className="add-task__select"
+            {workerList}
+            <input
+              type="text"
+              placeholder="Сотрудник"
               value={optionWorker}
-              onChange={(e) => handleChangeWorker(e)}>
-              <option value="Не выбран">Сотрудник</option>
-              <option value="Алешка">Алешка</option>
-              <option value="Василий">Василий</option>
-              <option value="Джигурда">Джигурда</option>
-            </select>
+              onChange={(e) => {
+                setOptionWorker(e.target.value);
+                setOpen(true);
+              }}
+            />
           </div>
           <div className="add-task__action-btn">
             {editMode ? (

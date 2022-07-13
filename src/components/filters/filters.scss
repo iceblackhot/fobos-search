@@ -66,6 +66,28 @@
     overflow-y: scroll;
   }
 
+  &__list {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    width: 99%;
+    border-radius: $midRadius;
+    padding: 5px;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background: $lightFobos;
+      color: $white;
+    }
+  }
+
   //Custom scroll
   &__viewport::-webkit-scrollbar {
     width: 12px;
