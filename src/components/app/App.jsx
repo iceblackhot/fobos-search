@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {AddTask} from '../addTask/addTask';
 import {Filters} from '../filters/filters';
 import {Footer} from '../footer/footer';
@@ -39,7 +39,7 @@ function App() {
     <div className="wrapper">
       <Header />
       <main>
-        <Filters />
+        <Filters task={task} setTask={setTask} />
         <AddTask
           task={task}
           setTask={setTask}

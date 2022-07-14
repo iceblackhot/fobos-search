@@ -115,7 +115,7 @@ export const TaskList = ({
     setRegular(false);
   }
 
-  // console.log(task);
+  console.log(task);
 
   return (
     <div className="task-list">

@@ -1,0 +1,20 @@
+@import '../../scss/vars.scss';
+
+.optionStreet {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  position: absolute;
+  bottom: 15.5em;
+  width: 189px;
+  height: 35px;
+  padding: 0 10px;
+  border-radius: $minRadius;
+  background: $white;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+
+  &.hidden {
+    display: none;
+  }
+}

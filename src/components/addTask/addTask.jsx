@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
 import {Russian} from 'flatpickr/dist/l10n/ru.js';
 import Modal from '../modal/modal';
 import './addTask.scss';
+import {WorkerInput} from './workerAutoInput/workerInput';
+import {PriorityBtns} from './priorityBtns/priorityBtns';
+import {SityAutoInput} from './sityAutoInput/sityAutoInput';
+import {StreetAutoInput} from './streetAutoInput/streetAutoInput';
 
 export const AddTask = ({
   task,
@@ -49,8 +53,6 @@ export const AddTask = ({
   editMode,
   setEditMode,
 }) => {
-  const [open, setOpen] = useState(false);
-
   let year = new Date().getFullYear();
   let month = new Date().getMonth();
   let day = new Date().getDate();
@@ -178,119 +180,7 @@ export const AddTask = ({
     setRegular(false);
   }
 
-  function newConnectionTask(e) {
-    e.preventDefault();
-    setConnection(true);
-    setFaq(false);
-    let newTask = [...task].filter((item) => {
-      if (item.id === editMode) {
-        item.newConnection = !item.newConnection;
-      }
-      return item;
-    });
-    setTask(newTask);
-  }
-
-  const classNameConnection = connection
-    ? 'add-task__options-btn connection'
-    : 'add-task__options-btn ';
-
-  function newConnectionFaq(e) {
-    e.preventDefault();
-    setConnection(false);
-    setFaq(true);
-    let newTask = [...task].filter((item) => {
-      if (item.id === editMode) {
-        item.faq = !item.faq;
-      }
-      return item;
-    });
-    setTask(newTask);
-  }
-
-  const classNameFaq = faq ? 'add-task__options-btn faq' : 'add-task__options-btn';
-
-  function priorityCritical(e) {
-    e.preventDefault();
-    setCritical(true);
-    setImportant(false);
-    setRegular(false);
-    let newTask = [...task].filter((item) => {
-      if (item.id === editMode) {
-        item.statCritical = !item.statCritical;
-      }
-      return item;
-    });
-    setTask(newTask);
-  }
-
-  const classNameCritical = critical ? 'add-task__priority-btn critical' : 'add-task__priority-btn';
-
-  function priorityImportant(e) {
-    e.preventDefault();
-    setCritical(false);
-    setImportant(true);
-    setRegular(false);
-    let newTask = [...task].filter((item) => {
-      if (item.id === editMode) {
-        item.important = !item.important;
-      }
-      return item;
-    });
-    setTask(newTask);
-  }
-
-  const classNameImportant = important
-    ? 'add-task__priority-btn important'
-    : 'add-task__priority-btn';
-
-  function priorityRegular(e) {
-    e.preventDefault();
-    setCritical(false);
-    setImportant(false);
-    setRegular(true);
-    let newTask = [...task].filter((item) => {
-      if (item.id === editMode) {
-        item.regular = !item.regular;
-      }
-      return item;
-    });
-    setTask(newTask);
-  }
-
-  const classNameRegular = regular ? 'add-task__priority-btn regular' : 'add-task__priority-btn';
-
-  let WorkerNames = [
-    {name: 'Котэ'},
-    {name: 'Хакир'},
-    {name: 'Евгений'},
-    {name: 'Дэнчик'},
-    {name: 'Мишаня'},
-  ];
-
-  let filtredWorker = WorkerNames.filter((worker) => {
-    return worker.name.toLowerCase().includes(optionWorker.toLowerCase());
-  });
-
-  let workerList = filtredWorker.map((worker, index) => {
-    function handleChangeWorker() {
-      setOptionWorker(worker.name);
-      setOpen(false);
-    }
-
-    if (optionWorker) {
-      return (
-        <div
-          className={open ? 'optionWorker' : 'optionWorker hidden'}
-          onClick={handleChangeWorker}
-          key={index}>
-          <span style={{color: 'grey', fontSize: '15px'}}>{worker.name}</span>
-        </div>
-      );
-    }
-  });
-
-  console.log(task);
+  // console.log(task);
 
   return (
     <div className="add-task">
@@ -299,27 +189,21 @@ export const AddTask = ({
           <h1>Новая запись</h1>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="add-task__options">
-            <div className="add-task__options-type">
-              <button className={classNameConnection} onClick={newConnectionTask}>
-                Подключение
-              </button>
-              <button className={classNameFaq} onClick={newConnectionFaq}>
-                Фак
-              </button>
-            </div>
-            <div className="add-task__options-priority">
-              <button className={classNameCritical} onClick={priorityCritical}>
-                Критично
-              </button>
-              <button className={classNameImportant} onClick={priorityImportant}>
-                Важно
-              </button>
-              <button className={classNameRegular} onClick={priorityRegular}>
-                Обычная
-              </button>
-            </div>
-          </div>
+          <PriorityBtns
+            editMode={editMode}
+            task={task}
+            setTask={setTask}
+            faq={faq}
+            setFaq={setFaq}
+            setConnection={setConnection}
+            connection={connection}
+            setCritical={setCritical}
+            critical={critical}
+            setImportant={setImportant}
+            important={important}
+            setRegular={setRegular}
+            regular={regular}
+          />
           <div className="add-task__inputs">
             <input
               placeholder="Ф.И.О"
@@ -333,18 +217,8 @@ export const AddTask = ({
               value={mobileNum}
               onChange={(e) => setMobileNum(e.target.value)}
             />
-            <input
-              placeholder="Город"
-              type="text"
-              value={sity}
-              onChange={(e) => setSity(e.target.value)}
-            />
-            <input
-              placeholder="Улица"
-              type="text"
-              value={street}
-              onChange={(e) => setStreet(e.target.value)}
-            />
+            <SityAutoInput sity={sity} setSity={setSity} />
+            <StreetAutoInput street={street} setStreet={setStreet} sity={sity} setSity={setSity} />
           </div>
           <div className="add-task__inputs-adress">
             <input
@@ -401,9 +275,9 @@ export const AddTask = ({
               }}
               onChange={(selectedDates, dateStr, instance) => {
                 date = dateStr;
-                console.log(selectedDates === null);
+                // console.log(selectedDates === null);
                 // console.log(dateStr);
-                console.log(instance);
+                // console.log(instance);
                 setDate(date);
               }}
             />
@@ -415,18 +289,7 @@ export const AddTask = ({
               onChange={(e) => setNote(e.target.value)}
             />
           </div>
-          <div>
-            {workerList}
-            <input
-              type="text"
-              placeholder="Сотрудник"
-              value={optionWorker}
-              onChange={(e) => {
-                setOptionWorker(e.target.value);
-                setOpen(true);
-              }}
-            />
-          </div>
+          <WorkerInput optionWorker={optionWorker} setOptionWorker={setOptionWorker} />
           <div className="add-task__action-btn">
             {editMode ? (
               <button onClick={(e) => editTask(e)}>Редактировать</button>

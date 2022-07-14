@@ -1,36 +1,12 @@
 import React, {useState} from 'react';
 import './filters.scss';
 
-export const Filters = () => {
-  const [sity, setSity] = useState([
-    {sity: 'Горишни Плавни'},
-    {sity: 'Келеберда'},
-    {sity: 'Григоро-Бригадировка'},
-    {sity: 'Дмитровка'},
-    {sity: 'Дружба'},
-    {sity: 'Золотнище'},
-    {sity: 'Коноплянка'},
-    {sity: 'Мотрино'},
-    {sity: 'Озера'},
-    {sity: 'Подубное'},
-    {sity: 'Пришиб'},
-    {sity: 'Решетиловка'},
-    {sity: 'Саловка'},
-    {sity: 'Солошино'},
-    {sity: 'Хорол'},
-    {sity: 'Юнность'},
-  ]);
-
+export const Filters = ({task, setTask}) => {
   const [sityValue, setSityValue] = useState('');
 
-  const filtredSity = sity.filter((sity) => {
+  let filtredSity = task.filter((sity) => {
     return sity.sity.toLowerCase().includes(sityValue.toLowerCase());
   });
-
-  function handleChangeSity(sity) {
-    // setSity(sity);
-    // console.log(sity);
-  }
 
   return (
     <div className="search-filters">
@@ -44,7 +20,13 @@ export const Filters = () => {
               value={sityValue}
               onChange={(e) => setSityValue(e.target.value)}
             />
-            <button onClick={() => setSityValue('')}>Сброс</button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setSityValue('');
+              }}>
+              Сброс
+            </button>
           </form>
         </div>
         <div className="search-filters__viewport">
@@ -53,7 +35,7 @@ export const Filters = () => {
               <li
                 className="search-filters__item"
                 key={index}
-                onClick={handleChangeSity(item.sity)}>
+                onClick={() => setSityValue(item.sity)}>
                 {item.sity}
               </li>
             ))}
