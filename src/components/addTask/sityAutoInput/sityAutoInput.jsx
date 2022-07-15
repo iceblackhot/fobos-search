@@ -5,22 +5,22 @@ export const SityAutoInput = ({sity, setSity}) => {
   const [open, setOpen] = useState(false);
 
   let sitiesNames = [
-    {sityId: '1', name: 'Горишни Плавни'},
-    {sityId: '2', name: 'Келеберда'},
-    {sityId: '3', name: 'Григоро-Бригадировка'},
-    {sityId: '4', name: 'Дмитровка'},
-    {sityId: '5', name: 'Дружба'},
-    {sityId: '6', name: 'Золотнище'},
-    {sityId: '7', name: 'Коноплянка'},
-    {sityId: '8', name: 'Мотрино'},
-    {sityId: '9', name: 'Озера'},
-    {sityId: '10', name: 'Подубное'},
-    {sityId: '11', name: 'Пришиб'},
-    {sityId: '12', name: 'Решетиловка'},
-    {sityId: '13', name: 'Саловка'},
-    {sityId: '14', name: 'Солошино'},
-    {sityId: '15', name: 'Хорол'},
-    {sityId: '16', name: 'Юнность'},
+    {name: 'Горишни Плавни'},
+    {name: 'Келеберда'},
+    {name: 'Григоро-Бригадировка'},
+    {name: 'Дмитровка'},
+    {name: 'Дружба'},
+    {name: 'Золотнище'},
+    {name: 'Коноплянка'},
+    {name: 'Мотрино'},
+    {name: 'Озера'},
+    {name: 'Подубное'},
+    {name: 'Пришиб'},
+    {name: 'Решетиловка'},
+    {name: 'Саловка'},
+    {name: 'Солошино'},
+    {name: 'Хорол'},
+    {name: 'Юнность'},
   ];
 
   let filterSity = sitiesNames.filter((sityName) => {
@@ -54,6 +54,7 @@ export const SityAutoInput = ({sity, setSity}) => {
         value={sity}
         onChange={(e) => {
           setSity(e.target.value);
+          console.log(sity);
           setOpen(true);
         }}
       />

@@ -22,17 +22,13 @@ export const TaskList = ({
   setNote,
   setOptionWorker,
   editMode,
-  connection,
   setConnection,
-  faq,
   setFaq,
-  critical,
   setCritical,
-  important,
   setImportant,
-  regular,
   setRegular,
   setEditMode,
+  filtered,
 }) => {
   function deleteTask(e, id) {
     e.stopPropagation();
@@ -137,7 +133,7 @@ export const TaskList = ({
         <li className="task-list__table-title">Сотрудник</li>
       </ul>
       <ul className="task-list__list">
-        {task.map((item) => (
+        {filtered.map((item) => (
           <li
             key={item.id}
             className={editMode === item.id ? 'task-list__item edit' : 'task-list__item '}

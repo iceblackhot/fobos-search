@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import {useState} from 'react';
 import {AddTask} from '../addTask/addTask';
 import {Filters} from '../filters/filters';
@@ -8,6 +9,7 @@ import './App.scss';
 
 function App() {
   const [task, setTask] = useState([]);
+  const [filtered, setFiltered] = useState(task);
   const [modalActive, setModalActive] = useState(false);
 
   const [connection, setConnection] = useState(false);
@@ -33,13 +35,17 @@ function App() {
 
   const [editMode, setEditMode] = useState(null);
 
+  useEffect(() => {
+    setFiltered(task);
+  }, [task]);
+
   // console.log(task);
 
   return (
     <div className="wrapper">
       <Header />
       <main>
-        <Filters task={task} setTask={setTask} />
+        <Filters task={task} setTask={setTask} filtered={filtered} setFiltered={setFiltered} />
         <AddTask
           task={task}
           setTask={setTask}
@@ -113,6 +119,7 @@ function App() {
           setRegular={setRegular}
           editMode={editMode}
           setEditMode={setEditMode}
+          filtered={filtered}
         />
       </main>
       <Footer />
