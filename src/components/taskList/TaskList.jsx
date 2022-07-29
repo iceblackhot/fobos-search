@@ -10,8 +10,10 @@ export const TaskList = ({
   setModalActive,
   setFio,
   setMobileNum,
-  setSity,
+  setCity,
+  setCityId,
   setStreet,
+  setStreetId,
   setHouse,
   setSection,
   setFlat,
@@ -50,8 +52,10 @@ export const TaskList = ({
   function showEditModal(
     fio,
     mobile,
-    sity,
+    city,
+    cityId,
     street,
+    streetId,
     house,
     section,
     flat,
@@ -70,8 +74,10 @@ export const TaskList = ({
     setModalActive(true);
     setFio(fio);
     setMobileNum(mobile);
-    setSity(sity);
+    setCity(city);
+    setCityId(cityId);
     setStreet(street);
+    setStreetId(streetId);
     setHouse(house);
     setSection(section);
     setFlat(flat);
@@ -93,8 +99,8 @@ export const TaskList = ({
     setEditMode(false);
     setFio('');
     setMobileNum('');
-    setSity('');
-    setStreet('');
+    setCityId('');
+    setStreetId('');
     setHouse('');
     setSection('');
     setFlat('');
@@ -144,8 +150,10 @@ export const TaskList = ({
                 showEditModal(
                   item.fio,
                   item.mobile,
-                  item.sity,
+                  item.city,
+                  item.cityId,
                   item.street,
+                  item.streetId,
                   item.house,
                   item.section,
                   item.flat,
@@ -165,7 +173,7 @@ export const TaskList = ({
             }}>
             <>
               <div className="task-list__item-cell">{item.dateNow}</div>
-              <div className="task-list__item-cell">{item.sity}</div>
+              <div className="task-list__item-cell">{item.city}</div>
               <div className="task-list__item-cell">
                 <span>
                   {item.street +

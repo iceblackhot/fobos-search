@@ -6,10 +6,13 @@ import Modal from '../modal/modal';
 import './addTask.scss';
 import {WorkerInput} from './workerAutoInput/workerInput';
 import {PriorityBtns} from './priorityBtns/priorityBtns';
-import {SityAutoInput} from './sityAutoInput/sityAutoInput';
 import {StreetAutoInput} from './streetAutoInput/streetAutoInput';
+import {CityAutoInput} from './sityAutoInput/cityAutoInput';
 
 export const AddTask = ({
+  cityNames,
+  streetNames,
+  setStreetNames,
   task,
   setTask,
   modalActive,
@@ -18,10 +21,14 @@ export const AddTask = ({
   setFio,
   mobileNum,
   setMobileNum,
-  sity,
-  setSity,
+  city,
+  setCity,
+  cityId,
+  setCityId,
   street,
   setStreet,
+  streetId,
+  setStreetId,
   house,
   setHouse,
   section,
@@ -52,6 +59,8 @@ export const AddTask = ({
   setRegular,
   editMode,
   setEditMode,
+  filtered,
+  setFiltered,
 }) => {
   let year = new Date().getFullYear();
   let month = new Date().getMonth();
@@ -65,7 +74,7 @@ export const AddTask = ({
   let dateNow = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 
   function saveTask() {
-    if (!fio) {
+    if (!fio || cityId === '0') {
       return;
     } else {
       setTask([
@@ -75,8 +84,10 @@ export const AddTask = ({
           id: Math.random().toString(36).substring(2, 9),
           fio: fio,
           mobile: mobileNum,
-          sity: sity,
+          city: city,
+          cityId: cityId,
           street: street,
+          streetId: streetId,
           house: house,
           section: section,
           flat: flat,
@@ -97,8 +108,8 @@ export const AddTask = ({
     }
     setFio('');
     setMobileNum('');
-    setSity('');
-    setStreet('');
+    setCityId('');
+    setStreetId('');
     setHouse('');
     setSection('');
     setFlat('');
@@ -114,34 +125,41 @@ export const AddTask = ({
   function editTask(e) {
     e.stopPropagation();
     e.preventDefault();
-    let newTask = [...task].filter((item) => {
-      if (item.id === editMode) {
-        item.dateNow = dateNow;
-        item.fio = fio;
-        item.mobile = mobileNum;
-        item.sity = sity;
-        item.street = street;
-        item.house = house;
-        item.section = section;
-        item.flat = flat;
-        item.entrance = entrance;
-        item.floor = floor;
-        item.option = optionStatus;
-        item.date = date;
-        item.note = note;
-        item.worker = optionWorker;
-        item.editNote = editMode;
-        item.newConnection = connection;
-        item.faq = faq;
-        item.statCritical = critical;
-        item.statImportant = important;
-        item.statRegular = regular;
-      }
-      return item;
-    });
-    setTask(newTask);
-    setModalActive(false);
-    setEditMode(false);
+    if (!fio || cityId === '0') {
+      console.log(typeof cityId);
+      return;
+    } else {
+      let newTask = [...task].filter((item) => {
+        if (item.id === editMode) {
+          item.dateNow = dateNow;
+          item.fio = fio;
+          item.mobile = mobileNum;
+          item.city = city;
+          item.cityId = cityId;
+          item.street = street;
+          item.streetId = streetId;
+          item.house = house;
+          item.section = section;
+          item.flat = flat;
+          item.entrance = entrance;
+          item.floor = floor;
+          item.option = optionStatus;
+          item.date = date;
+          item.note = note;
+          item.worker = optionWorker;
+          item.editNote = editMode;
+          item.newConnection = connection;
+          item.faq = faq;
+          item.statCritical = critical;
+          item.statImportant = important;
+          item.statRegular = regular;
+        }
+        return item;
+      });
+      setTask(newTask);
+      setModalActive(false);
+      setEditMode(false);
+    }
   }
 
   function handleSubmit(e) {
@@ -162,8 +180,8 @@ export const AddTask = ({
   function handleClear() {
     setFio('');
     setMobileNum('');
-    setSity('');
-    setStreet('');
+    setCityId('');
+    setStreetId('');
     setHouse('');
     setSection('');
     setFlat('');
@@ -217,8 +235,30 @@ export const AddTask = ({
               value={mobileNum}
               onChange={(e) => setMobileNum(e.target.value)}
             />
-            <SityAutoInput sity={sity} setSity={setSity} />
-            <StreetAutoInput street={street} setStreet={setStreet} sity={sity} setSity={setSity} />
+            <CityAutoInput
+              cityNames={cityNames}
+              streetNames={streetNames}
+              setStreetNames={setStreetNames}
+              city={city}
+              setCity={setCity}
+              street={street}
+              setStreet={setStreet}
+              cityId={cityId}
+              setCityId={setCityId}
+              streetId={streetId}
+              setStreetId={setStreetId}
+              filtered={filtered}
+              setFiltered={setFiltered}
+            />
+            <StreetAutoInput
+              streetNames={streetNames}
+              setStreetNames={setStreetNames}
+              setStreet={setStreet}
+              streetId={streetId}
+              setStreetId={setStreetId}
+              cityId={cityId}
+              setCityId={setCityId}
+            />
           </div>
           <div className="add-task__inputs-adress">
             <input

@@ -2,41 +2,41 @@ import React, {useState} from 'react';
 import './filters.scss';
 
 export const Filters = ({filtered, setFiltered, task, setTask}) => {
-  const [sityValue, setSityValue] = useState('');
+  const [cityValue, setCityValue] = useState('');
   const [streetValue, setStreetValue] = useState('');
   const [length, setLength] = useState('');
 
-  const [sity, setSity] = useState([
-    {sityId: 1, name: 'Горишни Плавни'},
-    {sityId: 2, name: 'Келеберда'},
-    {sityId: 3, name: 'Григоро-Бригадировка'},
-    {sityId: 4, name: 'Дмитровка'},
-    {sityId: 5, name: 'Дружба'},
-    {sityId: 6, name: 'Золотнище'},
-    {sityId: 7, name: 'Коноплянка'},
-    {sityId: 8, name: 'Мотрино'},
-    {sityId: 9, name: 'Озера'},
-    {sityId: 10, name: 'Подубное'},
-    {sityId: 11, name: 'Пришиб'},
-    {sityId: 12, name: 'Решетиловка'},
-    {sityId: 13, name: 'Саловка'},
-    {sityId: 14, name: 'Солошино'},
-    {sityId: 15, name: 'Хорол'},
-    {sityId: 16, name: 'Юнность'},
+  const [city, setCity] = useState([
+    {cityId: 1, name: 'Горишни Плавни'},
+    {cityId: 2, name: 'Келеберда'},
+    {cityId: 3, name: 'Григоро-Бригадировка'},
+    {cityId: 4, name: 'Дмитровка'},
+    {cityId: 5, name: 'Дружба'},
+    {cityId: 6, name: 'Золотнище'},
+    {cityId: 7, name: 'Коноплянка'},
+    {cityId: 8, name: 'Мотрино'},
+    {cityId: 9, name: 'Озера'},
+    {cityId: 10, name: 'Подубное'},
+    {cityId: 11, name: 'Пришиб'},
+    {cityId: 12, name: 'Решетиловка'},
+    {cityId: 13, name: 'Саловка'},
+    {cityId: 14, name: 'Солошино'},
+    {cityId: 15, name: 'Хорол'},
+    {cityId: 16, name: 'Юнность'},
   ]);
 
-  function showFilterSity(id, name) {
-    if (!sityValue) {
+  function showFiltercity(id, name) {
+    if (!cityValue) {
       setFiltered(task);
     }
-    if (sityValue) {
-      let filterSity = [...task].filter((sityName) => sityName.sity === name);
-      setFiltered(filterSity);
-      setLength(filterSity.length);
+    if (cityValue) {
+      let filterCity = [...task].filter((cityName) => cityName.city === name);
+      setFiltered(filterCity);
+      setLength(filterCity.length);
     }
   }
 
-  // console.log(sityValue);
+  // console.log(cityValue);
 
   return (
     <div className="search-filters">
@@ -47,13 +47,13 @@ export const Filters = ({filtered, setFiltered, task, setTask}) => {
               placeholder="Город"
               className="search-filters__input"
               type="text"
-              value={sityValue}
-              onChange={(e) => setSityValue(e.target.value)}
+              value={cityValue}
+              onChange={(e) => setCityValue(e.target.value)}
             />
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setSityValue('');
+                setCityValue('');
                 setFiltered(task);
               }}>
               Сброс
@@ -62,14 +62,14 @@ export const Filters = ({filtered, setFiltered, task, setTask}) => {
         </div>
         <div className="search-filters__viewport">
           <ul className="search-filters__list">
-            {sity.map((item, index) => (
+            {city.map((item, index) => (
               <li
                 className="search-filters__item"
                 key={index}
                 onClick={(e) => {
                   e.preventDefault();
-                  setSityValue(item.name);
-                  showFilterSity(item.sityId, item.name);
+                  setCityValue(item.name);
+                  showFiltercity(item.cityId, item.name);
                 }}>
                 {item.name}
                 {' ' + length}
