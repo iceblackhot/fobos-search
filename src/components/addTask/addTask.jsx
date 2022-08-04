@@ -7,7 +7,7 @@ import './addTask.scss';
 import {WorkerInput} from './workerAutoInput/workerInput';
 import {PriorityBtns} from './priorityBtns/priorityBtns';
 import {StreetAutoInput} from './streetAutoInput/streetAutoInput';
-import {CityAutoInput} from './sityAutoInput/cityAutoInput';
+import {CityAutoInput} from './cityAutoInput/cityAutoInput';
 
 export const AddTask = ({
   cityNames,
@@ -59,7 +59,6 @@ export const AddTask = ({
   setRegular,
   editMode,
   setEditMode,
-  filtered,
   setFiltered,
 }) => {
   let year = new Date().getFullYear();
@@ -74,7 +73,8 @@ export const AddTask = ({
   let dateNow = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 
   function saveTask() {
-    if (!fio || cityId === '0') {
+    if (!fio || !cityId) {
+      console.log(cityId);
       return;
     } else {
       setTask([
@@ -125,8 +125,7 @@ export const AddTask = ({
   function editTask(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (!fio || cityId === '0') {
-      console.log(typeof cityId);
+    if (!fio || !cityId) {
       return;
     } else {
       let newTask = [...task].filter((item) => {
@@ -198,6 +197,26 @@ export const AddTask = ({
     setRegular(false);
   }
 
+  function changeMobileInput(e) {
+    let str = e.target.value
+      .replace(/\D+/g, '')
+      .replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '($1) $2-$3-$4');
+    if (str != null) {
+      setMobileNum(str);
+    } else {
+      setMobileNum('');
+    }
+  }
+
+  function changeFioInput(e) {
+    let str = e.target.value;
+    if (str != null) {
+      setFio(str);
+    } else {
+      setFio('');
+    }
+  }
+
   // console.log(task);
 
   return (
@@ -223,41 +242,28 @@ export const AddTask = ({
             regular={regular}
           />
           <div className="add-task__inputs">
-            <input
-              placeholder="Ф.И.О"
-              type="text"
-              value={fio}
-              onChange={(e) => setFio(e.target.value)}
-            />
+            <input placeholder="Ф.И.О" type="text" value={fio} onChange={changeFioInput} />
             <input
               placeholder="Телефон(мобильный)"
               type="text"
+              maxLength={50}
               value={mobileNum}
-              onChange={(e) => setMobileNum(e.target.value)}
+              onChange={changeMobileInput}
             />
             <CityAutoInput
+              setFiltered={setFiltered}
+              task={task}
               cityNames={cityNames}
-              streetNames={streetNames}
-              setStreetNames={setStreetNames}
-              city={city}
               setCity={setCity}
-              street={street}
-              setStreet={setStreet}
               cityId={cityId}
               setCityId={setCityId}
-              streetId={streetId}
-              setStreetId={setStreetId}
-              filtered={filtered}
-              setFiltered={setFiltered}
             />
             <StreetAutoInput
               streetNames={streetNames}
-              setStreetNames={setStreetNames}
               setStreet={setStreet}
               streetId={streetId}
               setStreetId={setStreetId}
               cityId={cityId}
-              setCityId={setCityId}
             />
           </div>
           <div className="add-task__inputs-adress">
@@ -310,7 +316,8 @@ export const AddTask = ({
                 defaultDate: 'today',
                 minDate: '01.01.2020',
                 maxDate: '01.01.2025',
-                dateFormat: 'Y-m-d h:i:ss',
+                time_24hr: true,
+                dateFormat: 'Y-m-d H:i:ss',
                 locale: Russian,
               }}
               onChange={(selectedDates, dateStr, instance) => {

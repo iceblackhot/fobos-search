@@ -37,6 +37,8 @@ function App() {
 
   const [editMode, setEditMode] = useState(null);
 
+  const [filterCitySelectValue, setFilterCitySelectValue] = useState([]);
+
   let cityNames = [
     {id: 0, cityName: 'Выбрать город'},
     {id: 1, cityName: 'Горишни Плавни'},
@@ -103,7 +105,19 @@ function App() {
     <div className="wrapper">
       <Header />
       <main>
-        <Filters task={task} setTask={setTask} filtered={filtered} setFiltered={setFiltered} />
+        <Filters
+          cityNames={cityNames}
+          streetNames={streetNames}
+          setStreetNames={setStreetNames}
+          setStreetId={setStreetId}
+          setStreet={setStreet}
+          task={task}
+          setTask={setTask}
+          filtered={filtered}
+          setFiltered={setFiltered}
+          filterCitySelectValue={filterCitySelectValue}
+          setFilterCitySelectValue={setFilterCitySelectValue}
+        />
         <AddTask
           streetNames={streetNames}
           setStreetNames={setStreetNames}

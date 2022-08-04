@@ -1,15 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './streetAutoInput.scss';
 
-export const StreetAutoInput = ({
-  setStreet,
-  streetId,
-  setStreetId,
-  streetNames,
-  setStreetNames,
-  cityId,
-  setCityId,
-}) => {
+export const StreetAutoInput = ({setStreet, streetId, setStreetId, streetNames, cityId}) => {
   let disabled = '';
 
   let newStreetNames = [...streetNames].filter((streetObj) => streetObj.cityId === cityId);
@@ -33,6 +25,13 @@ export const StreetAutoInput = ({
     }
     setStreetId(e.currentTarget.value);
   }
+
+  useEffect(() => {
+    if (newStreetNames.length > 0) {
+      setStreetId(newStreetNames[0].id);
+      setStreet(newStreetNames[0].streetName);
+    }
+  }, [newStreetNames.length]);
 
   return (
     <div>
