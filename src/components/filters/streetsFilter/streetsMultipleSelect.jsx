@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 
-export const StreetsMultipleSelect = ({streetNames, filterCitySelectValue}) => {
+export const StreetsMultipleSelect = ({streetNames, task, setFiltered, filterCitySelectValue}) => {
   const [filterStreetSearchValue, setFilterStreetSearchValue] = useState('');
   const [filterStreetSelectValue, setFilterStreetSelectValue] = useState([]);
+
+  let newTaskList = [...task];
 
   function onChangeStreetSearchValue(e) {
     let str = e.target.value;
@@ -13,6 +15,7 @@ export const StreetsMultipleSelect = ({streetNames, filterCitySelectValue}) => {
   function onFilterStreetReset() {
     setFilterStreetSearchValue('');
     setFilterStreetSelectValue([]);
+    setFiltered(task);
   }
 
   function onChangeStreetFilter(e) {
@@ -25,6 +28,15 @@ export const StreetsMultipleSelect = ({streetNames, filterCitySelectValue}) => {
       tmpFilterStreetSelectValue.push(e.target.value);
     }
     setFilterStreetSelectValue(tmpFilterStreetSelectValue);
+
+    let currStreetIndex = tmpFilterStreetSelectValue.map((obj) => {
+      return Number(obj);
+    });
+    // console.log(currStreetIndex);
+
+    newTaskList = [...task].filter((obj) => currStreetIndex.includes(obj.streetId));
+
+    setFiltered(newTaskList);
   }
 
   return (

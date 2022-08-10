@@ -1,8 +1,11 @@
-import React from 'react';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import React, {useRef} from 'react';
+import ReactToPrint from 'react-to-print';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import './taskList.scss';
+import './print.scss';
+import {PrintTask} from './printTask/printTask';
 
 export const TaskList = ({
   task,
@@ -19,7 +22,7 @@ export const TaskList = ({
   setFlat,
   setEntrance,
   setFloor,
-  setOptionStatus,
+  setStatus,
   setDate,
   setNote,
   setOptionWorker,
@@ -31,7 +34,11 @@ export const TaskList = ({
   setRegular,
   setEditMode,
   filtered,
+  statusId,
+  setStatusId,
 }) => {
+  const printContentRef = useRef();
+
   function deleteTask(e, id) {
     e.stopPropagation();
     let newTask = [...task].filter((item) => item.id !== id);
@@ -39,7 +46,7 @@ export const TaskList = ({
   }
 
   function statusTask(e, id) {
-    e.stopPropagation();
+    // e.stopPropagation();
     let newTask = [...task].filter((item) => {
       if (item.id === id) {
         item.editNote = !item.editNote;
@@ -61,7 +68,8 @@ export const TaskList = ({
     flat,
     entrance,
     floor,
-    option,
+    status,
+    statusId,
     date,
     note,
     worker,
@@ -83,7 +91,8 @@ export const TaskList = ({
     setFlat(flat);
     setEntrance(entrance);
     setFloor(floor);
-    setOptionStatus(option);
+    setStatus(status);
+    setStatusId(statusId);
     setDate(date);
     setNote(note);
     setOptionWorker(worker);
@@ -106,7 +115,7 @@ export const TaskList = ({
     setFlat('');
     setEntrance('');
     setFloor('');
-    setOptionStatus('');
+    setStatus('');
     setDate('');
     setNote('');
     setOptionWorker('');
@@ -119,6 +128,8 @@ export const TaskList = ({
 
   console.log(task);
 
+  //Print Task function
+
   return (
     <div className="task-list">
       <div className="task-list__title">
@@ -127,6 +138,12 @@ export const TaskList = ({
       </div>
       <div className="task-list__add-btn">
         <button onClick={handleClick}>Создать заявку</button>
+        <ReactToPrint
+          trigger={() => {
+            return <button>Печать</button>;
+          }}
+          content={() => printContentRef.current}
+        />
       </div>
       <ul className="task-list__table-head">
         <li className="task-list__table-title">Дата подачи</li>
@@ -137,16 +154,18 @@ export const TaskList = ({
         <li className="task-list__table-title">Телефон</li>
         <li className="task-list__table-title">Комментарий</li>
         <li className="task-list__table-title">Сотрудник</li>
+        <li className="task-list__table-title">Вып</li>
       </ul>
-      <ul className="task-list__list">
+      <ul className="task-list__list" ref={printContentRef}>
         {filtered.map((item) => (
           <li
             key={item.id}
             className={editMode === item.id ? 'task-list__item edit' : 'task-list__item '}
             onClick={() => {
+              setEditMode(item.id);
               if (editMode === item.id) {
-                setEditMode(item.id);
-                // console.log(editMode === item.id);
+                statusTask(item.id);
+                console.log(editMode === item.id);
                 showEditModal(
                   item.fio,
                   item.mobile,
@@ -159,7 +178,8 @@ export const TaskList = ({
                   item.flat,
                   item.entrance,
                   item.floor,
-                  item.option,
+                  item.status,
+                  item.statusId,
                   item.date,
                   item.note,
                   item.worker,
@@ -172,11 +192,14 @@ export const TaskList = ({
               }
             }}>
             <>
-              <div className="task-list__item-cell">{item.dateNow}</div>
+              <div id="noPrint" className="task-list__item-cell">
+                {item.dateNow}
+              </div>
               <div className="task-list__item-cell">{item.city}</div>
               <div className="task-list__item-cell">
                 <span>
-                  {item.street +
+                  {'ул.' +
+                    item.street +
                     ' д.' +
                     item.house +
                     ' секц.' +
@@ -190,25 +213,52 @@ export const TaskList = ({
                 </span>
               </div>
               <div className="task-list__item-cell">
-                <span> {item.option}</span>
-                <span>{item.date}</span>
+                <span>
+                  {item.status}
+                  <br /> {item.date}
+                </span>
               </div>
-              <div className="task-list__item-cell">{item.fio}</div>
-              <div className="task-list__item-cell">{item.mobile}</div>
-              <div className="task-list__item-cell">{item.note}</div>
-              <div className="task-list__item-cell">{item.worker}</div>
-              <div style={{display: 'flex'}}>
-                <DeleteForeverOutlinedIcon onClick={(e) => deleteTask(e, item.id)}>
+              <div className="task-list__item-cell">
+                <span>{item.fio}</span>
+              </div>
+              <div className="task-list__item-cell">
+                <span>{item.mobile}</span>
+              </div>
+              <div className="task-list__item-cell">
+                <span>{item.note}</span>
+              </div>
+              <div className="task-list__item-cell">
+                <span>{item.worker}</span>
+              </div>
+              <div className="task-list__item-cell">
+                <TaskAltIcon
+                  style={{fontSize: '1.2rem', color: '#84c4ff'}}
+                  className="no-print"
+                  id="noPrint"
+                  onClick={(e) => deleteTask(e, item.id)}>
                   Удалить
-                </DeleteForeverOutlinedIcon>
-                <div
-                  onClick={(e) => {
-                    setEditMode(item.id);
-                    statusTask(e, item.id);
-                  }}>
-                  {editMode === item.id ? <LockOpenRoundedIcon /> : <LockRoundedIcon />}
-                </div>
+                </TaskAltIcon>
               </div>
+              {/* <div
+                className="task-list__item-cell"
+                onClick={(e) => {
+                  setEditMode(item.id);
+                  statusTask(e, item.id);
+                }}>
+                {editMode === item.id ? (
+                  <LockOpenRoundedIcon
+                    style={{fontSize: '1.2rem', color: '#2dcf40'}}
+                    className="no-print"
+                    id="noPrint"
+                  />
+                ) : (
+                  <LockRoundedIcon
+                    style={{fontSize: '1.2rem', color: '#84c4ff'}}
+                    className="no-print"
+                    id="noPrint"
+                  />
+                )}
+              </div> */}
             </>
           </li>
         ))}

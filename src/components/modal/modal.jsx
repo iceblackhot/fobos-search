@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 
 import './modal.scss';
 
 export default function Modal({active, setActive, children}) {
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setActive(false);
+      }
+    };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
+
   return (
     <div className={active ? 'modal active' : 'modal'} onClick={() => setActive(false)}>
       <div

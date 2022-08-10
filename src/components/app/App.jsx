@@ -30,7 +30,8 @@ function App() {
   const [flat, setFlat] = useState('');
   const [entrance, setEntrance] = useState('');
   const [floor, setFloor] = useState('');
-  const [optionStatus, setOptionStatus] = useState('');
+  const [status, setStatus] = useState('');
+  const [statusId, setStatusId] = useState('');
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
   const [optionWorker, setOptionWorker] = useState('');
@@ -38,6 +39,7 @@ function App() {
   const [editMode, setEditMode] = useState(null);
 
   const [filterCitySelectValue, setFilterCitySelectValue] = useState([]);
+  const [filterStatusSelectValue, setFilterStatusSelectValue] = useState([]);
 
   let cityNames = [
     {id: 0, cityName: 'Выбрать город'},
@@ -95,6 +97,15 @@ function App() {
     {cityId: 16, id: 32, streetName: 'Козацкой Славы'},
   ]);
 
+  let statusList = [
+    {id: 0, statusName: 'Не выбрано'},
+    {id: 1, statusName: 'Не подключен'},
+    {id: 2, statusName: 'Нет технической возможности'},
+    {id: 3, statusName: 'Не оплачено'},
+    {id: 4, statusName: 'Отменено заказчиком'},
+    {id: 5, statusName: 'Сайт'},
+  ];
+
   useEffect(() => {
     setFiltered(task);
   }, [task]);
@@ -106,6 +117,7 @@ function App() {
       <Header />
       <main>
         <Filters
+          statusList={statusList}
           cityNames={cityNames}
           streetNames={streetNames}
           setStreetNames={setStreetNames}
@@ -117,6 +129,8 @@ function App() {
           setFiltered={setFiltered}
           filterCitySelectValue={filterCitySelectValue}
           setFilterCitySelectValue={setFilterCitySelectValue}
+          filterStatusSelectValue={filterStatusSelectValue}
+          setFilterStatusSelectValue={setFilterStatusSelectValue}
         />
         <AddTask
           streetNames={streetNames}
@@ -148,8 +162,8 @@ function App() {
           setEntrance={setEntrance}
           floor={floor}
           setFloor={setFloor}
-          optionStatus={optionStatus}
-          setOptionStatus={setOptionStatus}
+          status={status}
+          setStatus={setStatus}
           date={date}
           setDate={setDate}
           note={note}
@@ -170,6 +184,9 @@ function App() {
           setEditMode={setEditMode}
           filtered={filtered}
           setFiltered={setFiltered}
+          statusList={statusList}
+          statusId={statusId}
+          setStatusId={setStatusId}
         />
         <TaskList
           task={task}
@@ -186,7 +203,7 @@ function App() {
           setFlat={setFlat}
           setEntrance={setEntrance}
           setFloor={setFloor}
-          setOptionStatus={setOptionStatus}
+          setStatus={setStatus}
           setDate={setDate}
           setNote={setNote}
           setOptionWorker={setOptionWorker}
@@ -203,6 +220,8 @@ function App() {
           editMode={editMode}
           setEditMode={setEditMode}
           filtered={filtered}
+          statusId={statusId}
+          setStatusId={setStatusId}
         />
       </main>
       <Footer />

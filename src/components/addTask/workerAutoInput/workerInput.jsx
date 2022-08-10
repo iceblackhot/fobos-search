@@ -5,20 +5,21 @@ export const WorkerInput = ({optionWorker, setOptionWorker}) => {
   const [open, setOpen] = useState(false);
 
   let workerNames = [
-    {name: 'Котэ'},
-    {name: 'Хакир'},
-    {name: 'Евгений'},
-    {name: 'Дэнчик'},
-    {name: 'Мишаня'},
+    {id: 1, cityId: 1, workerName: 'Серега'},
+    {id: 2, cityId: 1, workerName: 'Котэ'},
+    {id: 3, cityId: 2, workerName: 'Хакир'},
+    {id: 4, cityId: 2, workerName: 'Евгений'},
+    {id: 5, cityId: 3, workerName: 'Дэнчик'},
+    {id: 6, cityId: 3, workerName: 'Мишаня'},
   ];
 
   let filtredWorker = workerNames.filter((worker) => {
-    return worker.name.toLowerCase().includes(optionWorker.toLowerCase());
+    return worker.workerName.toLowerCase().includes(optionWorker.toLowerCase());
   });
 
   let workerList = filtredWorker.map((worker, index) => {
     function handleChangeWorker() {
-      setOptionWorker(worker.name);
+      setOptionWorker(worker.workerName);
       setOpen(false);
     }
 
@@ -28,7 +29,7 @@ export const WorkerInput = ({optionWorker, setOptionWorker}) => {
           className={open ? 'optionWorker' : 'optionWorker hidden'}
           onClick={handleChangeWorker}
           key={index}>
-          <span style={{color: 'grey', fontSize: '15px'}}>{worker.name}</span>
+          <span style={{color: 'grey', fontSize: '15px'}}>{worker.workerName}</span>
         </div>
       );
     }

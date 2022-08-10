@@ -11,14 +11,6 @@ export const CitiesMultipleSelect = ({
 
   let newTaskList = [...task];
 
-  //   let index = newTaskList.findIndex((value) => {
-  //     return value.cityId;
-  // if (value.id === formElements.id.value) {
-  //   return true;
-  // }
-  //   });
-  //   console.log(index);
-
   function onChangeCitySearchValue(e) {
     let str = e.target.value;
     str.replace(/[^A-Za-z0-9А-Яа-я]/, '');
@@ -42,20 +34,13 @@ export const CitiesMultipleSelect = ({
       tmpFilterCitySelectValue.push(e.target.value);
     }
     setFilterCitySelectValue(tmpFilterCitySelectValue);
-    // console.log(tmpFilterCitySelectValue);
 
     let currCityIndex = tmpFilterCitySelectValue.map((obj) => {
       return Number(obj);
     });
-    console.log(currCityIndex);
-
-    // let cityIndex = newTaskList.map((obj) => {
-    //   return obj.cityId;
-    // });
-    // console.log(cityIndex);
 
     newTaskList = [...task].filter((obj) => currCityIndex.includes(obj.cityId));
-    console.log(newTaskList);
+
     setFiltered(newTaskList);
   }
 
@@ -76,7 +61,11 @@ export const CitiesMultipleSelect = ({
         onChange={onChangeCityFilter}
         value={filterCitySelectValue}>
         {cityNames.map((obj) => {
-          if (obj.cityName.toLowerCase().includes(filterCitySearchValue.toLowerCase())) {
+          if (
+            (Array.isArray(filterCitySelectValue) &&
+              filterCitySelectValue.indexOf(obj.id.toString()) >= 0) ||
+            obj.cityName.toLowerCase().includes(filterCitySearchValue.toLowerCase())
+          ) {
             return (
               <option value={obj.id} key={obj.id}>
                 {obj.cityName}

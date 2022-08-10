@@ -8,6 +8,7 @@ import {WorkerInput} from './workerAutoInput/workerInput';
 import {PriorityBtns} from './priorityBtns/priorityBtns';
 import {StreetAutoInput} from './streetAutoInput/streetAutoInput';
 import {CityAutoInput} from './cityAutoInput/cityAutoInput';
+import {StatusOption} from './cityAutoInput/statusOption/statusOption';
 
 export const AddTask = ({
   cityNames,
@@ -39,8 +40,8 @@ export const AddTask = ({
   setEntrance,
   floor,
   setFloor,
-  optionStatus,
-  setOptionStatus,
+  status,
+  setStatus,
   date,
   setDate,
   note,
@@ -60,6 +61,9 @@ export const AddTask = ({
   editMode,
   setEditMode,
   setFiltered,
+  statusList,
+  statusId,
+  setStatusId,
 }) => {
   let year = new Date().getFullYear();
   let month = new Date().getMonth();
@@ -73,8 +77,8 @@ export const AddTask = ({
   let dateNow = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 
   function saveTask() {
-    if (!fio || !cityId) {
-      console.log(cityId);
+    if (!fio || !cityId || !statusId) {
+      console.log(statusId);
       return;
     } else {
       setTask([
@@ -93,7 +97,8 @@ export const AddTask = ({
           flat: flat,
           entrance: entrance,
           floor: floor,
-          option: optionStatus,
+          status: status,
+          statusId: statusId,
           date: date,
           note: note,
           worker: optionWorker,
@@ -115,7 +120,8 @@ export const AddTask = ({
     setFlat('');
     setEntrance('');
     setFloor('');
-    setOptionStatus('');
+    setStatus('');
+    setStatusId('');
     setDate('');
     setNote('');
     setOptionWorker('');
@@ -125,7 +131,7 @@ export const AddTask = ({
   function editTask(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (!fio || !cityId) {
+    if (!fio || !cityId || !statusId) {
       return;
     } else {
       let newTask = [...task].filter((item) => {
@@ -142,7 +148,8 @@ export const AddTask = ({
           item.flat = flat;
           item.entrance = entrance;
           item.floor = floor;
-          item.option = optionStatus;
+          item.status = status;
+          item.statusId = statusId;
           item.date = date;
           item.note = note;
           item.worker = optionWorker;
@@ -172,10 +179,6 @@ export const AddTask = ({
     handleClear();
   }
 
-  function handleChangeStatus(e) {
-    setOptionStatus(e.currentTarget.value);
-  }
-
   function handleClear() {
     setFio('');
     setMobileNum('');
@@ -186,7 +189,7 @@ export const AddTask = ({
     setFlat('');
     setEntrance('');
     setFloor('');
-    setOptionStatus('');
+    setStatus('');
     setDate('');
     setNote('');
     setOptionWorker('');
@@ -299,15 +302,13 @@ export const AddTask = ({
             />
           </div>
           <div className="add-task__inputs-data">
-            <select className="add-task__select" value={optionStatus} onChange={handleChangeStatus}>
-              <option value="Не выбран">Статус</option>
-              <option value="Не подключен">Не подключен</option>
-              <option value="Нет технической возможности">Нет технической возможности</option>
-              <option value="Не оплачено">Не оплачено</option>
-              <option value="Отменено заказчиком">Отменено заказчиком</option>
-              <option value="Сайт">Сайт</option>
-            </select>
-
+            <StatusOption
+              statusList={statusList}
+              status={status}
+              setStatus={setStatus}
+              statusId={statusId}
+              setStatusId={setStatusId}
+            />
             <Flatpickr
               placeholder="Дата"
               data-enable-time
