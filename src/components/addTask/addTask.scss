@@ -114,7 +114,22 @@
     width: 100%;
   }
 
-  &__inputs-adress {
+  &__inputs-adress,
+  &__inputs-data {
+    display: flex;
+    width: 100%;
+
+    & div {
+      width: 50%;
+      padding-right: 15px;
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+
+  &__inputs-adressdetails {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -122,24 +137,6 @@
     & input {
       width: calc(100% / 5);
       max-width: 95px;
-    }
-  }
-
-  &__inputs-data {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    color: $darkText;
-
-    & input {
-      width: calc(100% / 2);
-      max-width: 260px;
-    }
-
-    & select {
-      width: calc(100% / 2);
-      max-width: 260px;
-      color: $darkText;
     }
   }
 

@@ -1,52 +1,50 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './workerAutoInput.scss';
 
-export const WorkerInput = ({optionWorker, setOptionWorker}) => {
-  const [open, setOpen] = useState(false);
+export const WorkerInput = ({workerNames, worker, setWorker, workerId, setWorkerId, cityId}) => {
+  let disabled = '';
 
-  let workerNames = [
-    {id: 1, cityId: 1, workerName: 'Серега'},
-    {id: 2, cityId: 1, workerName: 'Котэ'},
-    {id: 3, cityId: 2, workerName: 'Хакир'},
-    {id: 4, cityId: 2, workerName: 'Евгений'},
-    {id: 5, cityId: 3, workerName: 'Дэнчик'},
-    {id: 6, cityId: 3, workerName: 'Мишаня'},
-  ];
+  let newWorkerNames = [...workerNames].filter((Obj) => Obj.cityId === cityId);
 
-  let filtredWorker = workerNames.filter((worker) => {
-    return worker.workerName.toLowerCase().includes(optionWorker.toLowerCase());
-  });
+  if (newWorkerNames.length === 0) {
+    newWorkerNames = [...workerNames];
+    disabled = 'disabled';
+  }
 
-  let workerList = filtredWorker.map((worker, index) => {
-    function handleChangeWorker() {
-      setOptionWorker(worker.workerName);
-      setOpen(false);
+  function handleChangeWorker(e) {
+    e.preventDefault();
+
+    let currWorker = [...workerNames].filter((obj) => {
+      if (obj.id.toString() === e.currentTarget.value) {
+        return obj;
+      }
+    });
+    // console.log(currWorker[0]);
+    setWorker(currWorker[0].workerName);
+    if (newWorkerNames.length === 0) {
+      newWorkerNames = [...workerNames].filter((Obj) => Obj.cityId !== cityId);
     }
+    setWorkerId(Number(e.currentTarget.value));
+  }
 
-    if (optionWorker) {
-      return (
-        <div
-          className={open ? 'optionWorker' : 'optionWorker hidden'}
-          onClick={handleChangeWorker}
-          key={index}>
-          <span style={{color: 'grey', fontSize: '15px'}}>{worker.workerName}</span>
-        </div>
-      );
+  useEffect(() => {
+    if (newWorkerNames.length > 0) {
+      setWorkerId(newWorkerNames[0].id);
+      setWorker(newWorkerNames[0].workerName);
     }
-  });
+  }, [newWorkerNames.length]);
 
   return (
     <div>
-      {workerList}
-      <input
-        type="text"
-        placeholder="Сотрудник"
-        value={optionWorker}
-        onChange={(e) => {
-          setOptionWorker(e.target.value);
-          setOpen(true);
-        }}
-      />
+      <select disabled={disabled} value={workerId} onChange={handleChangeWorker}>
+        {newWorkerNames.map((obj) => {
+          return (
+            <option key={obj.id} value={obj.id}>
+              {obj.workerName}
+            </option>
+          );
+        })}
+      </select>
     </div>
   );
 };

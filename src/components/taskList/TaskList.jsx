@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
 import ReactToPrint from 'react-to-print';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import LockRoundedIcon from '@mui/icons-material/LockRounded';
-import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+import ReportGmailerrorredRoundedIcon from '@mui/icons-material/ReportGmailerrorredRounded';
+import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import './taskList.scss';
 import './print.scss';
-import {PrintTask} from './printTask/printTask';
 
 export const TaskList = ({
   task,
@@ -25,10 +25,13 @@ export const TaskList = ({
   setStatus,
   setDate,
   setNote,
-  setOptionWorker,
+  setWorker,
+  workerId,
+  setWorkerId,
   editMode,
   setConnection,
   setFaq,
+  critical,
   setCritical,
   setImportant,
   setRegular,
@@ -36,8 +39,14 @@ export const TaskList = ({
   filtered,
   statusId,
   setStatusId,
+  btnActive,
+  setBtnActive,
 }) => {
   const printContentRef = useRef();
+
+  const classTask = `task-list${btnActive ? ' active' : ''}`;
+
+  const classTaskList = `task-list__list${btnActive ? ' active' : ''}`;
 
   function deleteTask(e, id) {
     e.stopPropagation();
@@ -73,6 +82,7 @@ export const TaskList = ({
     date,
     note,
     worker,
+    workerId,
     faq,
     newConnection,
     critical,
@@ -95,7 +105,8 @@ export const TaskList = ({
     setStatusId(statusId);
     setDate(date);
     setNote(note);
-    setOptionWorker(worker);
+    setWorker(worker);
+    setWorkerId(workerId);
     setFaq(faq);
     setConnection(newConnection);
     setCritical(critical);
@@ -116,9 +127,11 @@ export const TaskList = ({
     setEntrance('');
     setFloor('');
     setStatus('');
+    setStatusId('');
     setDate('');
     setNote('');
-    setOptionWorker('');
+    setWorker('');
+    setWorkerId('');
     setConnection(false);
     setFaq(false);
     setCritical(false);
@@ -131,7 +144,7 @@ export const TaskList = ({
   //Print Task function
 
   return (
-    <div className="task-list">
+    <div className={classTask}>
       <div className="task-list__title">
         <h1>Всего заявок</h1>
         <span>{task.length}</span>
@@ -156,7 +169,7 @@ export const TaskList = ({
         <li className="task-list__table-title">Сотрудник</li>
         <li className="task-list__table-title">Вып</li>
       </ul>
-      <ul className="task-list__list" ref={printContentRef}>
+      <ul className={classTaskList} ref={printContentRef}>
         {filtered.map((item) => (
           <li
             key={item.id}
@@ -183,6 +196,7 @@ export const TaskList = ({
                   item.date,
                   item.note,
                   item.worker,
+                  item.workerId,
                   item.faq,
                   item.newConnection,
                   item.statCritical,
@@ -195,7 +209,18 @@ export const TaskList = ({
               <div id="noPrint" className="task-list__item-cell">
                 {item.dateNow}
               </div>
-              <div className="task-list__item-cell">{item.city}</div>
+              <div className="task-list__item-cell">
+                {item.statCritical && (
+                  <WarningAmberRoundedIcon id="noPrint" style={{color: 'red'}} />
+                )}
+                {item.statImportant && (
+                  <ReportGmailerrorredRoundedIcon id="noPrint" style={{color: '#f4a261'}} />
+                )}
+                {item.statRegular && (
+                  <LibraryBooksRoundedIcon id="noPrint" style={{color: '#2dcf40'}} />
+                )}
+                {item.city}
+              </div>
               <div className="task-list__item-cell">
                 <span>
                   {'ул.' +
@@ -213,10 +238,8 @@ export const TaskList = ({
                 </span>
               </div>
               <div className="task-list__item-cell">
-                <span>
-                  {item.status}
-                  <br /> {item.date}
-                </span>
+                <span id="noPrint">{item.status}</span>
+                <span>{item.date}</span>
               </div>
               <div className="task-list__item-cell">
                 <span>{item.fio}</span>
@@ -227,38 +250,17 @@ export const TaskList = ({
               <div className="task-list__item-cell">
                 <span>{item.note}</span>
               </div>
-              <div className="task-list__item-cell">
+              <div id="noPrint" className="task-list__item-cell">
                 <span>{item.worker}</span>
               </div>
               <div className="task-list__item-cell">
                 <TaskAltIcon
                   style={{fontSize: '1.2rem', color: '#84c4ff'}}
-                  className="no-print"
                   id="noPrint"
                   onClick={(e) => deleteTask(e, item.id)}>
                   Удалить
                 </TaskAltIcon>
               </div>
-              {/* <div
-                className="task-list__item-cell"
-                onClick={(e) => {
-                  setEditMode(item.id);
-                  statusTask(e, item.id);
-                }}>
-                {editMode === item.id ? (
-                  <LockOpenRoundedIcon
-                    style={{fontSize: '1.2rem', color: '#2dcf40'}}
-                    className="no-print"
-                    id="noPrint"
-                  />
-                ) : (
-                  <LockRoundedIcon
-                    style={{fontSize: '1.2rem', color: '#84c4ff'}}
-                    className="no-print"
-                    id="noPrint"
-                  />
-                )}
-              </div> */}
             </>
           </li>
         ))}

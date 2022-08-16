@@ -4,34 +4,42 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 15px 30px 30px;
-  margin-bottom: 20px;
-  border-radius: $radius;
+  height: 721px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: $minRadius;
   background: $white;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+
+  &.active {
+    height: 539px;
+  }
 
   &__title {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    padding: 0 0 15px;
+    padding-bottom: 10px;
 
     & h1 {
       padding-right: 13px;
-      font-weight: 300;
+      font-weight: 500;
+      font-size: 18px;
+      color: $lightFobos;
     }
 
     & span {
       font-size: 18px;
       font-weight: 700;
+      color: $lightFobos;
     }
   }
 
   &__add-btn {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     & button {
       border: none;
@@ -62,7 +70,7 @@
     width: 100%;
     padding: 5px;
     background: $lightFobos;
-    border-radius: $midRadius $midRadius 0 0;
+    border-radius: $minRadius $minRadius 0 0;
   }
 
   &__table-title {
@@ -80,11 +88,16 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 215px;
+    height: 604px;
     overflow-y: scroll;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 0 0 $midRadius $midRadius;
+    border-radius: 0 0 $minRadius $minRadius;
     padding: 10px 0;
+    transition: 0.3s;
+
+    &.active {
+      height: 422px;
+    }
   }
 
   &__item {
@@ -93,8 +106,8 @@
     grid-template-columns: repeat(
       auto-fit,
       minmax(90px, 90px) minmax(150px, 150px) minmax(170px, 1fr) minmax(165px, 1fr)
-        minmax(110px, 120px) minmax(125px, 125px) minmax(130px, 1fr) minmax(110px, 110px)
-        minmax(30px, 35px)
+        minmax(110px, 120px) minmax(125px, 125px) minmax(100px, 1fr) minmax(120px, 120px)
+        minmax(35px, 35px)
     );
     grid-template-rows: auto;
     width: 99%;
@@ -110,10 +123,6 @@
     &:hover {
       background: #e2f1ff;
     }
-
-    // &.faq {
-    //   background: $grey;
-    // }
   }
   .edit {
     background: #e2f1ff;
@@ -123,12 +132,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     flex-direction: column;
     font-size: 15px;
     padding: 5px;
     width: 100%;
     height: 100%;
     border-right: 1px solid $lightFobos;
+
+    &:nth-child(2) {
+      position: relative;
+
+      & > svg {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        font-size: 1.2rem;
+      }
+    }
 
     &:last-child {
       border-right: 0;

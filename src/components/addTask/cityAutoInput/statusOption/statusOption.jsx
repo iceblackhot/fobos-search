@@ -14,7 +14,11 @@ export const StatusOption = ({status, setStatus, statusList, statusId, setStatus
 
   return (
     <div>
-      <select className="add-task__select" value={statusId} onChange={handleChangeStatus}>
+      <select
+        style={{width: '100%'}}
+        className="add-task__select"
+        value={statusId}
+        onChange={handleChangeStatus}>
         {statusList.map((obj) => (
           <option key={obj.id} value={obj.id}>
             {obj.statusName}

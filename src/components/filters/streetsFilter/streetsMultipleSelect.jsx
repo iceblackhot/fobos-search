@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 
-export const StreetsMultipleSelect = ({streetNames, task, setFiltered, filterCitySelectValue}) => {
+export const StreetsMultipleSelect = ({
+  streetNames,
+  task,
+  setFiltered,
+  filterCitySelectValue,
+  classDropViewport,
+}) => {
   const [filterStreetSearchValue, setFilterStreetSearchValue] = useState('');
   const [filterStreetSelectValue, setFilterStreetSelectValue] = useState([]);
 
@@ -51,7 +57,7 @@ export const StreetsMultipleSelect = ({streetNames, task, setFiltered, filterCit
       </div>
       <div>
         <select
-          className="search-filters__viewport"
+          className={classDropViewport}
           name="street"
           multiple={true}
           onChange={onChangeStreetFilter}

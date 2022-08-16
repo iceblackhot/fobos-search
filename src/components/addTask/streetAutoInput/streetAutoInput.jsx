@@ -23,7 +23,7 @@ export const StreetAutoInput = ({setStreet, streetId, setStreetId, streetNames, 
     if (newStreetNames.length === 0) {
       newStreetNames = [...streetNames].filter((streetObj) => streetObj.cityId !== cityId);
     }
-    setStreetId(e.currentTarget.value);
+    setStreetId(Number(e.currentTarget.value));
   }
 
   useEffect(() => {
@@ -35,7 +35,11 @@ export const StreetAutoInput = ({setStreet, streetId, setStreetId, streetNames, 
 
   return (
     <div>
-      <select disabled={disabled} value={streetId} onChange={handleChangeStreet}>
+      <select
+        style={{width: '100%'}}
+        disabled={disabled}
+        value={streetId}
+        onChange={handleChangeStreet}>
         {newStreetNames.map((obj) => {
           return (
             <option key={obj.id} value={obj.id}>

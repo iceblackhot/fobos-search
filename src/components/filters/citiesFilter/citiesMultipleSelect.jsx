@@ -6,6 +6,7 @@ export const CitiesMultipleSelect = ({
   cityNames,
   filterCitySelectValue,
   setFilterCitySelectValue,
+  classDropViewport,
 }) => {
   const [filterCitySearchValue, setFilterCitySearchValue] = useState('');
 
@@ -55,7 +56,7 @@ export const CitiesMultipleSelect = ({
         <button onClick={onFilterCityReset}>reset</button>
       </div>
       <select
-        className="search-filters__viewport"
+        className={classDropViewport}
         name="city"
         multiple={true}
         onChange={onChangeCityFilter}

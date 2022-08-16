@@ -25,7 +25,7 @@ export const CityAutoInput = ({setCity, cityId, setCityId, cityNames, setFiltere
 
   return (
     <div>
-      <select value={cityId} onChange={handleChangeCity}>
+      <select style={{width: '100%'}} value={cityId} onChange={handleChangeCity}>
         {cityNames.map((obj) => {
           return (
             <option

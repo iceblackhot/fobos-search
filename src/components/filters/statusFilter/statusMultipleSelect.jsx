@@ -6,6 +6,7 @@ export const StatusMultipleSelect = ({
   statusList,
   filterStatusSelectValue,
   setFilterStatusSelectValue,
+  classDropViewport,
 }) => {
   const [filterStatusSearchValue, setFilterStatusSearchValue] = useState('');
 
@@ -55,8 +56,8 @@ export const StatusMultipleSelect = ({
         <button onClick={onFilterStatusReset}>reset</button>
       </div>
       <select
-        className="search-filters__viewport"
-        name="city"
+        className={classDropViewport}
+        name="status"
         multiple={true}
         onChange={onChangeStatusFilter}
         value={filterStatusSelectValue}>

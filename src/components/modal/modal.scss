@@ -34,7 +34,7 @@
     flex-direction: column;
     padding: 40px;
     margin: 0 30px;
-    border-radius: 10px;
+    border-radius: $minRadius;
     background: $white;
     width: 620px;
     transform: perspective(400px) translateY(0%) rotateX(-45deg);
@@ -48,13 +48,13 @@
 }
 
 //Dark mode
-.wrapper {
-  &.dark {
-    .modal {
-      &__content {
-        background: $darkBlack;
-        border: 2px solid $darkText;
-      }
-    }
-  }
-}
+// .wrapper {
+//   &.dark {
+//     .modal {
+//       &__content {
+//         background: $darkBlack;
+//         border: 2px solid $darkText;
+//       }
+//     }
+//   }
+// }

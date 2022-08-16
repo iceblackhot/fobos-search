@@ -34,12 +34,15 @@ function App() {
   const [statusId, setStatusId] = useState('');
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
-  const [optionWorker, setOptionWorker] = useState('');
+  const [worker, setWorker] = useState('');
+  const [workerId, setWorkerId] = useState('');
 
   const [editMode, setEditMode] = useState(null);
 
   const [filterCitySelectValue, setFilterCitySelectValue] = useState([]);
   const [filterStatusSelectValue, setFilterStatusSelectValue] = useState([]);
+
+  const [btnActive, setBtnActive] = useState(false);
 
   let cityNames = [
     {id: 0, cityName: 'Выбрать город'},
@@ -61,7 +64,7 @@ function App() {
     {id: 16, cityName: 'Юнность'},
   ];
 
-  const [streetNames, setStreetNames] = useState([
+  let streetNames = [
     {cityId: 0, id: 0, streetName: 'Выбрать улицу'},
     {cityId: 1, id: 1, streetName: 'Патриса Лумумбы'},
     {cityId: 1, id: 2, streetName: 'Павлика Морорзова'},
@@ -95,7 +98,7 @@ function App() {
     {cityId: 15, id: 30, streetName: 'Кобзарская'},
     {cityId: 16, id: 31, streetName: 'Владимира Великого'},
     {cityId: 16, id: 32, streetName: 'Козацкой Славы'},
-  ]);
+  ];
 
   let statusList = [
     {id: 0, statusName: 'Не выбрано'},
@@ -104,6 +107,22 @@ function App() {
     {id: 3, statusName: 'Не оплачено'},
     {id: 4, statusName: 'Отменено заказчиком'},
     {id: 5, statusName: 'Сайт'},
+  ];
+
+  let workerNames = [
+    {cityId: 0, id: 0, workerName: 'Выбрать работягу'},
+    {cityId: 1, id: 1, workerName: 'БратишкаБармен А.В.'},
+    {cityId: 1, id: 2, workerName: 'Павлик Г.О.'},
+    {cityId: 2, id: 3, workerName: 'Дэнчик Д.В.'},
+    {cityId: 2, id: 4, workerName: 'Котэ Д.Г.'},
+    {cityId: 3, id: 5, workerName: 'Мишаня К.М.'},
+    {cityId: 3, id: 6, workerName: 'Евгений В.А.'},
+    {cityId: 4, id: 7, workerName: 'Даня Ф.Г.'},
+    {cityId: 4, id: 8, workerName: 'Жиган Е.В.'},
+    {cityId: 5, id: 9, workerName: 'Костян А.И.'},
+    {cityId: 5, id: 10, workerName: 'Хакир А.А.'},
+    {cityId: 6, id: 11, workerName: 'Халиф А.В.'},
+    {cityId: 6, id: 12, workerName: 'ТелоНеОпознано Б.Б.'},
   ];
 
   useEffect(() => {
@@ -120,22 +139,22 @@ function App() {
           statusList={statusList}
           cityNames={cityNames}
           streetNames={streetNames}
-          setStreetNames={setStreetNames}
+          workerNames={workerNames}
           setStreetId={setStreetId}
           setStreet={setStreet}
           task={task}
-          setTask={setTask}
-          filtered={filtered}
           setFiltered={setFiltered}
           filterCitySelectValue={filterCitySelectValue}
           setFilterCitySelectValue={setFilterCitySelectValue}
           filterStatusSelectValue={filterStatusSelectValue}
           setFilterStatusSelectValue={setFilterStatusSelectValue}
+          btnActive={btnActive}
+          setBtnActive={setBtnActive}
         />
         <AddTask
           streetNames={streetNames}
-          setStreetNames={setStreetNames}
           cityNames={cityNames}
+          workerNames={workerNames}
           task={task}
           setTask={setTask}
           modalActive={modalActive}
@@ -168,8 +187,10 @@ function App() {
           setDate={setDate}
           note={note}
           setNote={setNote}
-          optionWorker={optionWorker}
-          setOptionWorker={setOptionWorker}
+          worker={worker}
+          setWorker={setWorker}
+          workerId={workerId}
+          setWorkerId={setWorkerId}
           connection={connection}
           setConnection={setConnection}
           faq={faq}
@@ -206,7 +227,9 @@ function App() {
           setStatus={setStatus}
           setDate={setDate}
           setNote={setNote}
-          setOptionWorker={setOptionWorker}
+          setWorker={setWorker}
+          workerId={workerId}
+          setWorkerId={setWorkerId}
           connection={connection}
           setConnection={setConnection}
           faq={faq}
@@ -222,6 +245,8 @@ function App() {
           filtered={filtered}
           statusId={statusId}
           setStatusId={setStatusId}
+          btnActive={btnActive}
+          setBtnActive={setBtnActive}
         />
       </main>
       <Footer />

@@ -13,7 +13,7 @@ import {StatusOption} from './cityAutoInput/statusOption/statusOption';
 export const AddTask = ({
   cityNames,
   streetNames,
-  setStreetNames,
+  workerNames,
   task,
   setTask,
   modalActive,
@@ -46,8 +46,10 @@ export const AddTask = ({
   setDate,
   note,
   setNote,
-  optionWorker,
-  setOptionWorker,
+  worker,
+  setWorker,
+  workerId,
+  setWorkerId,
   connection,
   setConnection,
   faq,
@@ -101,7 +103,8 @@ export const AddTask = ({
           statusId: statusId,
           date: date,
           note: note,
-          worker: optionWorker,
+          worker: worker,
+          workerId: workerId,
           editNote: false,
           newConnection: connection,
           faq: faq,
@@ -124,7 +127,7 @@ export const AddTask = ({
     setStatusId('');
     setDate('');
     setNote('');
-    setOptionWorker('');
+    setWorker('');
     setModalActive(false);
   }
 
@@ -152,7 +155,8 @@ export const AddTask = ({
           item.statusId = statusId;
           item.date = date;
           item.note = note;
-          item.worker = optionWorker;
+          item.worker = worker;
+          item.workerId = workerId;
           item.editNote = editMode;
           item.newConnection = connection;
           item.faq = faq;
@@ -190,9 +194,10 @@ export const AddTask = ({
     setEntrance('');
     setFloor('');
     setStatus('');
+    setStatusId('');
     setDate('');
     setNote('');
-    setOptionWorker('');
+    setWorker('');
     setConnection(false);
     setFaq(false);
     setCritical(false);
@@ -253,6 +258,8 @@ export const AddTask = ({
               value={mobileNum}
               onChange={changeMobileInput}
             />
+          </div>
+          <div className="add-task__inputs-adress">
             <CityAutoInput
               setFiltered={setFiltered}
               task={task}
@@ -269,7 +276,7 @@ export const AddTask = ({
               cityId={cityId}
             />
           </div>
-          <div className="add-task__inputs-adress">
+          <div className="add-task__inputs-adressdetails">
             <input
               placeholder="Дом"
               type="text"
@@ -310,6 +317,7 @@ export const AddTask = ({
               setStatusId={setStatusId}
             />
             <Flatpickr
+              style={{width: '50%'}}
               placeholder="Дата"
               data-enable-time
               value={date}
@@ -337,7 +345,14 @@ export const AddTask = ({
               onChange={(e) => setNote(e.target.value)}
             />
           </div>
-          <WorkerInput optionWorker={optionWorker} setOptionWorker={setOptionWorker} />
+          <WorkerInput
+            worker={worker}
+            setWorker={setWorker}
+            workerNames={workerNames}
+            cityId={cityId}
+            workerId={workerId}
+            setWorkerId={setWorkerId}
+          />
           <div className="add-task__action-btn">
             {editMode ? (
               <button onClick={(e) => editTask(e)}>Редактировать</button>
