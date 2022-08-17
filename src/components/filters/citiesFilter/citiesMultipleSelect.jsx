@@ -49,7 +49,7 @@ export const CitiesMultipleSelect = ({
     <div>
       <div className="search-filters__header">
         <input
-          placeholder="Введите город"
+          placeholder="Обрати місто"
           type="text"
           value={filterCitySearchValue}
           onChange={onChangeCitySearchValue}></input>

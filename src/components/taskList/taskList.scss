@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 721px;
+  height: fit-content;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: $minRadius;
@@ -13,7 +13,7 @@
   transition: 0.3s;
 
   &.active {
-    height: 539px;
+    height: fit-content;
   }
 
   &__title {

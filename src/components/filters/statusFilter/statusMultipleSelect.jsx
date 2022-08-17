@@ -49,7 +49,7 @@ export const StatusMultipleSelect = ({
     <div>
       <div className="search-filters__header">
         <input
-          placeholder="Введите город"
+          placeholder="Статус заявки"
           type="text"
           value={filterStatusSearchValue}
           onChange={onChangeStatusSearchValue}></input>

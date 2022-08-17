@@ -44,7 +44,7 @@ export const WorkersMultipleSelect = ({workerNames, task, setFiltered, classDrop
     <div>
       <div className="search-filters__header">
         <input
-          placeholder="Введите город"
+          placeholder="Обрати робітника"
           type="text"
           value={filterWorkerSearchValue}
           onChange={onChangeWorkerSearchValue}></input>

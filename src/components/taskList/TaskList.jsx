@@ -178,7 +178,7 @@ export const TaskList = ({
               setEditMode(item.id);
               if (editMode === item.id) {
                 statusTask(item.id);
-                console.log(editMode === item.id);
+                // console.log(editMode === item.id);
                 showEditModal(
                   item.fio,
                   item.mobile,

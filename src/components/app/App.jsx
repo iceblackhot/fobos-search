@@ -8,6 +8,9 @@ import {TaskList} from '../taskList/TaskList';
 import './App.scss';
 
 function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
   const [task, setTask] = useState([]);
   const [filtered, setFiltered] = useState(task);
   const [modalActive, setModalActive] = useState(false);
@@ -44,86 +47,95 @@ function App() {
 
   const [btnActive, setBtnActive] = useState(false);
 
-  let cityNames = [
-    {id: 0, cityName: 'Выбрать город'},
-    {id: 1, cityName: 'Горишни Плавни'},
-    {id: 2, cityName: 'Келеберда'},
-    {id: 3, cityName: 'Григоро-Бригадировка'},
-    {id: 4, cityName: 'Дмитровка'},
-    {id: 5, cityName: 'Дружба'},
-    {id: 6, cityName: 'Золотнище'},
-    {id: 7, cityName: 'Коноплянка'},
-    {id: 8, cityName: 'Мотрино'},
-    {id: 9, cityName: 'Озера'},
-    {id: 10, cityName: 'Подубное'},
-    {id: 11, cityName: 'Пришиб'},
-    {id: 12, cityName: 'Решетиловка'},
-    {id: 13, cityName: 'Саловка'},
-    {id: 14, cityName: 'Солошино'},
-    {id: 15, cityName: 'Хорол'},
-    {id: 16, cityName: 'Юнность'},
-  ];
+  const [cityNames, setCityNames] = useState([]);
+  const [streetNames, setStreetNames] = useState([]);
+  const [statusList, setStatusList] = useState([]);
+  const [workerNames, setWorkerNames] = useState([]);
 
-  let streetNames = [
-    {cityId: 0, id: 0, streetName: 'Выбрать улицу'},
-    {cityId: 1, id: 1, streetName: 'Патриса Лумумбы'},
-    {cityId: 1, id: 2, streetName: 'Павлика Морорзова'},
-    {cityId: 2, id: 3, streetName: 'Жданова'},
-    {cityId: 2, id: 4, streetName: 'Кирова'},
-    {cityId: 3, id: 5, streetName: 'Калининская'},
-    {cityId: 3, id: 6, streetName: 'Вишневая'},
-    {cityId: 4, id: 7, streetName: 'Полтавский Проспект'},
-    {cityId: 4, id: 8, streetName: 'Героев Днепра'},
-    {cityId: 5, id: 9, streetName: 'Космонавтов'},
-    {cityId: 5, id: 10, streetName: 'Портовая'},
-    {cityId: 6, id: 11, streetName: 'Мира'},
-    {cityId: 6, id: 12, streetName: 'Горняков'},
-    {cityId: 7, id: 13, streetName: 'Сезам'},
-    {cityId: 7, id: 14, streetName: 'Щорса'},
-    {cityId: 8, id: 15, streetName: 'Островкского'},
-    {cityId: 8, id: 16, streetName: 'Академика Шлихтера'},
-    {cityId: 9, id: 17, streetName: 'Юрия Коцюбинского'},
-    {cityId: 9, id: 18, streetName: 'Днепропетровская'},
-    {cityId: 10, id: 19, streetName: 'Киевская'},
-    {cityId: 10, id: 20, streetName: 'Вифлиемская'},
-    {cityId: 11, id: 21, streetName: 'Горького'},
-    {cityId: 11, id: 22, streetName: 'Ломоносова'},
-    {cityId: 12, id: 23, streetName: 'Ивана Клименко'},
-    {cityId: 12, id: 24, streetName: 'Чудновского'},
-    {cityId: 13, id: 25, streetName: 'Фадеева'},
-    {cityId: 13, id: 26, streetName: 'Леси Украинки'},
-    {cityId: 14, id: 27, streetName: 'Шевченко'},
-    {cityId: 14, id: 28, streetName: 'Большая Набережная'},
-    {cityId: 15, id: 29, streetName: 'Проспект Свободы'},
-    {cityId: 15, id: 30, streetName: 'Кобзарская'},
-    {cityId: 16, id: 31, streetName: 'Владимира Великого'},
-    {cityId: 16, id: 32, streetName: 'Козацкой Славы'},
-  ];
+  useEffect(() => {
+    fetch(process.env.REACT_APP_URL_CITIES, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result.values);
+          setIsLoaded(true);
+          const citiesObj = result.values;
+          const firstCityObject = {id: 0, cityName: 'Обрати місто'};
+          citiesObj.unshift(firstCityObject);
+          setCityNames(citiesObj);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        },
+      );
+    fetch(process.env.REACT_APP_URL_STREETS, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result.values);
+          setIsLoaded(true);
+          const streetsObj = result.values;
+          const firstStreetObject = {cityId: 0, id: 0, streetName: 'Обрати вулицю'};
+          streetsObj.unshift(firstStreetObject);
+          setStreetNames(streetsObj);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        },
+      );
 
-  let statusList = [
-    {id: 0, statusName: 'Не выбрано'},
-    {id: 1, statusName: 'Не подключен'},
-    {id: 2, statusName: 'Нет технической возможности'},
-    {id: 3, statusName: 'Не оплачено'},
-    {id: 4, statusName: 'Отменено заказчиком'},
-    {id: 5, statusName: 'Сайт'},
-  ];
+    fetch(process.env.REACT_APP_URL_STATUSES, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result.values);
+          setIsLoaded(true);
+          const statusesObj = result.values;
+          const firstStatusObject = {id: 0, statusName: 'Не обрано'};
+          statusesObj.unshift(firstStatusObject);
+          setStatusList(statusesObj);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        },
+      );
 
-  let workerNames = [
-    {cityId: 0, id: 0, workerName: 'Выбрать работягу'},
-    {cityId: 1, id: 1, workerName: 'БратишкаБармен А.В.'},
-    {cityId: 1, id: 2, workerName: 'Павлик Г.О.'},
-    {cityId: 2, id: 3, workerName: 'Дэнчик Д.В.'},
-    {cityId: 2, id: 4, workerName: 'Котэ Д.Г.'},
-    {cityId: 3, id: 5, workerName: 'Мишаня К.М.'},
-    {cityId: 3, id: 6, workerName: 'Евгений В.А.'},
-    {cityId: 4, id: 7, workerName: 'Даня Ф.Г.'},
-    {cityId: 4, id: 8, workerName: 'Жиган Е.В.'},
-    {cityId: 5, id: 9, workerName: 'Костян А.И.'},
-    {cityId: 5, id: 10, workerName: 'Хакир А.А.'},
-    {cityId: 6, id: 11, workerName: 'Халиф А.В.'},
-    {cityId: 6, id: 12, workerName: 'ТелоНеОпознано Б.Б.'},
-  ];
+    fetch(process.env.REACT_APP_URL_WORKERS, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result.values);
+          setIsLoaded(true);
+          const workersObj = result.values;
+          const firstWorkerObject = {id: 0, workerName: 'Обрати робітника'};
+          workersObj.unshift(firstWorkerObject);
+          setWorkerNames(workersObj);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        },
+      );
+  }, []);
 
   useEffect(() => {
     setFiltered(task);
