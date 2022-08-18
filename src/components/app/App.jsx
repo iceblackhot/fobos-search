@@ -22,21 +22,24 @@ function App() {
   const [important, setImportant] = useState(false);
   const [regular, setRegular] = useState(false);
 
-  const [fio, setFio] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [patronymic, setPatronymic] = useState('');
+
   const [mobileNum, setMobileNum] = useState('');
   const [city, setCity] = useState('');
   const [cityId, setCityId] = useState('');
   const [street, setStreet] = useState('');
   const [streetId, setStreetId] = useState('');
-  const [house, setHouse] = useState('');
+  const [building, setBuilding] = useState('');
   const [section, setSection] = useState('');
-  const [flat, setFlat] = useState('');
+  const [apartment, setApartment] = useState(''); //
   const [entrance, setEntrance] = useState('');
   const [floor, setFloor] = useState('');
   const [status, setStatus] = useState('');
   const [statusId, setStatusId] = useState('');
-  const [date, setDate] = useState('');
-  const [note, setNote] = useState('');
+  const [planDate, setPlanDate] = useState('');
+  const [comment, setComment] = useState('');
   const [worker, setWorker] = useState('');
   const [workerId, setWorkerId] = useState('');
 
@@ -53,6 +56,23 @@ function App() {
   const [workerNames, setWorkerNames] = useState([]);
 
   useEffect(() => {
+    fetch(process.env.REACT_APP_URL_REQUESTS, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result.values);
+          setIsLoaded(true);
+          setTask(result.values);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        },
+      );
     fetch(process.env.REACT_APP_URL_CITIES, {
       method: 'get',
       mode: 'cors',
@@ -171,8 +191,12 @@ function App() {
           setTask={setTask}
           modalActive={modalActive}
           setModalActive={setModalActive}
-          fio={fio}
-          setFio={setFio}
+          firstName={firstName}
+          setFirstName={setFirstName}
+          lastName={lastName}
+          setLastName={setLastName}
+          patronymic={patronymic}
+          setPatronymic={setPatronymic}
           mobileNum={mobileNum}
           setMobileNum={setMobileNum}
           city={city}
@@ -183,22 +207,22 @@ function App() {
           setStreet={setStreet}
           streetId={streetId}
           setStreetId={setStreetId}
-          house={house}
-          setHouse={setHouse}
+          building={building}
+          setBuilding={setBuilding}
           section={section}
           setSection={setSection}
-          flat={flat}
-          setFlat={setFlat}
+          apartment={apartment}
+          setApartment={setApartment}
           entrance={entrance}
           setEntrance={setEntrance}
           floor={floor}
           setFloor={setFloor}
           status={status}
           setStatus={setStatus}
-          date={date}
-          setDate={setDate}
-          note={note}
-          setNote={setNote}
+          planDate={planDate}
+          setPlanDate={setPlanDate}
+          comment={comment}
+          setComment={setComment}
           worker={worker}
           setWorker={setWorker}
           workerId={workerId}
@@ -225,20 +249,22 @@ function App() {
           task={task}
           setTask={setTask}
           setModalActive={setModalActive}
-          setFio={setFio}
+          setFirstName={setFirstName}
+          setLastName={setLastName}
+          setPatronymic={setPatronymic}
           setMobileNum={setMobileNum}
           setCity={setCity}
           setCityId={setCityId}
           setStreet={setStreet}
           setStreetId={setStreetId}
-          setHouse={setHouse}
+          setBuilding={setBuilding}
           setSection={setSection}
-          setFlat={setFlat}
+          setApartment={setApartment}
           setEntrance={setEntrance}
           setFloor={setFloor}
           setStatus={setStatus}
-          setDate={setDate}
-          setNote={setNote}
+          setPlanDate={setPlanDate}
+          setComment={setComment}
           setWorker={setWorker}
           workerId={workerId}
           setWorkerId={setWorkerId}

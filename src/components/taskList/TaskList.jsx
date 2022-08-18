@@ -11,36 +11,34 @@ export const TaskList = ({
   task,
   setTask,
   setModalActive,
-  setFio,
+  setFirstName,
+  setLastName,
+  setPatronymic,
   setMobileNum,
   setCity,
   setCityId,
   setStreet,
   setStreetId,
-  setHouse,
+  setBuilding,
   setSection,
-  setFlat,
+  setApartment,
   setEntrance,
   setFloor,
   setStatus,
-  setDate,
-  setNote,
+  setPlanDate,
+  setComment,
   setWorker,
-  workerId,
   setWorkerId,
   editMode,
   setConnection,
   setFaq,
-  critical,
   setCritical,
   setImportant,
   setRegular,
   setEditMode,
   filtered,
-  statusId,
   setStatusId,
   btnActive,
-  setBtnActive,
 }) => {
   const printContentRef = useRef();
 
@@ -66,21 +64,23 @@ export const TaskList = ({
   }
 
   function showEditModal(
-    fio,
+    fname,
+    lname,
+    patronymic,
     mobile,
     city,
     cityId,
     street,
     streetId,
-    house,
+    building,
     section,
-    flat,
+    apartment,
     entrance,
     floor,
     status,
     statusId,
-    date,
-    note,
+    planDate,
+    comment,
     worker,
     workerId,
     faq,
@@ -90,21 +90,23 @@ export const TaskList = ({
     regular,
   ) {
     setModalActive(true);
-    setFio(fio);
+    setFirstName(fname);
+    setLastName(lname);
+    setPatronymic(patronymic);
     setMobileNum(mobile);
     setCity(city);
     setCityId(cityId);
     setStreet(street);
     setStreetId(streetId);
-    setHouse(house);
+    setBuilding(building);
     setSection(section);
-    setFlat(flat);
+    setApartment(apartment);
     setEntrance(entrance);
     setFloor(floor);
     setStatus(status);
     setStatusId(statusId);
-    setDate(date);
-    setNote(note);
+    setPlanDate(planDate);
+    setComment(comment);
     setWorker(worker);
     setWorkerId(workerId);
     setFaq(faq);
@@ -117,19 +119,21 @@ export const TaskList = ({
   function handleClick() {
     setModalActive(true);
     setEditMode(false);
-    setFio('');
+    setFirstName('');
+    setLastName('');
+    setPatronymic('');
     setMobileNum('');
     setCityId('');
     setStreetId('');
-    setHouse('');
+    setBuilding('');
     setSection('');
-    setFlat('');
+    setApartment('');
     setEntrance('');
     setFloor('');
     setStatus('');
     setStatusId('');
-    setDate('');
-    setNote('');
+    setPlanDate('');
+    setComment('');
     setWorker('');
     setWorkerId('');
     setConnection(false);
@@ -140,8 +144,6 @@ export const TaskList = ({
   }
 
   console.log(task);
-
-  //Print Task function
 
   return (
     <div className={classTask}>
@@ -180,22 +182,25 @@ export const TaskList = ({
                 statusTask(item.id);
                 // console.log(editMode === item.id);
                 showEditModal(
-                  item.fio,
+                  item.addDate,
+                  item.fname,
+                  item.lname,
+                  item.patronymic,
                   item.mobile,
-                  item.city,
+                  item.cityName,
                   item.cityId,
-                  item.street,
+                  item.streetName,
                   item.streetId,
-                  item.house,
+                  item.building,
                   item.section,
-                  item.flat,
+                  item.apartment,
                   item.entrance,
                   item.floor,
-                  item.status,
+                  item.statusName,
                   item.statusId,
-                  item.date,
-                  item.note,
-                  item.worker,
+                  item.planDate,
+                  item.comment,
+                  item.workerName,
                   item.workerId,
                   item.faq,
                   item.newConnection,
@@ -207,7 +212,7 @@ export const TaskList = ({
             }}>
             <>
               <div id="noPrint" className="task-list__item-cell">
-                {item.dateNow}
+                {item.addDate}
               </div>
               <div className="task-list__item-cell">
                 {item.statCritical && (
@@ -219,18 +224,18 @@ export const TaskList = ({
                 {item.statRegular && (
                   <LibraryBooksRoundedIcon id="noPrint" style={{color: '#2dcf40'}} />
                 )}
-                {item.city}
+                {item.cityName}
               </div>
               <div className="task-list__item-cell">
                 <span>
                   {'ул.' +
-                    item.street +
+                    item.streetName +
                     ' д.' +
-                    item.house +
+                    item.building +
                     ' секц.' +
                     item.section +
                     ' кв.' +
-                    item.flat +
+                    item.apartment +
                     ' под.' +
                     item.entrance +
                     ' эт.' +
@@ -238,20 +243,23 @@ export const TaskList = ({
                 </span>
               </div>
               <div className="task-list__item-cell">
-                <span id="noPrint">{item.status}</span>
-                <span>{item.date}</span>
+                <span id="noPrint">{item.statusName}</span>
+                <span>{item.planDate}</span>
               </div>
+
               <div className="task-list__item-cell">
-                <span>{item.fio}</span>
+                <span>{item.lname}</span>
+                <span>{item.fname}</span>
+                <span>{item.patronymic}</span>
               </div>
               <div className="task-list__item-cell">
                 <span>{item.mobile}</span>
               </div>
               <div className="task-list__item-cell">
-                <span>{item.note}</span>
+                <span>{item.comment}</span>
               </div>
               <div id="noPrint" className="task-list__item-cell">
-                <span>{item.worker}</span>
+                <span>{item.workerName}</span>
               </div>
               <div className="task-list__item-cell">
                 <TaskAltIcon

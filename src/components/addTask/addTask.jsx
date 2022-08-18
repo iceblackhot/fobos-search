@@ -18,8 +18,12 @@ export const AddTask = ({
   setTask,
   modalActive,
   setModalActive,
-  fio,
-  setFio,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  patronymic,
+  setPatronymic,
   mobileNum,
   setMobileNum,
   city,
@@ -30,22 +34,22 @@ export const AddTask = ({
   setStreet,
   streetId,
   setStreetId,
-  house,
-  setHouse,
+  building,
+  setBuilding,
   section,
   setSection,
-  flat,
-  setFlat,
+  apartment,
+  setApartment,
   entrance,
   setEntrance,
   floor,
   setFloor,
   status,
   setStatus,
-  date,
-  setDate,
-  note,
-  setNote,
+  planDate,
+  setPlanDate,
+  comment,
+  setComment,
   worker,
   setWorker,
   workerId,
@@ -67,42 +71,44 @@ export const AddTask = ({
   statusId,
   setStatusId,
 }) => {
-  let year = new Date().getFullYear();
-  let month = new Date().getMonth();
-  let day = new Date().getDate();
-  let hours = new Date().getHours();
+  // let year = new Date().getFullYear();
+  // let month = new Date().getMonth();
+  // let day = new Date().getDate();
+  // let hours = new Date().getHours();
 
-  let current_date = new Date().getMinutes();
-  let minutes = ('0' + current_date).slice(-2);
+  // let current_date = new Date().getMinutes();
+  // let minutes = ('0' + current_date).slice(-2);
 
-  let seconds = new Date().getSeconds();
-  let dateNow = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+  // let seconds = new Date().getSeconds();
+  // let dateNow = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 
   function saveTask() {
-    if (!fio || !cityId || !statusId) {
+    if (!cityId || !statusId) {
       console.log(statusId);
       return;
     } else {
       setTask([
         ...task,
         {
-          dateNow: dateNow,
-          id: Math.random().toString(36).substring(2, 9),
-          fio: fio,
+          // dateNow: dateNow,
+          // id: Math.random().toString(36).substring(2, 9),
+          fname: firstName,
+          lname: lastName,
+          patronymic: patronymic,
           mobile: mobileNum,
           city: city,
           cityId: cityId,
           street: street,
           streetId: streetId,
-          house: house,
+          building: building,
           section: section,
-          flat: flat,
+          apartment: apartment,
           entrance: entrance,
           floor: floor,
           status: status,
           statusId: statusId,
-          date: date,
-          note: note,
+          planDate: planDate,
+          comment: comment,
           worker: worker,
           workerId: workerId,
           editNote: false,
@@ -114,19 +120,21 @@ export const AddTask = ({
         },
       ]);
     }
-    setFio('');
+    setFirstName('');
+    setLastName('');
+    setPatronymic('');
     setMobileNum('');
     setCityId('');
     setStreetId('');
-    setHouse('');
+    setBuilding('');
     setSection('');
-    setFlat('');
+    setApartment('');
     setEntrance('');
     setFloor('');
     setStatus('');
     setStatusId('');
-    setDate('');
-    setNote('');
+    setPlanDate('');
+    setComment('');
     setWorker('');
     setModalActive(false);
   }
@@ -134,27 +142,29 @@ export const AddTask = ({
   function editTask(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (!fio || !cityId || !statusId) {
+    if (!cityId || !statusId) {
       return;
     } else {
       let newTask = [...task].filter((item) => {
         if (item.id === editMode) {
-          item.dateNow = dateNow;
-          item.fio = fio;
+          // item.dateNow = dateNow;
+          item.lname = lastName;
+          item.fname = firstName;
+          item.patronymic = patronymic;
           item.mobile = mobileNum;
           item.city = city;
           item.cityId = cityId;
           item.street = street;
           item.streetId = streetId;
-          item.house = house;
+          item.building = building;
           item.section = section;
-          item.flat = flat;
+          item.apartment = apartment;
           item.entrance = entrance;
           item.floor = floor;
           item.status = status;
           item.statusId = statusId;
-          item.date = date;
-          item.note = note;
+          item.planDate = planDate;
+          item.comment = comment;
           item.worker = worker;
           item.workerId = workerId;
           item.editNote = editMode;
@@ -184,19 +194,21 @@ export const AddTask = ({
   }
 
   function handleClear() {
-    setFio('');
+    setFirstName('');
+    setLastName('');
+    setPatronymic('');
     setMobileNum('');
     setCityId('');
     setStreetId('');
-    setHouse('');
+    setBuilding('');
     setSection('');
-    setFlat('');
+    setApartment('');
     setEntrance('');
     setFloor('');
     setStatus('');
     setStatusId('');
-    setDate('');
-    setNote('');
+    setPlanDate('');
+    setComment('');
     setWorker('');
     setConnection(false);
     setFaq(false);
@@ -216,12 +228,30 @@ export const AddTask = ({
     }
   }
 
-  function changeFioInput(e) {
+  function changeLastNameInput(e) {
     let str = e.target.value;
     if (str != null) {
-      setFio(str);
+      setLastName(str);
     } else {
-      setFio('');
+      setLastName('');
+    }
+  }
+
+  function changeFirstNameInput(e) {
+    let str = e.target.value;
+    if (str != null) {
+      setFirstName(str);
+    } else {
+      setFirstName('');
+    }
+  }
+
+  function changePatronymicInput(e) {
+    let str = e.target.value;
+    if (str != null) {
+      setPatronymic(str);
+    } else {
+      setPatronymic('');
     }
   }
 
@@ -249,8 +279,27 @@ export const AddTask = ({
             setRegular={setRegular}
             regular={regular}
           />
-          <div className="add-task__inputs">
-            <input placeholder="Ф.И.О" type="text" value={fio} onChange={changeFioInput} />
+          <div className="add-task__inputs-fio">
+            <input
+              placeholder="Прізвище"
+              type="text"
+              value={lastName}
+              onChange={changeLastNameInput}
+            />
+            <input
+              placeholder="Ім'я"
+              type="text"
+              value={firstName}
+              onChange={changeFirstNameInput}
+            />
+            <input
+              placeholder="По батькові"
+              type="text"
+              value={patronymic}
+              onChange={changePatronymicInput}
+            />
+          </div>
+          <div className="add-task__inputs-mobile">
             <input
               placeholder="Телефон(мобильный)"
               type="text"
@@ -280,8 +329,8 @@ export const AddTask = ({
             <input
               placeholder="Дом"
               type="text"
-              value={house}
-              onChange={(e) => setHouse(e.target.value)}
+              value={building}
+              onChange={(e) => setBuilding(e.target.value)}
             />
             <input
               placeholder="Секция"
@@ -292,8 +341,8 @@ export const AddTask = ({
             <input
               placeholder="Квартира"
               type="text"
-              value={flat}
-              onChange={(e) => setFlat(e.target.value)}
+              value={apartment}
+              onChange={(e) => setApartment(e.target.value)}
             />
             <input
               placeholder="Подьезд"
@@ -320,7 +369,7 @@ export const AddTask = ({
               style={{width: '50%'}}
               placeholder="Дата"
               data-enable-time
-              value={date}
+              value={planDate}
               options={{
                 defaultDate: 'today',
                 minDate: '01.01.2020',
@@ -330,19 +379,19 @@ export const AddTask = ({
                 locale: Russian,
               }}
               onChange={(selectedDates, dateStr, instance) => {
-                date = dateStr;
+                planDate = dateStr;
                 // console.log(selectedDates === null);
                 // console.log(dateStr);
                 // console.log(instance);
-                setDate(date);
+                setPlanDate(planDate);
               }}
             />
           </div>
           <div>
             <textarea
               placeholder="Комментраий"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
           </div>
           <WorkerInput

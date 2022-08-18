@@ -86,10 +86,27 @@
     }
   }
 
-  &__inputs {
+  &__inputs-fio {
     display: flex;
-    flex-direction: column;
     width: 100%;
+
+    & input {
+      width: calc(100% / 3);
+      margin-right: 15px;
+    }
+
+    & input:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__inputs-mobile {
+    display: flex;
+    width: 100%;
+
+    & > input {
+      width: 100%;
+    }
   }
 
   input,
