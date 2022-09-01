@@ -17,6 +17,7 @@ export const StatusOption = ({status, setStatus, statusList, statusId, setStatus
       <select
         style={{width: '100%'}}
         className="add-task__select"
+        placeholder="Статус"
         value={statusId}
         onChange={handleChangeStatus}>
         {statusList.map((obj) => (

@@ -366,6 +366,7 @@ export const AddTask = ({
               setFiltered={setFiltered}
               task={task}
               cityNames={cityNames}
+              city={city}
               setCity={setCity}
               cityId={cityId}
               setCityId={setCityId}
@@ -453,7 +454,12 @@ export const AddTask = ({
               onChange={(e) => setComment(e.target.value)}
             />
           </div>
-          <WorkerInput setWorker={setWorker} workerNames={workerNames} setWorkerId={setWorkerId} />
+          <WorkerInput
+            worker={worker}
+            setWorker={setWorker}
+            workerNames={workerNames}
+            setWorkerId={setWorkerId}
+          />
           <div className="add-task__action-btn">
             {editMode ? (
               <button onClick={(e) => editTask(e)}>Редактировать</button>

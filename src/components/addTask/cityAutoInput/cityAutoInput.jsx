@@ -3,6 +3,7 @@ import Select from 'react-select';
 import './cityAutoInput.scss';
 
 export const CityAutoInput = ({
+  city,
   setCity,
   cityId,
   setCityId,
@@ -21,21 +22,6 @@ export const CityAutoInput = ({
 
   function handleChangeCity(event) {
     // console.log(event === null);
-    // console.log(event);
-    // if (!event) {
-    //   event = {
-    //     value: '',
-    //     label: '',
-    //   };
-    //   console.log(event.value);
-    //   setCity('');
-    //   setCityId('');
-    //   setStreet('');
-    //   setStreetId('');
-    // } else {
-    //   setCity(event.label);
-    //   setCityId(event.value);
-    // }
     if (event) {
       setCity(event.label);
       setCityId(event.value);
@@ -47,11 +33,12 @@ export const CityAutoInput = ({
     }
   }
 
-  // console.log(cityNames);
+  // console.log(cityId);
 
   return (
     <div>
       <Select
+        value={cityId ? options.filter((option) => option.label === city) : ''}
         classNamePrefix="custom-select"
         onChange={handleChangeCity}
         options={options}
