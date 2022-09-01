@@ -116,7 +116,7 @@ export const TaskList = ({
     setRegular(regular);
   }
 
-  function handleClick() {
+  function showAddModal() {
     setModalActive(true);
     setEditMode(false);
     setFirstName('');
@@ -143,6 +143,20 @@ export const TaskList = ({
     setRegular(false);
   }
 
+  function formatAddDate(date) {
+    // console.log(date);
+    let d = new Date(date);
+    let currDate = d.toLocaleString('ua-UA');
+    return currDate;
+  }
+
+  function formatPlanDate(date) {
+    // console.log(date);
+    let d = new Date(date);
+    let currDate = d.toLocaleString('ua-UA');
+    return currDate;
+  }
+
   console.log(task);
 
   return (
@@ -152,7 +166,7 @@ export const TaskList = ({
         <span>{task.length}</span>
       </div>
       <div className="task-list__add-btn">
-        <button onClick={handleClick}>Создать заявку</button>
+        <button onClick={showAddModal}>Создать заявку</button>
         <ReactToPrint
           trigger={() => {
             return <button>Печать</button>;
@@ -182,7 +196,6 @@ export const TaskList = ({
                 statusTask(item.id);
                 // console.log(editMode === item.id);
                 showEditModal(
-                  item.addDate,
                   item.fname,
                   item.lname,
                   item.patronymic,
@@ -212,7 +225,7 @@ export const TaskList = ({
             }}>
             <>
               <div id="noPrint" className="task-list__item-cell">
-                {item.addDate}
+                {formatAddDate(item.addDate)}
               </div>
               <div className="task-list__item-cell">
                 {item.statCritical && (
@@ -244,7 +257,7 @@ export const TaskList = ({
               </div>
               <div className="task-list__item-cell">
                 <span id="noPrint">{item.statusName}</span>
-                <span>{item.planDate}</span>
+                <span>{formatPlanDate(item.planDate)}</span>
               </div>
 
               <div className="task-list__item-cell">

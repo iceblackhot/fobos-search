@@ -1,53 +1,74 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
+import Select from 'react-select';
 import './streetAutoInput.scss';
 
-export const StreetAutoInput = ({setStreet, streetId, setStreetId, streetNames, cityId}) => {
-  let disabled = '';
+export const StreetAutoInput = ({
+  setStreet,
+  street,
+  streetId,
+  setStreetId,
+  streetNames,
+  cityId,
+}) => {
+  const [selectedOption, setSelectedOption] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
   let newStreetNames = [...streetNames].filter((streetObj) => streetObj.cityId === cityId);
 
-  if (newStreetNames.length === 0) {
-    newStreetNames = [...streetNames];
-    disabled = 'disabled';
+  const options = newStreetNames.map((streetObj) => ({
+    value: streetObj.id,
+    label: streetObj.streetName,
+  }));
+
+  // console.log(options);
+
+  function handleChangeStreet(event) {
+    // console.log(event === null);
+    if (event) {
+      setStreet(event.label);
+      setStreetId(event.value);
+      setSelectedOption(event.label);
+    } else {
+      setStreet('');
+      setStreetId('');
+    }
   }
 
-  function handleChangeStreet(e) {
-    e.preventDefault();
-
-    let currStreet = [...streetNames].filter((obj) => {
-      if (obj.id.toString() === e.currentTarget.value) {
-        return obj;
-      }
-    });
-    setStreet(currStreet[0].streetName);
-    if (newStreetNames.length === 0) {
-      newStreetNames = [...streetNames].filter((streetObj) => streetObj.cityId !== cityId);
+  function handleInputChange(inputValue, action) {
+    if (action.action !== 'input-blur' && action.action !== 'menu-close') {
+      setInputValue(inputValue);
+      console.log(action);
     }
-    setStreetId(Number(e.currentTarget.value));
   }
 
-  useEffect(() => {
-    if (newStreetNames.length > 0) {
-      setStreetId(newStreetNames[0].id);
-      setStreet(newStreetNames[0].streetName);
+  function getValueOption(action, selectedOption) {
+    if (action.action !== 'set-value' && action.action !== 'menu-close') {
+      console.log(selectedOption);
     }
-  }, [newStreetNames.length]);
+  }
 
   return (
     <div>
-      <select
-        style={{width: '100%'}}
-        disabled={disabled}
-        value={streetId}
-        onChange={handleChangeStreet}>
-        {newStreetNames.map((obj) => {
-          return (
-            <option key={obj.id} value={obj.id}>
-              {obj.streetName}
-            </option>
-          );
+      <Select
+        value={options.filter((option) => {
+          console.log(option);
+          return option.label === selectedOption;
         })}
-      </select>
+        // value={selectedOption}
+        inputValue={inputValue}
+        onInputChange={handleInputChange}
+        getOptionValue={getValueOption}
+        classNamePrefix="custom-select"
+        onChangeStreet={handleChangeStreet}
+        options={options}
+        noOptionsMessage={() => 'Не знайдено'}
+        isClearable
+        placeholder="Обрати вулицю"
+        loadingMessage={() => 'Пошук...'}
+        isLoading={!streetNames.length ? true : false}
+        // isDisabled={!cityId ? true : false}
+        hideSelectedOptions
+      />
     </div>
   );
 };

@@ -1,52 +1,40 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+import Select from 'react-select';
 import './workerAutoInput.scss';
 
-export const WorkerInput = ({workerNames, worker, setWorker, workerId, setWorkerId, cityId}) => {
-  // let disabled = '';
+export const WorkerInput = ({workerNames, setWorker, setWorkerId}) => {
+  const options = workerNames.map((workerObj) => ({
+    value: workerObj.id,
+    label: workerObj.workerName,
+  }));
 
-  // let newWorkerNames = [...workerNames].filter((Obj) => Obj.cityId === cityId);
-
-  // if (newWorkerNames.length === 0) {
-  //   newWorkerNames = [...workerNames];
-  //   disabled = 'disabled';
-  // }
-
-  // disabled={disabled}
-
-  function handleChangeWorker(e) {
-    e.preventDefault();
-
-    let currWorker = [...workerNames].filter((obj) => {
-      if (obj.id.toString() === e.currentTarget.value) {
-        return obj;
-      }
-    });
-    // console.log(currWorker[0]);
-    setWorker(currWorker[0].workerName);
-    if (workerNames.length === 0) {
-      workerNames = [...workerNames].filter((Obj) => Obj.cityId !== cityId);
+  function handleChangeWorker(event) {
+    console.log(event === null);
+    if (!event) {
+      event = {
+        value: '',
+        label: '',
+      };
+    } else {
+      setWorker(event.label);
+      setWorkerId(event.value);
     }
-    setWorkerId(Number(e.currentTarget.value));
   }
 
-  useEffect(() => {
-    if (workerNames.length > 0) {
-      setWorkerId(workerNames[0].id);
-      setWorker(workerNames[0].workerName);
-    }
-  }, [workerNames.length]);
+  // console.log(workerNames);
 
   return (
-    <div>
-      <select value={workerId} onChange={handleChangeWorker}>
-        {workerNames.map((obj) => {
-          return (
-            <option key={obj.id} value={obj.id}>
-              {obj.workerName}
-            </option>
-          );
-        })}
-      </select>
+    <div className="add-task__inputs-workers">
+      <Select
+        classNamePrefix="custom-select"
+        onChange={handleChangeWorker}
+        options={options}
+        noOptionsMessage={() => 'Не знайдено'}
+        isClearable
+        placeholder="Обрати робітника"
+        loadingMessage={() => 'Пошук...'}
+        isLoading={!workerNames.length ? true : false}
+      />
     </div>
   );
 };

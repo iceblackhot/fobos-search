@@ -12,6 +12,7 @@ function App() {
   const [error, setError] = useState(false);
 
   const [task, setTask] = useState([]);
+  const [taskId, setTaskId] = useState(false);
   const [filtered, setFiltered] = useState(task);
   const [modalActive, setModalActive] = useState(false);
 
@@ -33,12 +34,13 @@ function App() {
   const [streetId, setStreetId] = useState('');
   const [building, setBuilding] = useState('');
   const [section, setSection] = useState('');
-  const [apartment, setApartment] = useState(''); //
+  const [apartment, setApartment] = useState('');
   const [entrance, setEntrance] = useState('');
   const [floor, setFloor] = useState('');
   const [status, setStatus] = useState('');
   const [statusId, setStatusId] = useState('');
   const [planDate, setPlanDate] = useState('');
+  const [addDate, setAddDate] = useState('');
   const [comment, setComment] = useState('');
   const [worker, setWorker] = useState('');
   const [workerId, setWorkerId] = useState('');
@@ -47,6 +49,8 @@ function App() {
 
   const [filterCitySelectValue, setFilterCitySelectValue] = useState([]);
   const [filterStatusSelectValue, setFilterStatusSelectValue] = useState([]);
+
+  const [cityReactSelectValue, setReactCitySelectValue] = useState(null);
 
   const [btnActive, setBtnActive] = useState(false);
 
@@ -84,8 +88,6 @@ function App() {
           // console.log(result.values);
           setIsLoaded(true);
           const citiesObj = result.values;
-          const firstCityObject = {id: 0, cityName: 'Обрати місто'};
-          citiesObj.unshift(firstCityObject);
           setCityNames(citiesObj);
         },
         (error) => {
@@ -104,8 +106,6 @@ function App() {
           // console.log(result.values);
           setIsLoaded(true);
           const streetsObj = result.values;
-          const firstStreetObject = {cityId: 0, id: 0, streetName: 'Обрати вулицю'};
-          streetsObj.unshift(firstStreetObject);
           setStreetNames(streetsObj);
         },
         (error) => {
@@ -125,8 +125,6 @@ function App() {
           // console.log(result.values);
           setIsLoaded(true);
           const statusesObj = result.values;
-          const firstStatusObject = {id: 0, statusName: 'Не обрано'};
-          statusesObj.unshift(firstStatusObject);
           setStatusList(statusesObj);
         },
         (error) => {
@@ -146,8 +144,6 @@ function App() {
           // console.log(result.values);
           setIsLoaded(true);
           const workersObj = result.values;
-          const firstWorkerObject = {id: 0, workerName: 'Обрати робітника'};
-          workersObj.unshift(firstWorkerObject);
           setWorkerNames(workersObj);
         },
         (error) => {
@@ -162,6 +158,7 @@ function App() {
   }, [task]);
 
   // console.log(task);
+  // console.log(workerId);
 
   return (
     <div className="wrapper">
@@ -189,6 +186,8 @@ function App() {
           workerNames={workerNames}
           task={task}
           setTask={setTask}
+          taskId={taskId}
+          setTaskId={setTaskId}
           modalActive={modalActive}
           setModalActive={setModalActive}
           firstName={firstName}
@@ -221,6 +220,8 @@ function App() {
           setStatus={setStatus}
           planDate={planDate}
           setPlanDate={setPlanDate}
+          addDate={addDate}
+          setAddDate={setAddDate}
           comment={comment}
           setComment={setComment}
           worker={worker}
@@ -244,6 +245,10 @@ function App() {
           statusList={statusList}
           statusId={statusId}
           setStatusId={setStatusId}
+          isLoaded={isLoaded}
+          setIsLoaded={setIsLoaded}
+          cityReactSelectValue={cityReactSelectValue}
+          setReactCitySelectValue={setReactCitySelectValue}
         />
         <TaskList
           task={task}

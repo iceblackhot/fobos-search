@@ -1,45 +1,67 @@
 import React, {useState} from 'react';
+import Select from 'react-select';
 import './cityAutoInput.scss';
 
-export const CityAutoInput = ({setCity, cityId, setCityId, cityNames, setFiltered, task}) => {
-  const [cityValue, setCityValue] = useState('');
+export const CityAutoInput = ({
+  setCity,
+  cityId,
+  setCityId,
+  cityNames,
+  setFiltered,
+  task,
+  cityReactSelectValue,
+  setReactCitySelectValue,
+  setStreet,
+  setStreetId,
+}) => {
+  const options = cityNames.map((cityObj) => ({
+    value: cityObj.id,
+    label: cityObj.cityName,
+  }));
 
-  function handleChangeCity(e) {
-    e.preventDefault();
-    let currCity = [...cityNames].filter((obj) => {
-      if (obj.id.toString() === e.currentTarget.value) {
-        setCity(obj.cityName);
-        return obj;
-      }
-    });
-    setCityId(currCity[0].id);
-  }
-
-  function showFiltercity(id, name) {
-    if (!cityValue) {
-      setFiltered(task);
+  function handleChangeCity(event) {
+    // console.log(event === null);
+    // console.log(event);
+    // if (!event) {
+    //   event = {
+    //     value: '',
+    //     label: '',
+    //   };
+    //   console.log(event.value);
+    //   setCity('');
+    //   setCityId('');
+    //   setStreet('');
+    //   setStreetId('');
+    // } else {
+    //   setCity(event.label);
+    //   setCityId(event.value);
+    // }
+    if (event) {
+      setCity(event.label);
+      setCityId(event.value);
+    } else {
+      setCity('');
+      setCityId('');
+      setStreet('');
+      setStreetId('');
     }
-    let filterCity = [...task].filter((cityName) => cityName.city === name);
-    setFiltered(filterCity);
   }
+
+  // console.log(cityNames);
 
   return (
     <div>
-      <select style={{width: '100%'}} value={cityId} onChange={handleChangeCity}>
-        {cityNames.map((obj) => {
-          return (
-            <option
-              onClick={() => {
-                showFiltercity(obj.id, obj.cityName);
-                setCityValue(obj.cityName);
-              }}
-              key={obj.id}
-              value={obj.id}>
-              {obj.cityName}
-            </option>
-          );
-        })}
-      </select>
+      <Select
+        classNamePrefix="custom-select"
+        onChange={handleChangeCity}
+        options={options}
+        noOptionsMessage={() => 'Не знайдено'}
+        isClearable
+        placeholder="Обрати місто"
+        loadingMessage={() => 'Пошук...'}
+        isLoading={!cityNames.length ? true : false}
+        hideSelectedOptions
+      />
     </div>
   );
 };

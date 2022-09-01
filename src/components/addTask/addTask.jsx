@@ -16,6 +16,8 @@ export const AddTask = ({
   workerNames,
   task,
   setTask,
+  taskId,
+  setTaskId,
   modalActive,
   setModalActive,
   firstName,
@@ -48,6 +50,8 @@ export const AddTask = ({
   setStatus,
   planDate,
   setPlanDate,
+  addDate,
+  setAddDate,
   comment,
   setComment,
   worker,
@@ -70,55 +74,104 @@ export const AddTask = ({
   statusList,
   statusId,
   setStatusId,
+  isLoaded,
+  setIsLoaded,
+  cityReactSelectValue,
+  setReactCitySelectValue,
 }) => {
-  // let year = new Date().getFullYear();
-  // let month = new Date().getMonth();
-  // let day = new Date().getDate();
-  // let hours = new Date().getHours();
-
-  // let current_date = new Date().getMinutes();
-  // let minutes = ('0' + current_date).slice(-2);
-
-  // let seconds = new Date().getSeconds();
-  // let dateNow = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-
   function saveTask() {
-    if (!cityId || !statusId) {
-      console.log(statusId);
+    if (!cityId) {
+      // console.log(workerId);
       return;
     } else {
-      setTask([
-        ...task,
-        {
-          // dateNow: dateNow,
-          // id: Math.random().toString(36).substring(2, 9),
+      fetch(process.env.REACT_APP_URL_ADD_REQUEST, {
+        method: 'post',
+        mode: 'cors',
+        withCredentials: true,
+        body: JSON.stringify({
           fname: firstName,
           lname: lastName,
           patronymic: patronymic,
-          mobile: mobileNum,
-          city: city,
           cityId: cityId,
-          street: street,
           streetId: streetId,
           building: building,
           section: section,
           apartment: apartment,
           entrance: entrance,
           floor: floor,
-          status: status,
-          statusId: statusId,
-          planDate: planDate,
           comment: comment,
-          worker: worker,
+          mobile: mobileNum,
+          planDate: planDate,
+          statusId: statusId,
           workerId: workerId,
-          editNote: false,
-          newConnection: connection,
-          faq: faq,
-          statCritical: critical,
-          statImportant: important,
-          statRegular: regular,
+        }),
+        headers: {
+          'content-type': 'application/json',
         },
-      ]);
+      })
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            // console.log(result);
+            if (result.status === 200) {
+              fetch(process.env.REACT_APP_URL_REQUESTS + result.id, {
+                method: 'get',
+                mode: 'cors',
+                withCredentials: true,
+              })
+                .then((res) => res.json())
+                .then(
+                  (result) => {
+                    let newTask = result.values;
+                    // setIsLoaded(true);
+                    console.log(newTask);
+                    setTask([...newTask, ...task]);
+                  },
+                  (error) => {
+                    // setIsLoaded(true);
+                    // setError(error);
+                    console.log(error);
+                  },
+                );
+            }
+          },
+          (error) => {
+            console.log(error);
+          },
+        );
+
+      // setTask([
+      //   ...task,
+      //   {
+      //     // dateNow: dateNow,
+      //     // id: Math.random().toString(36).substring(2, 9),
+      //     fname: firstName,
+      //     lname: lastName,
+      //     patronymic: patronymic,
+      //     mobile: mobileNum,
+      //     city: city,
+      //     cityId: cityId,
+      //     street: street,
+      //     streetId: streetId,
+      //     building: building,
+      //     section: section,
+      //     apartment: apartment,
+      //     entrance: entrance,
+      //     floor: floor,
+      //     status: status,
+      //     statusId: statusId,
+      //     planDate: planDate,
+      //     comment: comment,
+      //     worker: worker,
+      //     workerId: workerId,
+      //     editNote: false,
+      //     newConnection: connection,
+      //     faq: faq,
+      //     statCritical: critical,
+      //     statImportant: important,
+      //     statRegular: regular,
+      //   },
+      // ]);
     }
     setFirstName('');
     setLastName('');
@@ -142,7 +195,7 @@ export const AddTask = ({
   function editTask(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (!cityId || !statusId) {
+    if (!cityId) {
       return;
     } else {
       let newTask = [...task].filter((item) => {
@@ -316,9 +369,14 @@ export const AddTask = ({
               setCity={setCity}
               cityId={cityId}
               setCityId={setCityId}
+              cityReactSelectValue={cityReactSelectValue}
+              setReactCitySelectValue={setReactCitySelectValue}
+              setStreet={setStreet}
+              setStreetId={setStreetId}
             />
             <StreetAutoInput
               streetNames={streetNames}
+              street={street}
               setStreet={setStreet}
               streetId={streetId}
               setStreetId={setStreetId}
@@ -383,6 +441,7 @@ export const AddTask = ({
                 // console.log(selectedDates === null);
                 // console.log(dateStr);
                 // console.log(instance);
+                console.log(planDate);
                 setPlanDate(planDate);
               }}
             />
@@ -394,14 +453,7 @@ export const AddTask = ({
               onChange={(e) => setComment(e.target.value)}
             />
           </div>
-          <WorkerInput
-            worker={worker}
-            setWorker={setWorker}
-            workerNames={workerNames}
-            cityId={cityId}
-            workerId={workerId}
-            setWorkerId={setWorkerId}
-          />
+          <WorkerInput setWorker={setWorker} workerNames={workerNames} setWorkerId={setWorkerId} />
           <div className="add-task__action-btn">
             {editMode ? (
               <button onClick={(e) => editTask(e)}>Редактировать</button>
