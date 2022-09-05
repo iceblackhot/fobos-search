@@ -39,6 +39,8 @@ export const TaskList = ({
   filtered,
   setStatusId,
   btnActive,
+  setError,
+  setIsLoaded,
 }) => {
   const printContentRef = useRef();
 
@@ -63,57 +65,42 @@ export const TaskList = ({
     setTask(newTask);
   }
 
-  function showEditModal(
-    fname,
-    lname,
-    patronymic,
-    mobile,
-    city,
-    cityId,
-    street,
-    streetId,
-    building,
-    section,
-    apartment,
-    entrance,
-    floor,
-    status,
-    statusId,
-    planDate,
-    comment,
-    worker,
-    workerId,
-    faq,
-    newConnection,
-    critical,
-    important,
-    regular,
-  ) {
-    setModalActive(true);
-    setFirstName(fname);
-    setLastName(lname);
-    setPatronymic(patronymic);
-    setMobileNum(mobile);
-    setCity(city);
-    setCityId(cityId);
-    setStreet(street);
-    setStreetId(streetId);
-    setBuilding(building);
-    setSection(section);
-    setApartment(apartment);
-    setEntrance(entrance);
-    setFloor(floor);
-    setStatus(status);
-    setStatusId(statusId);
-    setPlanDate(planDate);
-    setComment(comment);
-    setWorker(worker);
-    setWorkerId(workerId);
-    setFaq(faq);
-    setConnection(newConnection);
-    setCritical(critical);
-    setImportant(important);
-    setRegular(regular);
+  function showEditModal(noteId) {
+    fetch(process.env.REACT_APP_URL_EDIT_REQUEST + noteId, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          let res = result.values[0];
+          // console.log(editMode + ' show modal');
+          // console.log(res);
+          setIsLoaded(true);
+          setModalActive(true);
+          setFirstName(res.fname);
+          setLastName(res.lname);
+          setPatronymic(res.patronymic);
+          setMobileNum(res.mobile);
+          setCityId(res.cityId);
+          setStreetId(res.streetId);
+          setBuilding(res.building);
+          setSection(res.section);
+          setApartment(res.apartment);
+          setEntrance(res.entrance);
+          setFloor(res.floor);
+          setStatus(res.status);
+          setStatusId(res.statusId);
+          setPlanDate(res.planDate);
+          setComment(res.comment);
+          setWorkerId(res.workerId);
+        },
+        (error) => {
+          // setIsLoaded(true);
+          setError(error);
+        },
+      );
   }
 
   function showAddModal() {
@@ -194,33 +181,34 @@ export const TaskList = ({
               setEditMode(item.id);
               if (editMode === item.id) {
                 statusTask(item.id);
-                // console.log(editMode === item.id);
-                showEditModal(
-                  item.fname,
-                  item.lname,
-                  item.patronymic,
-                  item.mobile,
-                  item.cityName,
-                  item.cityId,
-                  item.streetName,
-                  item.streetId,
-                  item.building,
-                  item.section,
-                  item.apartment,
-                  item.entrance,
-                  item.floor,
-                  item.statusName,
-                  item.statusId,
-                  item.planDate,
-                  item.comment,
-                  item.workerName,
-                  item.workerId,
-                  item.faq,
-                  item.newConnection,
-                  item.statCritical,
-                  item.statImportant,
-                  item.statRegular,
-                );
+                console.log(editMode === item.id);
+                console.log(editMode);
+                console.log(item.id);
+                showEditModal(item.id);
+                // item.fname,
+                // item.lname,
+                // item.patronymic,
+                // item.mobile,
+                // item.cityName,
+                // item.cityId,
+                // item.streetName,
+                // item.streetId,
+                // item.building,
+                // item.section,
+                // item.apartment,
+                // item.entrance,
+                // item.floor,
+                // item.statusName,
+                // item.statusId,
+                // item.planDate,
+                // item.comment,
+                // item.workerName,
+                // item.workerId,
+                // item.faq,
+                // item.newConnection,
+                // item.statCritical,
+                // item.statImportant,
+                // item.statRegular,
               }
             }}>
             <>

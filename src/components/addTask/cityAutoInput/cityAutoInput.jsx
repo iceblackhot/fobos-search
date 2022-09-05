@@ -14,7 +14,10 @@ export const CityAutoInput = ({
   setReactCitySelectValue,
   setStreet,
   setStreetId,
+  editMode,
 }) => {
+  const [cityValue, setCityValue] = useState('');
+
   const options = cityNames.map((cityObj) => ({
     value: cityObj.id,
     label: cityObj.cityName,
@@ -38,7 +41,7 @@ export const CityAutoInput = ({
   return (
     <div>
       <Select
-        value={cityId ? options.filter((option) => option.label === city) : ''}
+        value={cityId ? options.filter((option) => option.value === cityId) : ''}
         classNamePrefix="custom-select"
         onChange={handleChangeCity}
         options={options}

@@ -290,6 +290,8 @@ function App() {
           setStatusId={setStatusId}
           btnActive={btnActive}
           setBtnActive={setBtnActive}
+          setError={setError}
+          setIsLoaded={setIsLoaded}
         />
       </main>
       <Footer />

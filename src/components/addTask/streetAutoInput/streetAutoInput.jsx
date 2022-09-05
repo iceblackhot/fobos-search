@@ -35,7 +35,7 @@ export const StreetAutoInput = ({
   return (
     <div>
       <Select
-        value={options.filter((option) => option.label === street)}
+        value={streetId ? options.filter((option) => option.value === streetId) : ''}
         classNamePrefix="custom-select"
         onChange={handleChangeStreet}
         options={options}

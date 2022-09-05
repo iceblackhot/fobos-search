@@ -81,7 +81,6 @@ export const AddTask = ({
 }) => {
   function saveTask() {
     if (!cityId) {
-      // console.log(workerId);
       return;
     } else {
       fetch(process.env.REACT_APP_URL_ADD_REQUEST, {
@@ -113,7 +112,7 @@ export const AddTask = ({
         .then(
           (result) => {
             // console.log(result);
-            if (result.status === 200) {
+            if (result.status === 200 && result.id) {
               fetch(process.env.REACT_APP_URL_REQUESTS + result.id, {
                 method: 'get',
                 mode: 'cors',
@@ -139,39 +138,6 @@ export const AddTask = ({
             console.log(error);
           },
         );
-
-      // setTask([
-      //   ...task,
-      //   {
-      //     // dateNow: dateNow,
-      //     // id: Math.random().toString(36).substring(2, 9),
-      //     fname: firstName,
-      //     lname: lastName,
-      //     patronymic: patronymic,
-      //     mobile: mobileNum,
-      //     city: city,
-      //     cityId: cityId,
-      //     street: street,
-      //     streetId: streetId,
-      //     building: building,
-      //     section: section,
-      //     apartment: apartment,
-      //     entrance: entrance,
-      //     floor: floor,
-      //     status: status,
-      //     statusId: statusId,
-      //     planDate: planDate,
-      //     comment: comment,
-      //     worker: worker,
-      //     workerId: workerId,
-      //     editNote: false,
-      //     newConnection: connection,
-      //     faq: faq,
-      //     statCritical: critical,
-      //     statImportant: important,
-      //     statRegular: regular,
-      //   },
-      // ]);
     }
     setFirstName('');
     setLastName('');
@@ -198,38 +164,80 @@ export const AddTask = ({
     if (!cityId) {
       return;
     } else {
-      let newTask = [...task].filter((item) => {
-        if (item.id === editMode) {
-          // item.dateNow = dateNow;
-          item.lname = lastName;
-          item.fname = firstName;
-          item.patronymic = patronymic;
-          item.mobile = mobileNum;
-          item.city = city;
-          item.cityId = cityId;
-          item.street = street;
-          item.streetId = streetId;
-          item.building = building;
-          item.section = section;
-          item.apartment = apartment;
-          item.entrance = entrance;
-          item.floor = floor;
-          item.status = status;
-          item.statusId = statusId;
-          item.planDate = planDate;
-          item.comment = comment;
-          item.worker = worker;
-          item.workerId = workerId;
-          item.editNote = editMode;
-          item.newConnection = connection;
-          item.faq = faq;
-          item.statCritical = critical;
-          item.statImportant = important;
-          item.statRegular = regular;
-        }
-        return item;
-      });
-      setTask(newTask);
+      if (editMode) {
+        fetch(process.env.REACT_APP_URL_EDIT_SAVE_REQUEST + editMode, {
+          method: 'post',
+          mode: 'cors',
+          withCredentials: true,
+          body: JSON.stringify({
+            fname: firstName,
+            lname: lastName,
+            patronymic: patronymic,
+            cityId: cityId,
+            streetId: streetId,
+            building: building,
+            section: section,
+            apartment: apartment,
+            entrance: entrance,
+            floor: floor,
+            comment: comment,
+            mobile: mobileNum,
+            planDate: planDate,
+            statusId: statusId,
+            workerId: workerId,
+          }),
+          headers: {
+            'content-type': 'application/json',
+          },
+        })
+          .then((res) => res.json())
+          .then(
+            (result) => {
+              console.log(result);
+              if (result.status === 200 && editMode === result.id) {
+                fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
+                  method: 'get',
+                  mode: 'cors',
+                  withCredentials: true,
+                })
+                  .then((res) => res.json())
+                  .then(
+                    (result) => {
+                      let res = result.values;
+                      // setIsLoaded(true);
+                      console.log(res);
+                      setFirstName(res.fname);
+                      setLastName(res.lname);
+                      setPatronymic(res.patronymic);
+                      setMobileNum(res.mobile);
+                      setCity(res.cityName);
+                      setCityId(res.cityId);
+                      setStreetId(res.streetId);
+                      setBuilding(res.building);
+                      setSection(res.section);
+                      setApartment(res.apartment);
+                      setEntrance(res.entrance);
+                      setFloor(res.floor);
+                      setStatus(res.status);
+                      setStatusId(res.statusId);
+                      setAddDate(res.addDate);
+                      setPlanDate(res.planDate);
+                      setComment(res.comment);
+                      setWorkerId(res.workerId);
+                    },
+                    (error) => {
+                      // setIsLoaded(true);
+                      // setError(error);
+                      console.log(error);
+                    },
+                  );
+              }
+            },
+            (error) => {
+              console.log(error);
+            },
+          );
+      }
       setModalActive(false);
       setEditMode(false);
     }
@@ -374,6 +382,7 @@ export const AddTask = ({
               setReactCitySelectValue={setReactCitySelectValue}
               setStreet={setStreet}
               setStreetId={setStreetId}
+              editMode={editMode}
             />
             <StreetAutoInput
               streetNames={streetNames}
@@ -455,7 +464,9 @@ export const AddTask = ({
             />
           </div>
           <WorkerInput
+            editMode={editMode}
             worker={worker}
+            workerId={workerId}
             setWorker={setWorker}
             workerNames={workerNames}
             setWorkerId={setWorkerId}
