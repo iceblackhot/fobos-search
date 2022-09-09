@@ -31,11 +31,8 @@ export const TaskList = ({
   setWorker,
   setWorkerId,
   editMode,
-  setConnection,
-  setFaq,
-  setCritical,
-  setImportant,
-  setRegular,
+  setType,
+  setPriority,
   setEditMode,
   filtered,
   setStatusId,
@@ -43,8 +40,6 @@ export const TaskList = ({
   setError,
   setIsLoaded,
   setAddDate,
-  taskDone,
-  setTaskDone,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -56,7 +51,7 @@ export const TaskList = ({
 
   function showEditModal(noteId) {
     setEditMode(noteId);
-    fetch(process.env.REACT_APP_URL_REQUESTS + noteId, {
+    fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
       method: 'get',
       mode: 'cors',
       withCredentials: true,
@@ -89,6 +84,8 @@ export const TaskList = ({
           setComment(res.comment);
           setWorker(res.workerName);
           setWorkerId(res.workerId);
+          setType(res.type);
+          setPriority(res.priority);
         },
         (error) => {
           // setIsLoaded(true);
@@ -117,11 +114,8 @@ export const TaskList = ({
     setComment('');
     setWorker('');
     setWorkerId('');
-    setConnection(false);
-    setFaq(false);
-    setCritical(false);
-    setImportant(false);
-    setRegular(false);
+    setType(0);
+    setPriority(0);
   }
 
   function formatAddDate(date) {
@@ -175,30 +169,28 @@ export const TaskList = ({
             onClick={(e) => {
               // e.stopPropagation();
               setEditMode(item.id);
-              task.filter((currTask) => {
-                if (currTask.id === editMode) {
-                  showEditModal(item.id);
-                  console.log(editMode === item.id);
-                  console.log(editMode);
-                  console.log(item.id);
-                  return item;
-                } else {
-                  setModalActive(false);
-                }
-              });
+              // task.filter((currTask) => {
+              if (item.id === editMode) {
+                showEditModal(item.id);
+                // console.log(editMode === item.id);
+                // console.log(editMode);
+                // console.log(item.id);
+                return item;
+              }
+              // });
             }}>
             <>
               <div id="noPrint" className="task-list__item-cell">
                 {formatAddDate(item.addDate)}
               </div>
               <div className="task-list__item-cell">
-                {item.statCritical && (
+                {item.priority === 1 && (
                   <WarningAmberRoundedIcon id="noPrint" style={{color: 'red'}} />
                 )}
-                {item.statImportant && (
+                {item.priority === 2 && (
                   <ReportGmailerrorredRoundedIcon id="noPrint" style={{color: '#f4a261'}} />
                 )}
-                {item.statRegular && (
+                {item.priority === 3 && (
                   <LibraryBooksRoundedIcon id="noPrint" style={{color: '#2dcf40'}} />
                 )}
                 {item.cityName}
@@ -248,8 +240,6 @@ export const TaskList = ({
                   setModalActive={setModalActive}
                   editMode={editMode}
                   setEditMode={setEditMode}
-                  taskDone={taskDone}
-                  setTaskDone={setTaskDone}
                 />
               </div>
             </>

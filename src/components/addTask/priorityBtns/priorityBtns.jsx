@@ -1,121 +1,94 @@
 import React from 'react';
 
-export const PriorityBtns = ({
-  editMode,
-  task,
-  setTask,
-  faq,
-  setFaq,
-  setConnection,
-  connection,
-  setImportant,
-  important,
-  setCritical,
-  critical,
-  setRegular,
-  regular,
-}) => {
-  function newConnectionTask(e) {
+export const PriorityBtns = ({editMode, task, setTask, priority, setPriority, type, setType}) => {
+  function setTypeConnection(e) {
     e.preventDefault();
-    setConnection(true);
-    setFaq(false);
-    let newTask = [...task].filter((item) => {
+    task.filter((item) => {
       if (item.id === editMode) {
-        item.newConnection = !item.newConnection;
+        setType(1);
+        item.type = type;
       }
       return item;
     });
-    setTask(newTask);
   }
 
-  const classNameConnection = connection
-    ? 'add-task__options-btn connection'
-    : 'add-task__options-btn ';
+  const classNameConnection =
+    type === 1 ? 'add-task__options-btn connection' : 'add-task__options-btn ';
 
-  function newConnectionFaq(e) {
+  function setTypeFaq(e) {
     e.preventDefault();
-    setConnection(false);
-    setFaq(true);
-    let newTask = [...task].filter((item) => {
+    task.filter((item) => {
       if (item.id === editMode) {
-        item.faq = !item.faq;
+        setType(2);
+        item.type = type;
       }
       return item;
     });
-    setTask(newTask);
   }
 
-  const classNameFaq = faq ? 'add-task__options-btn faq' : 'add-task__options-btn';
+  const classNameFaq = type === 2 ? 'add-task__options-btn faq' : 'add-task__options-btn';
 
-  function priorityCritical(e) {
+  function setPriorityCritical(e) {
     e.preventDefault();
-    setCritical(true);
-    setImportant(false);
-    setRegular(false);
-    let newTask = [...task].filter((item) => {
+    task.filter((item) => {
       if (item.id === editMode) {
-        item.statCritical = !item.statCritical;
+        setPriority(1);
+        item.priority = priority;
       }
       return item;
     });
-    setTask(newTask);
   }
 
-  const classNameCritical = critical ? 'add-task__priority-btn critical' : 'add-task__priority-btn';
+  const classNameCritical =
+    priority === 1 ? 'add-task__priority-btn critical' : 'add-task__priority-btn';
 
-  function priorityImportant(e) {
+  function setPriorityImportant(e) {
     e.preventDefault();
-    setCritical(false);
-    setImportant(true);
-    setRegular(false);
-    let newTask = [...task].filter((item) => {
+    task.filter((item) => {
       if (item.id === editMode) {
-        item.important = !item.important;
+        setPriority(2);
+        item.priority = priority;
       }
       return item;
     });
-    setTask(newTask);
   }
 
-  const classNameImportant = important
-    ? 'add-task__priority-btn important'
-    : 'add-task__priority-btn';
+  const classNameImportant =
+    priority === 2 ? 'add-task__priority-btn important' : 'add-task__priority-btn';
 
-  function priorityRegular(e) {
+  function setPriorityRegular(e) {
     e.preventDefault();
-    setCritical(false);
-    setImportant(false);
-    setRegular(true);
-    let newTask = [...task].filter((item) => {
+    task.filter((item) => {
       if (item.id === editMode) {
-        item.regular = !item.regular;
+        setPriority(3);
+        item.priority = priority;
       }
       return item;
     });
-    setTask(newTask);
   }
 
-  const classNameRegular = regular ? 'add-task__priority-btn regular' : 'add-task__priority-btn';
+  const classNameRegular =
+    priority === 3 ? 'add-task__priority-btn regular' : 'add-task__priority-btn';
 
   return (
     <div className="add-task__options">
       <div className="add-task__options-type">
-        <button className={classNameConnection} onClick={newConnectionTask}>
+        <button className={classNameConnection} onClick={setTypeConnection}>
           Подключение
         </button>
-        <button className={classNameFaq} onClick={newConnectionFaq}>
+        <button className={classNameFaq} onClick={setTypeFaq}>
           Фак
         </button>
       </div>
       <div className="add-task__options-priority">
-        <button className={classNameCritical} onClick={priorityCritical}>
+        <button className={classNameCritical} onClick={setPriorityCritical}>
           Критично
         </button>
-        <button className={classNameImportant} onClick={priorityImportant}>
-          Важно
+        <button className={classNameImportant} onClick={setPriorityImportant}>
+          Важливо
         </button>
-        <button className={classNameRegular} onClick={priorityRegular}>
-          Обычная
+        <button className={classNameRegular} onClick={setPriorityRegular}>
+          Звичайна
         </button>
       </div>
     </div>

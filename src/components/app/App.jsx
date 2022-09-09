@@ -12,17 +12,13 @@ function App() {
   const [error, setError] = useState(false);
 
   const [task, setTask] = useState([]);
-  const [taskDone, setTaskDone] = useState(0);
+  // const [taskDone, setTaskDone] = useState(0);
   const [taskId, setTaskId] = useState(false);
   const [filtered, setFiltered] = useState(task);
   const [modalActive, setModalActive] = useState(false);
 
-  const [connection, setConnection] = useState(false);
-  const [faq, setFaq] = useState(false);
-
-  const [critical, setCritical] = useState(false);
-  const [important, setImportant] = useState(false);
-  const [regular, setRegular] = useState(false);
+  const [type, setType] = useState(0);
+  const [priority, setPriority] = useState(0);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -183,7 +179,6 @@ function App() {
           streetNames={streetNames}
           cityNames={cityNames}
           workerNames={workerNames}
-          taskDone={taskDone}
           task={task}
           setTask={setTask}
           taskId={taskId}
@@ -228,16 +223,10 @@ function App() {
           setWorker={setWorker}
           workerId={workerId}
           setWorkerId={setWorkerId}
-          connection={connection}
-          setConnection={setConnection}
-          faq={faq}
-          setFaq={setFaq}
-          critical={critical}
-          setCritical={setCritical}
-          important={important}
-          setImportant={setImportant}
-          regular={regular}
-          setRegular={setRegular}
+          type={type}
+          setType={setType}
+          priority={priority}
+          setPriority={setPriority}
           editMode={editMode}
           setEditMode={setEditMode}
           filtered={filtered}
@@ -251,8 +240,6 @@ function App() {
         <TaskList
           task={task}
           setTask={setTask}
-          taskDone={taskDone}
-          setTaskDone={setTaskDone}
           modalActive={modalActive}
           setModalActive={setModalActive}
           setFirstName={setFirstName}
@@ -274,16 +261,10 @@ function App() {
           setWorker={setWorker}
           workerId={workerId}
           setWorkerId={setWorkerId}
-          connection={connection}
-          setConnection={setConnection}
-          faq={faq}
-          setFaq={setFaq}
-          critical={critical}
-          setCritical={setCritical}
-          important={important}
-          setImportant={setImportant}
-          regular={regular}
-          setRegular={setRegular}
+          type={type}
+          setType={setType}
+          priority={priority}
+          setPriority={setPriority}
           editMode={editMode}
           setEditMode={setEditMode}
           filtered={filtered}

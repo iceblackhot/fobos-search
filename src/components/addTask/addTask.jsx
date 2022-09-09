@@ -14,11 +14,8 @@ export const AddTask = ({
   cityNames,
   streetNames,
   workerNames,
-  taskDone,
   task,
   setTask,
-  taskId,
-  setTaskId,
   modalActive,
   setModalActive,
   firstName,
@@ -59,16 +56,10 @@ export const AddTask = ({
   setWorker,
   workerId,
   setWorkerId,
-  connection,
-  setConnection,
-  faq,
-  setFaq,
-  critical,
-  setCritical,
-  important,
-  setImportant,
-  regular,
-  setRegular,
+  type,
+  setType,
+  priority,
+  setPriority,
   editMode,
   setEditMode,
   setFiltered,
@@ -80,7 +71,7 @@ export const AddTask = ({
 }) => {
   function saveTask() {
     if (!cityId || !lastName || !mobileNum) {
-      console.log(cityId);
+      // console.log(cityId);
       return;
     } else {
       fetch(process.env.REACT_APP_URL_ADD_REQUEST, {
@@ -103,7 +94,8 @@ export const AddTask = ({
           planDate: planDate,
           statusId: statusId,
           workerId: workerId,
-          taskDone: taskDone,
+          type: type,
+          priority: priority,
         }),
         headers: {
           'content-type': 'application/json',
@@ -156,6 +148,8 @@ export const AddTask = ({
     setPlanDate('');
     setComment('');
     setWorker('');
+    setType(0);
+    setPriority(0);
     setModalActive(false);
   }
 
@@ -185,7 +179,8 @@ export const AddTask = ({
           planDate: planDate,
           statusId: statusId,
           workerId: workerId,
-          taskDone: taskDone,
+          type: type,
+          priority: priority,
         }),
         headers: {
           'content-type': 'application/json',
@@ -226,6 +221,8 @@ export const AddTask = ({
                     setAddDate(res.addDate);
                     setPlanDate(res.planDate);
                     setComment(res.comment);
+                    setType(res.type);
+                    setPriority(res.priority);
                     task.filter((item) => {
                       if (item.id === editMode) {
                         // console.log(item.id === editMode);
@@ -249,6 +246,8 @@ export const AddTask = ({
                         item.planDate = planDate;
                         item.addDate = addDate;
                         item.comment = comment;
+                        item.priority = priority;
+                        item.type = type;
                       }
                     });
                     // setIsLoaded(true);
@@ -298,11 +297,8 @@ export const AddTask = ({
     setPlanDate('');
     setComment('');
     setWorker('');
-    setConnection(false);
-    setFaq(false);
-    setCritical(false);
-    setImportant(false);
-    setRegular(false);
+    setType(0);
+    setPriority(0);
   }
 
   function changeMobileInput(e) {
@@ -360,16 +356,10 @@ export const AddTask = ({
             editMode={editMode}
             task={task}
             setTask={setTask}
-            faq={faq}
-            setFaq={setFaq}
-            setConnection={setConnection}
-            connection={connection}
-            setCritical={setCritical}
-            critical={critical}
-            setImportant={setImportant}
-            important={important}
-            setRegular={setRegular}
-            regular={regular}
+            type={type}
+            setType={setType}
+            priority={priority}
+            setPriority={setPriority}
           />
           <div className="add-task__inputs-fio">
             <input

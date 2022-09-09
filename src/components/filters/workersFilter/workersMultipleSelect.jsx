@@ -35,7 +35,7 @@ export const WorkersMultipleSelect = ({workerNames, task, setFiltered, classDrop
     });
     // console.log(currWorkerIndex);
 
-    newTaskList = [...task].filter((obj) => currWorkerIndex.includes(obj.streetId));
+    newTaskList = [...task].filter((obj) => currWorkerIndex.includes(obj.workerId));
 
     setFiltered(newTaskList);
   }

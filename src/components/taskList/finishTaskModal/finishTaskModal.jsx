@@ -22,13 +22,18 @@ export default function FinishTaskModal({
   editMode,
   setEditMode,
   setModalActive,
-  taskDone,
-  setTaskDone,
 }) {
   const handleClickOpen = (e) => {
     e.stopPropagation();
-    setOpen(true);
+    setEditMode(id);
+    task.filter((currTask) => {
+      if (currTask.id === editMode) {
+        setOpen(true);
+      }
+    });
   };
+
+  // console.log(editMode);
 
   const handleClose = (e) => {
     e.stopPropagation();
@@ -39,9 +44,6 @@ export default function FinishTaskModal({
 
   function handleDoneTask(e) {
     e.stopPropagation();
-    // task.filter((currTask) => {
-    //   if (currTask.id === editMode) {
-    // console.log(currTask.id === editMode);
     let completeTask = 1;
     fetch(process.env.REACT_APP_URL_EDIT_TASKDONE + editMode, {
       method: 'post',
@@ -89,15 +91,12 @@ export default function FinishTaskModal({
     setOpen(false);
     setEditMode(false);
     setModalActive(false);
-    // }
-    // });
   }
-
-  // console.log(taskDone);
 
   return (
     <div>
       <TaskAltIcon
+        className="task-done__btn"
         style={{fontSize: '1.2rem', color: '#84c4ff'}}
         id="noPrint"
         onClick={handleClickOpen}
