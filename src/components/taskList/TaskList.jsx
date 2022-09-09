@@ -1,15 +1,16 @@
 import React, {useRef} from 'react';
 import ReactToPrint from 'react-to-print';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import ReportGmailerrorredRoundedIcon from '@mui/icons-material/ReportGmailerrorredRounded';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
+import FinishTaskModal from './finishTaskModal/finishTaskModal';
 import './taskList.scss';
 import './print.scss';
 
 export const TaskList = ({
   task,
   setTask,
+  modalActive,
   setModalActive,
   setFirstName,
   setLastName,
@@ -41,32 +42,21 @@ export const TaskList = ({
   btnActive,
   setError,
   setIsLoaded,
+  setAddDate,
+  taskDone,
+  setTaskDone,
 }) => {
+  const [open, setOpen] = React.useState(false);
+
   const printContentRef = useRef();
 
   const classTask = `task-list${btnActive ? ' active' : ''}`;
 
   const classTaskList = `task-list__list${btnActive ? ' active' : ''}`;
 
-  function deleteTask(e, id) {
-    e.stopPropagation();
-    let newTask = [...task].filter((item) => item.id !== id);
-    setTask(newTask);
-  }
-
-  function statusTask(e, id) {
-    // e.stopPropagation();
-    let newTask = [...task].filter((item) => {
-      if (item.id === id) {
-        item.editNote = !item.editNote;
-      }
-      return item;
-    });
-    setTask(newTask);
-  }
-
   function showEditModal(noteId) {
-    fetch(process.env.REACT_APP_URL_EDIT_REQUEST + noteId, {
+    setEditMode(noteId);
+    fetch(process.env.REACT_APP_URL_REQUESTS + noteId, {
       method: 'get',
       mode: 'cors',
       withCredentials: true,
@@ -83,17 +73,21 @@ export const TaskList = ({
           setLastName(res.lname);
           setPatronymic(res.patronymic);
           setMobileNum(res.mobile);
+          setCity(res.cityName);
           setCityId(res.cityId);
+          setStreet(res.streetName);
           setStreetId(res.streetId);
           setBuilding(res.building);
           setSection(res.section);
           setApartment(res.apartment);
           setEntrance(res.entrance);
           setFloor(res.floor);
-          setStatus(res.status);
+          setStatus(res.statusName);
           setStatusId(res.statusId);
           setPlanDate(res.planDate);
+          setAddDate(res.addDate);
           setComment(res.comment);
+          setWorker(res.workerName);
           setWorkerId(res.workerId);
         },
         (error) => {
@@ -160,6 +154,7 @@ export const TaskList = ({
           }}
           content={() => printContentRef.current}
         />
+        <button>Виконані заявки</button>
       </div>
       <ul className="task-list__table-head">
         <li className="task-list__table-title">Дата подачи</li>
@@ -176,40 +171,21 @@ export const TaskList = ({
         {filtered.map((item) => (
           <li
             key={item.id}
-            className={editMode === item.id ? 'task-list__item edit' : 'task-list__item '}
-            onClick={() => {
+            className={editMode === item.id ? 'task-list__item edit' : 'task-list__item'}
+            onClick={(e) => {
+              // e.stopPropagation();
               setEditMode(item.id);
-              if (editMode === item.id) {
-                statusTask(item.id);
-                console.log(editMode === item.id);
-                console.log(editMode);
-                console.log(item.id);
-                showEditModal(item.id);
-                // item.fname,
-                // item.lname,
-                // item.patronymic,
-                // item.mobile,
-                // item.cityName,
-                // item.cityId,
-                // item.streetName,
-                // item.streetId,
-                // item.building,
-                // item.section,
-                // item.apartment,
-                // item.entrance,
-                // item.floor,
-                // item.statusName,
-                // item.statusId,
-                // item.planDate,
-                // item.comment,
-                // item.workerName,
-                // item.workerId,
-                // item.faq,
-                // item.newConnection,
-                // item.statCritical,
-                // item.statImportant,
-                // item.statRegular,
-              }
+              task.filter((currTask) => {
+                if (currTask.id === editMode) {
+                  showEditModal(item.id);
+                  console.log(editMode === item.id);
+                  console.log(editMode);
+                  console.log(item.id);
+                  return item;
+                } else {
+                  setModalActive(false);
+                }
+              });
             }}>
             <>
               <div id="noPrint" className="task-list__item-cell">
@@ -263,12 +239,18 @@ export const TaskList = ({
                 <span>{item.workerName}</span>
               </div>
               <div className="task-list__item-cell">
-                <TaskAltIcon
-                  style={{fontSize: '1.2rem', color: '#84c4ff'}}
-                  id="noPrint"
-                  onClick={(e) => deleteTask(e, item.id)}>
-                  Удалить
-                </TaskAltIcon>
+                <FinishTaskModal
+                  id={item.id}
+                  task={task}
+                  setTask={setTask}
+                  open={open}
+                  setOpen={setOpen}
+                  setModalActive={setModalActive}
+                  editMode={editMode}
+                  setEditMode={setEditMode}
+                  taskDone={taskDone}
+                  setTaskDone={setTaskDone}
+                />
               </div>
             </>
           </li>

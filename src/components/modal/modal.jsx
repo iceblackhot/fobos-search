@@ -4,11 +4,12 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import './modal.scss';
 
-export default function Modal({active, setActive, children}) {
+export default function Modal({handleCancel, modalActive, setModalActive, children, setEditMode}) {
   useEffect(() => {
     const close = (e) => {
       if (e.keyCode === 27) {
-        setActive(false);
+        setModalActive(false);
+        setEditMode(false);
       }
     };
     window.addEventListener('keydown', close);
@@ -16,9 +17,15 @@ export default function Modal({active, setActive, children}) {
   }, []);
 
   return (
-    <div className={active ? 'modal active' : 'modal'} onClick={() => setActive(false)}>
+    <div
+      className={modalActive ? 'modal active' : 'modal'}
+      // onClick={() => {
+      //   setModalActive(false);
+      //   setEditMode(false);
+      // }}
+    >
       <div
-        className={active ? 'modal__content active' : 'modal__content '}
+        className={modalActive ? 'modal__content active' : 'modal__content '}
         onClick={(e) => e.stopPropagation()}>
         <CloseIcon
           style={{
@@ -28,7 +35,10 @@ export default function Modal({active, setActive, children}) {
             cursor: 'pointer',
             color: '#3b9efa',
           }}
-          onClick={() => setActive(false)}
+          onClick={() => {
+            setModalActive(false);
+            setEditMode(false);
+          }}
         />
         {children}
       </div>

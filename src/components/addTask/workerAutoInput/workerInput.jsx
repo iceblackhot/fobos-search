@@ -8,22 +8,27 @@ export const WorkerInput = ({editMode, workerNames, worker, setWorker, workerId,
     label: workerObj.workerName,
   }));
 
-  function handleChangeWorker(event) {
-    if (event) {
-      setWorker(event.label);
-      setWorkerId(event.value);
+  function handleChangeWorker(newValue) {
+    if (newValue) {
+      setWorker(newValue.label);
+      setWorkerId(newValue.value);
     } else {
       setWorker('');
       setWorkerId('');
     }
   }
 
-  // console.log(workerId);
+  const getValue = () => {
+    return workerId ? options.filter((worker) => worker.value === workerId) : '';
+  };
+
+  // console.log(worker);
+  // console.log(editMode);
 
   return (
     <div className="add-task__inputs-workers">
       <Select
-        value={workerId ? options.filter((option) => option.value === workerId) : ''}
+        value={getValue()}
         classNamePrefix="custom-select"
         onChange={handleChangeWorker}
         options={options}

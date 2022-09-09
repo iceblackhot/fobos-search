@@ -5,6 +5,7 @@ export const StatusOption = ({status, setStatus, statusList, statusId, setStatus
     e.preventDefault();
     statusList.filter((obj) => {
       if (obj.id.toString() === e.currentTarget.value) {
+        console.log(obj.id);
         setStatus(obj.statusName);
         setStatusId(obj.id);
         return obj;

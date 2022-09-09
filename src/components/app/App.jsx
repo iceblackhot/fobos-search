@@ -12,6 +12,7 @@ function App() {
   const [error, setError] = useState(false);
 
   const [task, setTask] = useState([]);
+  const [taskDone, setTaskDone] = useState(0);
   const [taskId, setTaskId] = useState(false);
   const [filtered, setFiltered] = useState(task);
   const [modalActive, setModalActive] = useState(false);
@@ -49,8 +50,6 @@ function App() {
 
   const [filterCitySelectValue, setFilterCitySelectValue] = useState([]);
   const [filterStatusSelectValue, setFilterStatusSelectValue] = useState([]);
-
-  const [cityReactSelectValue, setReactCitySelectValue] = useState(null);
 
   const [btnActive, setBtnActive] = useState(false);
 
@@ -158,7 +157,7 @@ function App() {
   }, [task]);
 
   // console.log(task);
-  // console.log(workerId);
+  // console.log(editMode);
 
   return (
     <div className="wrapper">
@@ -184,6 +183,7 @@ function App() {
           streetNames={streetNames}
           cityNames={cityNames}
           workerNames={workerNames}
+          taskDone={taskDone}
           task={task}
           setTask={setTask}
           taskId={taskId}
@@ -247,12 +247,13 @@ function App() {
           setStatusId={setStatusId}
           isLoaded={isLoaded}
           setIsLoaded={setIsLoaded}
-          cityReactSelectValue={cityReactSelectValue}
-          setReactCitySelectValue={setReactCitySelectValue}
         />
         <TaskList
           task={task}
           setTask={setTask}
+          taskDone={taskDone}
+          setTaskDone={setTaskDone}
+          modalActive={modalActive}
           setModalActive={setModalActive}
           setFirstName={setFirstName}
           setLastName={setLastName}
@@ -292,6 +293,7 @@ function App() {
           setBtnActive={setBtnActive}
           setError={setError}
           setIsLoaded={setIsLoaded}
+          setAddDate={setAddDate}
         />
       </main>
       <Footer />

@@ -14,6 +14,7 @@ export const AddTask = ({
   cityNames,
   streetNames,
   workerNames,
+  taskDone,
   task,
   setTask,
   taskId,
@@ -76,11 +77,10 @@ export const AddTask = ({
   setStatusId,
   isLoaded,
   setIsLoaded,
-  cityReactSelectValue,
-  setReactCitySelectValue,
 }) => {
   function saveTask() {
-    if (!cityId) {
+    if (!cityId || !lastName || !mobileNum) {
+      console.log(cityId);
       return;
     } else {
       fetch(process.env.REACT_APP_URL_ADD_REQUEST, {
@@ -103,6 +103,7 @@ export const AddTask = ({
           planDate: planDate,
           statusId: statusId,
           workerId: workerId,
+          taskDone: taskDone,
         }),
         headers: {
           'content-type': 'application/json',
@@ -161,83 +162,109 @@ export const AddTask = ({
   function editTask(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (!cityId) {
+    if (!cityId || !lastName || !mobileNum) {
       return;
     } else {
-      if (editMode) {
-        fetch(process.env.REACT_APP_URL_EDIT_SAVE_REQUEST + editMode, {
-          method: 'post',
-          mode: 'cors',
-          withCredentials: true,
-          body: JSON.stringify({
-            fname: firstName,
-            lname: lastName,
-            patronymic: patronymic,
-            cityId: cityId,
-            streetId: streetId,
-            building: building,
-            section: section,
-            apartment: apartment,
-            entrance: entrance,
-            floor: floor,
-            comment: comment,
-            mobile: mobileNum,
-            planDate: planDate,
-            statusId: statusId,
-            workerId: workerId,
-          }),
-          headers: {
-            'content-type': 'application/json',
+      fetch(process.env.REACT_APP_URL_EDIT_SAVE_REQUEST + editMode, {
+        method: 'post',
+        mode: 'cors',
+        withCredentials: true,
+        body: JSON.stringify({
+          fname: firstName,
+          lname: lastName,
+          patronymic: patronymic,
+          cityId: cityId,
+          streetId: streetId,
+          building: building,
+          section: section,
+          apartment: apartment,
+          entrance: entrance,
+          floor: floor,
+          comment: comment,
+          mobile: mobileNum,
+          planDate: planDate,
+          statusId: statusId,
+          workerId: workerId,
+          taskDone: taskDone,
+        }),
+        headers: {
+          'content-type': 'application/json',
+        },
+      })
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            console.log(result);
+            if (result.status === 200) {
+              fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
+                method: 'get',
+                mode: 'cors',
+                withCredentials: true,
+              })
+                .then((res) => res.json())
+                .then(
+                  (result) => {
+                    let res = result.values;
+                    console.log(res);
+                    setFirstName(res.fname);
+                    setLastName(res.lname);
+                    setPatronymic(res.patronymic);
+                    setWorkerId(res.workerId);
+                    setWorker(res.workerName);
+                    setMobileNum(res.mobile);
+                    setCity(res.cityName);
+                    setCityId(res.cityId);
+                    setStreetId(res.streetId);
+                    setStreet(res.street);
+                    setBuilding(res.building);
+                    setSection(res.section);
+                    setApartment(res.apartment);
+                    setEntrance(res.entrance);
+                    setFloor(res.floor);
+                    setStatus(res.statusName);
+                    setStatusId(res.statusId);
+                    setAddDate(res.addDate);
+                    setPlanDate(res.planDate);
+                    setComment(res.comment);
+                    task.filter((item) => {
+                      if (item.id === editMode) {
+                        // console.log(item.id === editMode);
+                        item.workerId = workerId;
+                        item.workerName = worker;
+                        item.fname = firstName;
+                        item.lname = lastName;
+                        item.patronymic = patronymic;
+                        item.mobile = mobileNum;
+                        item.cityName = city;
+                        item.cityId = cityId;
+                        item.streetId = streetId;
+                        item.streetName = street;
+                        item.building = building;
+                        item.section = section;
+                        item.apartment = apartment;
+                        item.entrance = entrance;
+                        item.floor = floor;
+                        item.statusName = status;
+                        item.statusId = statusId;
+                        item.planDate = planDate;
+                        item.addDate = addDate;
+                        item.comment = comment;
+                      }
+                    });
+                    // setIsLoaded(true);
+                  },
+                  (error) => {
+                    // setIsLoaded(true);
+                    // setError(error);
+                    console.log(error);
+                  },
+                );
+            }
           },
-        })
-          .then((res) => res.json())
-          .then(
-            (result) => {
-              console.log(result);
-              if (result.status === 200 && editMode === result.id) {
-                fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
-                  method: 'get',
-                  mode: 'cors',
-                  withCredentials: true,
-                })
-                  .then((res) => res.json())
-                  .then(
-                    (result) => {
-                      let res = result.values;
-                      // setIsLoaded(true);
-                      console.log(res);
-                      setFirstName(res.fname);
-                      setLastName(res.lname);
-                      setPatronymic(res.patronymic);
-                      setMobileNum(res.mobile);
-                      setCity(res.cityName);
-                      setCityId(res.cityId);
-                      setStreetId(res.streetId);
-                      setBuilding(res.building);
-                      setSection(res.section);
-                      setApartment(res.apartment);
-                      setEntrance(res.entrance);
-                      setFloor(res.floor);
-                      setStatus(res.status);
-                      setStatusId(res.statusId);
-                      setAddDate(res.addDate);
-                      setPlanDate(res.planDate);
-                      setComment(res.comment);
-                      setWorkerId(res.workerId);
-                    },
-                    (error) => {
-                      // setIsLoaded(true);
-                      // setError(error);
-                      console.log(error);
-                    },
-                  );
-              }
-            },
-            (error) => {
-              console.log(error);
-            },
-          );
-      }
+          (error) => {
+            console.log(error);
+          },
+        );
       setModalActive(false);
       setEditMode(false);
     }
@@ -320,7 +347,11 @@ export const AddTask = ({
 
   return (
     <div className="add-task">
-      <Modal active={modalActive} setActive={setModalActive}>
+      <Modal
+        modalActive={modalActive}
+        setModalActive={setModalActive}
+        handleCancel={handleCancel}
+        setEditMode={setEditMode}>
         <div className="add-task__title">
           <h1>Новая запись</h1>
         </div>
@@ -378,8 +409,6 @@ export const AddTask = ({
               setCity={setCity}
               cityId={cityId}
               setCityId={setCityId}
-              cityReactSelectValue={cityReactSelectValue}
-              setReactCitySelectValue={setReactCitySelectValue}
               setStreet={setStreet}
               setStreetId={setStreetId}
               editMode={editMode}
