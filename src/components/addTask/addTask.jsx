@@ -8,7 +8,7 @@ import {WorkerInput} from './workerAutoInput/workerInput';
 import {PriorityBtns} from './priorityBtns/priorityBtns';
 import {StreetAutoInput} from './streetAutoInput/streetAutoInput';
 import {CityAutoInput} from './cityAutoInput/cityAutoInput';
-import {StatusOption} from './cityAutoInput/statusOption/statusOption';
+import {StatusOption} from './statusOption/statusOption';
 
 export const AddTask = ({
   cityNames,
@@ -68,6 +68,7 @@ export const AddTask = ({
   setStatusId,
   isLoaded,
   setIsLoaded,
+  doneMode,
 }) => {
   function saveTask() {
     if (!cityId || !lastName || !mobileNum) {
@@ -190,7 +191,7 @@ export const AddTask = ({
         .then(
           (result) => {
             console.log(result);
-            if (result.status === 200) {
+            if (result.status === 200 && result.id === editMode) {
               fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
                 method: 'get',
                 mode: 'cors',
@@ -339,7 +340,11 @@ export const AddTask = ({
     }
   }
 
+  let disabled = doneMode && 'disabled';
+
   // console.log(task);
+  // console.log(doneMode + ' doneMode');
+  // console.log(editMode + ' editMode');
 
   return (
     <div className="add-task">
@@ -349,7 +354,9 @@ export const AddTask = ({
         handleCancel={handleCancel}
         setEditMode={setEditMode}>
         <div className="add-task__title">
-          <h1>Новая запись</h1>
+          {!editMode & !doneMode ? <h1>Створити запис</h1> : ''}
+          {editMode & !doneMode ? <h1>Редагувати запис</h1> : ''}
+          {editMode & doneMode ? <h1>Перегляд запису</h1> : ''}
         </div>
         <form onSubmit={handleSubmit}>
           <PriorityBtns
@@ -360,6 +367,7 @@ export const AddTask = ({
             setType={setType}
             priority={priority}
             setPriority={setPriority}
+            disabled={disabled}
           />
           <div className="add-task__inputs-fio">
             <input
@@ -367,18 +375,21 @@ export const AddTask = ({
               type="text"
               value={lastName}
               onChange={changeLastNameInput}
+              disabled={disabled}
             />
             <input
               placeholder="Ім'я"
               type="text"
               value={firstName}
               onChange={changeFirstNameInput}
+              disabled={disabled}
             />
             <input
               placeholder="По батькові"
               type="text"
               value={patronymic}
               onChange={changePatronymicInput}
+              disabled={disabled}
             />
           </div>
           <div className="add-task__inputs-mobile">
@@ -388,6 +399,7 @@ export const AddTask = ({
               maxLength={50}
               value={mobileNum}
               onChange={changeMobileInput}
+              disabled={disabled}
             />
           </div>
           <div className="add-task__inputs-adress">
@@ -402,14 +414,15 @@ export const AddTask = ({
               setStreet={setStreet}
               setStreetId={setStreetId}
               editMode={editMode}
+              disabled={disabled}
             />
             <StreetAutoInput
               streetNames={streetNames}
-              street={street}
               setStreet={setStreet}
               streetId={streetId}
               setStreetId={setStreetId}
               cityId={cityId}
+              doneMode={doneMode}
             />
           </div>
           <div className="add-task__inputs-adressdetails">
@@ -418,45 +431,51 @@ export const AddTask = ({
               type="text"
               value={building}
               onChange={(e) => setBuilding(e.target.value)}
+              disabled={disabled}
             />
             <input
               placeholder="Секция"
               type="text"
               value={section}
               onChange={(e) => setSection(e.target.value)}
+              disabled={disabled}
             />
             <input
               placeholder="Квартира"
               type="text"
               value={apartment}
               onChange={(e) => setApartment(e.target.value)}
+              disabled={disabled}
             />
             <input
               placeholder="Подьезд"
               type="text"
               value={entrance}
               onChange={(e) => setEntrance(e.target.value)}
+              disabled={disabled}
             />
             <input
               placeholder="Этаж"
               type="text"
               value={floor}
               onChange={(e) => setFloor(e.target.value)}
+              disabled={disabled}
             />
           </div>
           <div className="add-task__inputs-data">
             <StatusOption
               statusList={statusList}
-              status={status}
               setStatus={setStatus}
               statusId={statusId}
               setStatusId={setStatusId}
+              disabled={disabled}
             />
             <Flatpickr
               style={{width: '50%'}}
               placeholder="Дата"
               data-enable-time
               value={planDate}
+              disabled={disabled}
               options={{
                 defaultDate: 'today',
                 minDate: '01.01.2020',
@@ -480,6 +499,7 @@ export const AddTask = ({
               placeholder="Комментраий"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
+              disabled={disabled}
             />
           </div>
           <WorkerInput
@@ -489,15 +509,24 @@ export const AddTask = ({
             setWorker={setWorker}
             workerNames={workerNames}
             setWorkerId={setWorkerId}
+            disabled={disabled}
           />
           <div className="add-task__action-btn">
             {editMode ? (
-              <button onClick={(e) => editTask(e)}>Редактировать</button>
+              <button onClick={(e) => editTask(e)} disabled={disabled}>
+                Редактировать
+              </button>
             ) : (
-              <button onClick={saveTask}>Сохранить</button>
+              <button onClick={saveTask} disabled={disabled}>
+                Сохранить
+              </button>
             )}
-            <button onClick={handleCancel}>Отмена</button>
-            <button onClick={handleClear}>Сброс</button>
+            <button onClick={handleCancel} disabled={disabled}>
+              Отмена
+            </button>
+            <button onClick={handleClear} disabled={disabled}>
+              Сброс
+            </button>
           </div>
         </form>
       </Modal>

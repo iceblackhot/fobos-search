@@ -1,12 +1,23 @@
 import React from 'react';
 
-export const PriorityBtns = ({editMode, task, setTask, priority, setPriority, type, setType}) => {
+export const PriorityBtns = ({
+  editMode,
+  task,
+  setTask,
+  priority,
+  setPriority,
+  type,
+  setType,
+  disabled,
+}) => {
   function setTypeConnection(e) {
     e.preventDefault();
     task.filter((item) => {
       if (item.id === editMode) {
         setType(1);
         item.type = type;
+      } else {
+        setType(1);
       }
       return item;
     });
@@ -21,6 +32,8 @@ export const PriorityBtns = ({editMode, task, setTask, priority, setPriority, ty
       if (item.id === editMode) {
         setType(2);
         item.type = type;
+      } else {
+        setType(2);
       }
       return item;
     });
@@ -34,6 +47,8 @@ export const PriorityBtns = ({editMode, task, setTask, priority, setPriority, ty
       if (item.id === editMode) {
         setPriority(1);
         item.priority = priority;
+      } else {
+        setPriority(1);
       }
       return item;
     });
@@ -48,6 +63,8 @@ export const PriorityBtns = ({editMode, task, setTask, priority, setPriority, ty
       if (item.id === editMode) {
         setPriority(2);
         item.priority = priority;
+      } else {
+        setPriority(2);
       }
       return item;
     });
@@ -62,6 +79,8 @@ export const PriorityBtns = ({editMode, task, setTask, priority, setPriority, ty
       if (item.id === editMode) {
         setPriority(3);
         item.priority = priority;
+      } else {
+        setPriority(3);
       }
       return item;
     });
@@ -73,21 +92,21 @@ export const PriorityBtns = ({editMode, task, setTask, priority, setPriority, ty
   return (
     <div className="add-task__options">
       <div className="add-task__options-type">
-        <button className={classNameConnection} onClick={setTypeConnection}>
+        <button className={classNameConnection} onClick={setTypeConnection} disabled={disabled}>
           Подключение
         </button>
-        <button className={classNameFaq} onClick={setTypeFaq}>
+        <button className={classNameFaq} onClick={setTypeFaq} disabled={disabled}>
           Фак
         </button>
       </div>
       <div className="add-task__options-priority">
-        <button className={classNameCritical} onClick={setPriorityCritical}>
+        <button className={classNameCritical} onClick={setPriorityCritical} disabled={disabled}>
           Критично
         </button>
-        <button className={classNameImportant} onClick={setPriorityImportant}>
+        <button className={classNameImportant} onClick={setPriorityImportant} disabled={disabled}>
           Важливо
         </button>
-        <button className={classNameRegular} onClick={setPriorityRegular}>
+        <button className={classNameRegular} onClick={setPriorityRegular} disabled={disabled}>
           Звичайна
         </button>
       </div>

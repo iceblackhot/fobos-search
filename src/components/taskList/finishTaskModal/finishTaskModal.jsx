@@ -59,29 +59,10 @@ export default function FinishTaskModal({
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log(result);
-          if (result.status === 200) {
-            fetch(process.env.REACT_APP_URL_REQUESTS + result.id, {
-              method: 'get',
-              mode: 'cors',
-              withCredentials: true,
-            })
-              .then((res) => res.json())
-              .then(
-                (result) => {
-                  console.log(result.values[0]);
-                  task.filter((item) => {
-                    if (item.id === editMode) {
-                      item.taskDone = result.values[0].taskDone;
-                    }
-                  });
-                },
-                (error) => {
-                  // setIsLoaded(true);
-                  // setError(error);
-                  console.log(error);
-                },
-              );
+          // console.log(result);
+          if (result.status === 200 && Number(result.id) === editMode) {
+            let newTask = task.filter((obj) => obj.id !== Number(result.id));
+            setTask(newTask);
           }
         },
         (error) => {

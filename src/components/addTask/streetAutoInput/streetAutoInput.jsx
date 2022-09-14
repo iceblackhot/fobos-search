@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Select from 'react-select';
 import './streetAutoInput.scss';
 
 export const StreetAutoInput = ({
   setStreet,
-  street,
   streetId,
   setStreetId,
   streetNames,
   cityId,
+  doneMode,
 }) => {
   let newStreetNames = [...streetNames].filter((streetObj) => streetObj.cityId === cityId);
 
@@ -44,7 +44,7 @@ export const StreetAutoInput = ({
         placeholder="Обрати вулицю"
         loadingMessage={() => 'Пошук...'}
         isLoading={!streetNames.length ? true : false}
-        isDisabled={!cityId ? true : false}
+        isDisabled={!cityId || doneMode ? true : false}
         hideSelectedOptions
       />
     </div>

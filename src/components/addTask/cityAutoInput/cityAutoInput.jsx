@@ -15,6 +15,7 @@ export const CityAutoInput = ({
   setStreet,
   setStreetId,
   editMode,
+  disabled,
 }) => {
   const [cityValue, setCityValue] = useState('');
 
@@ -51,6 +52,7 @@ export const CityAutoInput = ({
         loadingMessage={() => 'Пошук...'}
         isLoading={!cityNames.length ? true : false}
         hideSelectedOptions
+        isDisabled={disabled}
       />
     </div>
   );

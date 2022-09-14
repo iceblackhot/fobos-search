@@ -12,7 +12,7 @@ function App() {
   const [error, setError] = useState(false);
 
   const [task, setTask] = useState([]);
-  // const [taskDone, setTaskDone] = useState(0);
+  const [doneMode, setDoneMode] = useState(false);
   const [taskId, setTaskId] = useState(false);
   const [filtered, setFiltered] = useState(task);
   const [modalActive, setModalActive] = useState(false);
@@ -236,6 +236,7 @@ function App() {
           setStatusId={setStatusId}
           isLoaded={isLoaded}
           setIsLoaded={setIsLoaded}
+          doneMode={doneMode}
         />
         <TaskList
           task={task}
@@ -275,6 +276,8 @@ function App() {
           setError={setError}
           setIsLoaded={setIsLoaded}
           setAddDate={setAddDate}
+          doneMode={doneMode}
+          setDoneMode={setDoneMode}
         />
       </main>
       <Footer />

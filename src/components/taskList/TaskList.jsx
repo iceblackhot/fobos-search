@@ -1,11 +1,14 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import ReactToPrint from 'react-to-print';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import ReportGmailerrorredRoundedIcon from '@mui/icons-material/ReportGmailerrorredRounded';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 import FinishTaskModal from './finishTaskModal/finishTaskModal';
 import './taskList.scss';
 import './print.scss';
+import {DoneTasks} from './doneTasks/doneTasks';
+import {Tasks} from './tasks/tasks';
 
 export const TaskList = ({
   task,
@@ -40,8 +43,10 @@ export const TaskList = ({
   setError,
   setIsLoaded,
   setAddDate,
+  doneMode,
+  setDoneMode,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const printContentRef = useRef();
 
@@ -49,8 +54,40 @@ export const TaskList = ({
 
   const classTaskList = `task-list__list${btnActive ? ' active' : ''}`;
 
-  function showEditModal(noteId) {
-    setEditMode(noteId);
+  function showDoneTaskModal() {
+    // console.log(doneMode);
+    task.filter((obj) => {
+      if (obj.id === editMode) {
+        setModalActive(true);
+        setFirstName(obj.fname);
+        setLastName(obj.lname);
+        setPatronymic(obj.patronymic);
+        setMobileNum(obj.mobile);
+        setCity(obj.cityName);
+        setCityId(obj.cityId);
+        setStreet(obj.streetName);
+        setStreetId(obj.streetId);
+        setBuilding(obj.building);
+        setSection(obj.section);
+        setApartment(obj.apartment);
+        setEntrance(obj.entrance);
+        setFloor(obj.floor);
+        setStatus(obj.statusName);
+        setStatusId(obj.statusId);
+        setPlanDate(obj.planDate);
+        setAddDate(obj.addDate);
+        setComment(obj.comment);
+        setWorker(obj.workerName);
+        setWorkerId(obj.workerId);
+        setType(obj.type);
+        setPriority(obj.priority);
+      }
+    });
+  }
+
+  function showEditModal() {
+    setDoneMode(false);
+    console.log(editMode);
     fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
       method: 'get',
       mode: 'cors',
@@ -60,8 +97,7 @@ export const TaskList = ({
       .then(
         (result) => {
           let res = result.values[0];
-          // console.log(editMode + ' show modal');
-          // console.log(res);
+          console.log(result);
           setIsLoaded(true);
           setModalActive(true);
           setFirstName(res.fname);
@@ -137,18 +173,19 @@ export const TaskList = ({
   return (
     <div className={classTask}>
       <div className="task-list__title">
-        <h1>Всего заявок</h1>
+        <h1>Всього заявок</h1>
         <span>{task.length}</span>
       </div>
       <div className="task-list__add-btn">
-        <button onClick={showAddModal}>Создать заявку</button>
+        {doneMode ? '' : <button onClick={showAddModal}>Створити заявку</button>}
         <ReactToPrint
           trigger={() => {
             return <button>Печать</button>;
           }}
           content={() => printContentRef.current}
         />
-        <button>Виконані заявки</button>
+        <Tasks setTask={setTask} setDoneMode={setDoneMode} />
+        <DoneTasks setTask={setTask} setDoneMode={setDoneMode} />
       </div>
       <ul className="task-list__table-head">
         <li className="task-list__table-title">Дата подачи</li>
@@ -162,25 +199,30 @@ export const TaskList = ({
         <li className="task-list__table-title">Вып</li>
       </ul>
       <ul className={classTaskList} ref={printContentRef}>
+        {!task.length ? (
+          <div className="task-list__item_title">
+            <h2>Заявок немае</h2>
+          </div>
+        ) : (
+          ''
+        )}
         {filtered.map((item) => (
           <li
             key={item.id}
             className={editMode === item.id ? 'task-list__item edit' : 'task-list__item'}
-            onClick={(e) => {
-              // e.stopPropagation();
-              setEditMode(item.id);
-              // task.filter((currTask) => {
-              if (item.id === editMode) {
+            onClick={() => {
+              setEditMode(Number(item.id));
+              if (item.id === editMode && !doneMode) {
                 showEditModal(item.id);
-                // console.log(editMode === item.id);
-                // console.log(editMode);
-                // console.log(item.id);
                 return item;
               }
-              // });
+              if (doneMode) {
+                showDoneTaskModal(item.id);
+              }
             }}>
             <>
               <div id="noPrint" className="task-list__item-cell">
+                {item.taskDone === 1 && <DoneAllIcon style={{color: '#2dcf40'}} />}
                 {formatAddDate(item.addDate)}
               </div>
               <div className="task-list__item-cell">

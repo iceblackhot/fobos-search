@@ -2,7 +2,15 @@ import React from 'react';
 import Select from 'react-select';
 import './workerAutoInput.scss';
 
-export const WorkerInput = ({editMode, workerNames, worker, setWorker, workerId, setWorkerId}) => {
+export const WorkerInput = ({
+  editMode,
+  workerNames,
+  worker,
+  setWorker,
+  workerId,
+  setWorkerId,
+  disabled,
+}) => {
   const options = workerNames.map((workerObj) => ({
     value: workerObj.id,
     label: workerObj.workerName,
@@ -37,6 +45,7 @@ export const WorkerInput = ({editMode, workerNames, worker, setWorker, workerId,
         placeholder="Обрати робітника"
         loadingMessage={() => 'Пошук...'}
         isLoading={!workerNames.length ? true : false}
+        isDisabled={disabled}
       />
     </div>
   );
