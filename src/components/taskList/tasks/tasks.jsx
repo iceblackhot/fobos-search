@@ -1,15 +1,16 @@
 import React, {useCallback} from 'react';
 
-export const Tasks = ({setTask, setDoneMode}) => {
+export const Tasks = ({setTask, setDoneMode, doneTasks, setDoneTasks, page, setTotalPage}) => {
   const fetchTasks = useCallback(() => {
+    setDoneTasks(0);
     setDoneMode(false);
-    let done = 0;
-    fetch(process.env.REACT_APP_URL_REQUESTS + done, {
+    fetch(process.env.REACT_APP_URL_REQUESTS + doneTasks + page, {
       method: 'post',
       mode: 'cors',
       withCredentials: true,
       body: JSON.stringify({
-        done,
+        done: doneTasks,
+        page,
       }),
       headers: {
         'content-type': 'application/json',
@@ -18,7 +19,7 @@ export const Tasks = ({setTask, setDoneMode}) => {
       .then((res) => res.json())
       .then(
         (result) => {
-          //   console.log(result);
+          console.log(result);
           // setIsLoaded(true);
           setTask(result.values);
         },
@@ -27,7 +28,28 @@ export const Tasks = ({setTask, setDoneMode}) => {
           // setError(error);
         },
       );
-  }, []);
+
+    fetch(process.env.REACT_APP_URL_COUNT_RELEVANT_REQ, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result.values[0]['COUNT(id)']);
+          let totalReq = result.values[0]['COUNT(id)'];
+          let totalPages = Math.ceil(totalReq / 3);
+          setTotalPage(totalPages);
+          // setIsLoaded(true);
+        },
+        (error) => {
+          // setIsLoaded(true);
+          // setError(error);
+        },
+      );
+  }, [page, doneTasks]);
+
   return (
     <div>
       <button onClick={fetchTasks}>Заявки</button>

@@ -3,12 +3,16 @@ import ReactToPrint from 'react-to-print';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import ReportGmailerrorredRoundedIcon from '@mui/icons-material/ReportGmailerrorredRounded';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
 import FinishTaskModal from './finishTaskModal/finishTaskModal';
 import './taskList.scss';
 import './print.scss';
 import {DoneTasks} from './doneTasks/doneTasks';
 import {Tasks} from './tasks/tasks';
+import {PaginationNav} from './pagination/pagination';
+import {SortByOrder} from './sort/sortByOrder';
+import {Search} from './search/search';
+import {Russian} from 'flatpickr/dist/l10n/ru.js';
+import Flatpickr from 'react-flatpickr';
 
 export const TaskList = ({
   task,
@@ -45,6 +49,12 @@ export const TaskList = ({
   setAddDate,
   doneMode,
   setDoneMode,
+  doneTasks,
+  setDoneTasks,
+  page,
+  setPage,
+  totalPage,
+  setTotalPage,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -86,8 +96,7 @@ export const TaskList = ({
   }
 
   function showEditModal() {
-    setDoneMode(false);
-    console.log(editMode);
+    // console.log(editMode);
     fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
       method: 'get',
       mode: 'cors',
@@ -169,6 +178,7 @@ export const TaskList = ({
   }
 
   console.log(task);
+  // console.log(doneMode);
 
   return (
     <div className={classTask}>
@@ -177,27 +187,50 @@ export const TaskList = ({
         <span>{task.length}</span>
       </div>
       <div className="task-list__add-btn">
+        <Flatpickr
+          className="calendar"
+          placeholder="Дата"
+          options={{
+            mode: 'range',
+            defaultDate: 'today',
+            minDate: '01.01.2020',
+            maxDate: '01.01.2025',
+            dateFormat: 'Y-m-d',
+            locale: Russian,
+          }}
+          onChange={(selectedDates, dateStr, instance) => {
+            // console.log(selectedDates === null);
+            // console.log(dateStr);
+            // console.log(instance);
+            // console.log(planDate);
+          }}
+        />
+        <Search />
         {doneMode ? '' : <button onClick={showAddModal}>Створити заявку</button>}
+        <Tasks
+          setTask={setTask}
+          setDoneMode={setDoneMode}
+          doneTasks={doneTasks}
+          setDoneTasks={setDoneTasks}
+          setTotalPage={setTotalPage}
+          page={page}
+        />
+        <DoneTasks
+          setTask={setTask}
+          setDoneMode={setDoneMode}
+          doneTasks={doneTasks}
+          setDoneTasks={setDoneTasks}
+          setTotalPage={setTotalPage}
+          page={page}
+        />
         <ReactToPrint
           trigger={() => {
             return <button>Печать</button>;
           }}
           content={() => printContentRef.current}
         />
-        <Tasks setTask={setTask} setDoneMode={setDoneMode} />
-        <DoneTasks setTask={setTask} setDoneMode={setDoneMode} />
       </div>
-      <ul className="task-list__table-head">
-        <li className="task-list__table-title">Дата подачи</li>
-        <li className="task-list__table-title">Город</li>
-        <li className="task-list__table-title">Адрес</li>
-        <li className="task-list__table-title">Статус</li>
-        <li className="task-list__table-title">ФИО</li>
-        <li className="task-list__table-title">Телефон</li>
-        <li className="task-list__table-title">Комментарий</li>
-        <li className="task-list__table-title">Сотрудник</li>
-        <li className="task-list__table-title">Вып</li>
-      </ul>
+      <SortByOrder setTask={setTask} doneMode={doneMode} />
       <ul className={classTaskList} ref={printContentRef}>
         {!task.length ? (
           <div className="task-list__item_title">
@@ -222,7 +255,6 @@ export const TaskList = ({
             }}>
             <>
               <div id="noPrint" className="task-list__item-cell">
-                {item.taskDone === 1 && <DoneAllIcon style={{color: '#2dcf40'}} />}
                 {formatAddDate(item.addDate)}
               </div>
               <div className="task-list__item-cell">
@@ -282,12 +314,20 @@ export const TaskList = ({
                   setModalActive={setModalActive}
                   editMode={editMode}
                   setEditMode={setEditMode}
+                  doneMode={doneMode}
                 />
               </div>
             </>
           </li>
         ))}
       </ul>
+      <PaginationNav
+        setTask={setTask}
+        page={page}
+        setPage={setPage}
+        totalPage={totalPage}
+        setTotalPage={setTotalPage}
+      />
     </div>
   );
 };

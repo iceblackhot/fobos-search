@@ -5,7 +5,7 @@
   flex-direction: column;
   width: 100%;
   height: fit-content;
-  padding: 10px;
+  padding: 10px 10px 0;
   margin-bottom: 10px;
   border-radius: $minRadius;
   background: $white;
@@ -59,30 +59,6 @@
     }
   }
 
-  &__table-head {
-    display: grid;
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(90px, 90px) minmax(150px, 150px) minmax(170px, 1fr) minmax(165px, 1fr)
-        minmax(110px, 120px) minmax(125px, 125px) minmax(130px, 1fr) minmax(110px, 110px)
-        minmax(40px, 40px)
-    );
-    width: 100%;
-    padding: 5px;
-    background: $lightFobos;
-    border-radius: $minRadius $minRadius 0 0;
-  }
-
-  &__table-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 400;
-    font-size: 15px;
-    color: $white;
-    width: 100%;
-  }
-
   &__list {
     display: flex;
     flex-direction: column;
@@ -123,6 +99,7 @@
     &:hover {
       background: #e2f1ff;
     }
+
     &_title {
       font-weight: 300;
       font-size: 14px;
@@ -165,6 +142,27 @@
     &:last-child {
       border-right: 0;
     }
+  }
+}
+
+//Flatpikr
+.calendar {
+  border: none;
+  outline: none;
+  background: #84c4ff;
+  color: white;
+  border-radius: 4px;
+  box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.3);
+  padding: 5px 15px;
+  margin-left: 15px;
+  cursor: pointer;
+
+  &::-webkit-input-placeholder {
+    color: $white;
+  }
+
+  &::-moz-placeholder {
+    color: $white;
   }
 }
 

@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 import './finishTaskModal.scss';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -22,6 +23,7 @@ export default function FinishTaskModal({
   editMode,
   setEditMode,
   setModalActive,
+  doneMode,
 }) {
   const handleClickOpen = (e) => {
     e.stopPropagation();
@@ -76,12 +78,17 @@ export default function FinishTaskModal({
 
   return (
     <div>
-      <TaskAltIcon
-        className="task-done__btn"
-        style={{fontSize: '1.2rem', color: '#84c4ff'}}
-        id="noPrint"
-        onClick={handleClickOpen}
-      />
+      {doneMode ? (
+        <DoneAllIcon style={{fontSize: '1.2rem', color: '#2dcf40'}} />
+      ) : (
+        <TaskAltIcon
+          className="task-done__btn"
+          style={{fontSize: '1.2rem', color: '#84c4ff'}}
+          id="noPrint"
+          onClick={handleClickOpen}
+        />
+      )}
+
       <Dialog
         open={open}
         TransitionComponent={Transition}

@@ -1,5 +1,4 @@
 import React from 'react';
-import './printTask.scss';
 
 export const PrintTask = ({print, printContentRef, date}) => {
   return (

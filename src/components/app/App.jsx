@@ -13,6 +13,7 @@ function App() {
 
   const [task, setTask] = useState([]);
   const [doneMode, setDoneMode] = useState(false);
+  const [doneTasks, setDoneTasks] = useState(0);
   const [taskId, setTaskId] = useState(false);
   const [filtered, setFiltered] = useState(task);
   const [modalActive, setModalActive] = useState(false);
@@ -54,16 +55,28 @@ function App() {
   const [statusList, setStatusList] = useState([]);
   const [workerNames, setWorkerNames] = useState([]);
 
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(10);
+
+  // console.log(doneTasks);
+
   useEffect(() => {
-    fetch(process.env.REACT_APP_URL_REQUESTS, {
-      method: 'get',
+    fetch(process.env.REACT_APP_URL_REQUESTS + doneTasks + page, {
+      method: 'post',
       mode: 'cors',
       withCredentials: true,
+      body: JSON.stringify({
+        done: doneTasks,
+        page,
+      }),
+      headers: {
+        'content-type': 'application/json',
+      },
     })
       .then((res) => res.json())
       .then(
         (result) => {
-          // console.log(result.values);
+          // console.log(result);
           setIsLoaded(true);
           setTask(result.values);
         },
@@ -146,14 +159,11 @@ function App() {
           setError(error);
         },
       );
-  }, []);
+  }, [page, doneTasks]);
 
   useEffect(() => {
     setFiltered(task);
   }, [task]);
-
-  // console.log(task);
-  // console.log(editMode);
 
   return (
     <div className="wrapper">
@@ -278,6 +288,12 @@ function App() {
           setAddDate={setAddDate}
           doneMode={doneMode}
           setDoneMode={setDoneMode}
+          doneTasks={doneTasks}
+          setDoneTasks={setDoneTasks}
+          page={page}
+          setPage={setPage}
+          totalPage={totalPage}
+          setTotalPage={setTotalPage}
         />
       </main>
       <Footer />
