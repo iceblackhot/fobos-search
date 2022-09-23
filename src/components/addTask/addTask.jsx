@@ -190,8 +190,7 @@ export const AddTask = ({
         .then((res) => res.json())
         .then(
           (result) => {
-            console.log(result);
-            if (result.status === 200 && result.id === editMode) {
+            if (result.status === 200 && Number(result.id) === editMode) {
               fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
                 method: 'get',
                 mode: 'cors',
@@ -200,36 +199,57 @@ export const AddTask = ({
                 .then((res) => res.json())
                 .then(
                   (result) => {
-                    let res = result.values[0];
+                    let res = result.values;
                     console.log(res);
+                    setFirstName(res.fname);
+                    setLastName(res.lname);
+                    setPatronymic(res.patronymic);
+                    setWorkerId(res.workerId);
+                    setWorker(res.workerName);
+                    setMobileNum(res.mobile);
+                    setCity(res.cityName);
+                    setCityId(res.cityId);
+                    setStreetId(res.streetId);
+                    setStreet(res.street);
+                    setBuilding(res.building);
+                    setSection(res.section);
+                    setApartment(res.apartment);
+                    setEntrance(res.entrance);
+                    setFloor(res.floor);
+                    setStatus(res.statusName);
+                    setStatusId(res.statusId);
+                    setAddDate(res.addDate);
+                    setPlanDate(res.planDate);
+                    setComment(res.comment);
+                    setType(res.type);
+                    setPriority(res.priority);
                     task.filter((item) => {
                       if (item.id === editMode) {
-                        setTask(res);
-                        setFirstName(res.fname);
-                        setLastName(res.lname);
-                        setPatronymic(res.patronymic);
-                        setWorkerId(res.workerId);
-                        setWorker(res.workerName);
-                        setMobileNum(res.mobile);
-                        setCity(res.cityName);
-                        setCityId(res.cityId);
-                        setStreetId(res.streetId);
-                        setStreet(res.street);
-                        setBuilding(res.building);
-                        setSection(res.section);
-                        setApartment(res.apartment);
-                        setEntrance(res.entrance);
-                        setFloor(res.floor);
-                        setStatus(res.statusName);
-                        setStatusId(res.statusId);
-                        setAddDate(res.addDate);
-                        setPlanDate(res.planDate);
-                        setComment(res.comment);
-                        setType(res.type);
-                        setPriority(res.priority);
+                        // console.log(item.id === editMode);
+                        item.workerId = workerId;
+                        item.workerName = worker;
+                        item.fname = firstName;
+                        item.lname = lastName;
+                        item.patronymic = patronymic;
+                        item.mobile = mobileNum;
+                        item.cityName = city;
+                        item.cityId = cityId;
+                        item.streetId = streetId;
+                        item.streetName = street;
+                        item.building = building;
+                        item.section = section;
+                        item.apartment = apartment;
+                        item.entrance = entrance;
+                        item.floor = floor;
+                        item.statusName = status;
+                        item.statusId = statusId;
+                        item.planDate = planDate;
+                        item.addDate = addDate;
+                        item.comment = comment;
+                        item.priority = priority;
+                        item.type = type;
                       }
                     });
-
                     // setIsLoaded(true);
                   },
                   (error) => {

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import ReactToPrint from 'react-to-print';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import ReportGmailerrorredRoundedIcon from '@mui/icons-material/ReportGmailerrorredRounded';
@@ -13,6 +13,7 @@ import {SortByOrder} from './sort/sortByOrder';
 import {Search} from './search/search';
 import {Russian} from 'flatpickr/dist/l10n/ru.js';
 import Flatpickr from 'react-flatpickr';
+import {Preloader} from '../preloader/preloader';
 
 export const TaskList = ({
   task,
@@ -45,6 +46,7 @@ export const TaskList = ({
   setStatusId,
   btnActive,
   setError,
+  isLoaded,
   setIsLoaded,
   setAddDate,
   doneMode,
@@ -55,8 +57,11 @@ export const TaskList = ({
   setPage,
   totalPage,
   setTotalPage,
+  fetchTasks,
 }) => {
   const [open, setOpen] = useState(false);
+
+  const [inputValue, setLInputValue] = useState('');
 
   const printContentRef = useRef();
 
@@ -96,6 +101,7 @@ export const TaskList = ({
   }
 
   function showEditModal() {
+    // setIsLoaded(false);
     // console.log(editMode);
     fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
       method: 'get',
@@ -106,7 +112,7 @@ export const TaskList = ({
       .then(
         (result) => {
           let res = result.values[0];
-          console.log(result);
+          // console.log(res);
           setIsLoaded(true);
           setModalActive(true);
           setFirstName(res.fname);
@@ -133,7 +139,7 @@ export const TaskList = ({
           setPriority(res.priority);
         },
         (error) => {
-          // setIsLoaded(true);
+          setIsLoaded(true);
           setError(error);
         },
       );
@@ -177,8 +183,9 @@ export const TaskList = ({
     return currDate;
   }
 
+  if (!isLoaded) return <Preloader />;
+
   console.log(task);
-  // console.log(doneMode);
 
   return (
     <div className={classTask}>
@@ -205,23 +212,34 @@ export const TaskList = ({
             // console.log(planDate);
           }}
         />
-        <Search />
+        <Search
+          setTask={setTask}
+          inputValue={inputValue}
+          setLInputValue={setLInputValue}
+          fetchTasks={fetchTasks}
+        />
         {doneMode ? '' : <button onClick={showAddModal}>Створити заявку</button>}
         <Tasks
+          isLoaded={isLoaded}
+          setIsLoaded={setIsLoaded}
           setTask={setTask}
           setDoneMode={setDoneMode}
           doneTasks={doneTasks}
           setDoneTasks={setDoneTasks}
           setTotalPage={setTotalPage}
           page={page}
+          fetchTasks={fetchTasks}
         />
         <DoneTasks
+          isLoaded={isLoaded}
+          setIsLoaded={setIsLoaded}
           setTask={setTask}
           setDoneMode={setDoneMode}
           doneTasks={doneTasks}
           setDoneTasks={setDoneTasks}
           setTotalPage={setTotalPage}
           page={page}
+          fetchTasks={fetchTasks}
         />
         <ReactToPrint
           trigger={() => {

@@ -1,10 +1,11 @@
-import {useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 import {useState} from 'react';
 import {AddTask} from '../addTask/addTask';
 import {Filters} from '../filters/filters';
 import {Footer} from '../footer/footer';
 import {Header} from '../header/header';
 import {TaskList} from '../taskList/TaskList';
+import {Preloader} from '../preloader/preloader';
 import './App.scss';
 
 function App() {
@@ -60,7 +61,10 @@ function App() {
 
   // console.log(doneTasks);
 
-  useEffect(() => {
+  const fetchTasks = useCallback(() => {
+    setIsLoaded(false);
+    // console.log(doneTasks);
+    // console.log(doneMode);
     fetch(process.env.REACT_APP_URL_REQUESTS + doneTasks + page, {
       method: 'post',
       mode: 'cors',
@@ -82,9 +86,58 @@ function App() {
         },
         (error) => {
           setIsLoaded(true);
-          setError(error);
+          // setError(error);
         },
       );
+
+    if (doneMode) {
+      // console.log(doneMode && doneTasks === 1);
+      fetch(process.env.REACT_APP_URL_COUNT_DONE_REQ, {
+        method: 'get',
+        mode: 'cors',
+        withCredentials: true,
+      })
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            // console.log(result);
+            // console.log(result.values[0]['COUNT(id)']);
+            let totalReq = result.values[0]['COUNT(id)'];
+            let totalPages = Math.ceil(totalReq / 3);
+            setTotalPage(totalPages);
+            setIsLoaded(true);
+          },
+          (error) => {
+            setIsLoaded(true);
+            // setError(error);
+          },
+        );
+    } else {
+      fetch(process.env.REACT_APP_URL_COUNT_RELEVANT_REQ, {
+        method: 'get',
+        mode: 'cors',
+        withCredentials: true,
+      })
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            // console.log(result);
+            // console.log(result.values[0]['COUNT(id)']);
+            let totalReq = result.values[0]['COUNT(id)'];
+            let totalPages = Math.ceil(totalReq / 3);
+            setTotalPage(totalPages);
+            setIsLoaded(true);
+          },
+          (error) => {
+            setIsLoaded(true);
+            // setError(error);
+          },
+        );
+    }
+  }, [page, doneMode, doneTasks]);
+
+  useEffect(() => {
+    fetchTasks();
     fetch(process.env.REACT_APP_URL_CITIES, {
       method: 'get',
       mode: 'cors',
@@ -159,11 +212,13 @@ function App() {
           setError(error);
         },
       );
-  }, [page, doneTasks]);
+  }, [page, doneTasks, fetchTasks]);
 
   useEffect(() => {
     setFiltered(task);
   }, [task]);
+
+  if (!isLoaded) return <Preloader />;
 
   return (
     <div className="wrapper">
@@ -284,6 +339,7 @@ function App() {
           btnActive={btnActive}
           setBtnActive={setBtnActive}
           setError={setError}
+          isLoaded={isLoaded}
           setIsLoaded={setIsLoaded}
           setAddDate={setAddDate}
           doneMode={doneMode}
@@ -294,6 +350,7 @@ function App() {
           setPage={setPage}
           totalPage={totalPage}
           setTotalPage={setTotalPage}
+          fetchTasks={fetchTasks}
         />
       </main>
       <Footer />
