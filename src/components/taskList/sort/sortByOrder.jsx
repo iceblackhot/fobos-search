@@ -1,10 +1,11 @@
 import React, {useCallback} from 'react';
+import {useState} from 'react';
 import './sortByOrder.scss';
 
 export const SortByOrder = ({setTask, doneMode}) => {
-  // console.log(doneMode);
+  const [arrowActv, setArrowActv] = useState(false);
 
-  // console.log(doneMode ? 1 : 0);
+  const classNameArrow = arrowActv ? 'sort__arrow active' : 'sort__arrow';
 
   const sortByAddDesc = useCallback(() => {
     let sort = ' DESC';
@@ -62,14 +63,24 @@ export const SortByOrder = ({setTask, doneMode}) => {
       );
   }, [doneMode]);
 
+  const changeSort = () => {
+    setArrowActv(!arrowActv);
+    // console.log(arrowActv);
+
+    if (arrowActv) {
+      sortByAddDesc();
+    } else {
+      sortByAddAsc();
+    }
+  };
+
   return (
     <div className="sort">
       <ul className="sort__table-head">
         <li className="sort__table-title">
           Дата под.
           <div className="sort__by-date">
-            <span className="sort__arrow-bottom" onClick={sortByAddAsc}></span>
-            <span className="sort__arrow-top" onClick={sortByAddDesc}></span>
+            <span className={classNameArrow} onClick={changeSort}></span>
           </div>
         </li>
         <li className="sort__table-title">Місто</li>

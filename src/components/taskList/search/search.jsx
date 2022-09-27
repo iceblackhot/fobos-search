@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import './search.scss';
 
-export const Search = ({setTask, inputValue, setLInputValue, fetchTasks}) => {
+export const Search = ({setTask, inputValue, setInputValue, fetchTasks}) => {
   useEffect(() => {
     const fetchCurrTask = () => {
       fetch(process.env.REACT_APP_URL_SEARCH_TASK + inputValue, {
@@ -46,7 +46,7 @@ export const Search = ({setTask, inputValue, setLInputValue, fetchTasks}) => {
         placeholder="Пошук..."
         value={inputValue}
         onChange={(e) => {
-          setLInputValue(e.target.value);
+          setInputValue(e.target.value);
         }}
       />
     </div>

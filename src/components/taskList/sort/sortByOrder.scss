@@ -32,20 +32,17 @@
     flex-direction: column;
   }
 
-  &__arrow-top {
+  &__arrow {
     position: absolute;
-    top: 1px;
+    top: -4px;
     left: 3px;
     border: 5px solid transparent;
     border-top: 6px solid $white;
-  }
+    transition: all 0.3s;
 
-  &__arrow-bottom {
-    position: absolute;
-    top: -13px;
-    left: 3px;
-    transform: rotateX(180deg);
-    border: 5px solid transparent;
-    border-top: 6px solid $white;
+    &.active {
+      top: -8px;
+      transform: rotateX(180deg);
+    }
   }
 }

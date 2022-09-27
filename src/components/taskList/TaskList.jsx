@@ -11,9 +11,9 @@ import {Tasks} from './tasks/tasks';
 import {PaginationNav} from './pagination/pagination';
 import {SortByOrder} from './sort/sortByOrder';
 import {Search} from './search/search';
-import {Russian} from 'flatpickr/dist/l10n/ru.js';
-import Flatpickr from 'react-flatpickr';
+
 import {Preloader} from '../preloader/preloader';
+import {RangeCalendar} from './rangeCalendar/rangeCalendar';
 
 export const TaskList = ({
   task,
@@ -61,7 +61,7 @@ export const TaskList = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-  const [inputValue, setLInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
   const printContentRef = useRef();
 
@@ -194,28 +194,11 @@ export const TaskList = ({
         <span>{task.length}</span>
       </div>
       <div className="task-list__add-btn">
-        <Flatpickr
-          className="calendar"
-          placeholder="Дата"
-          options={{
-            mode: 'range',
-            defaultDate: 'today',
-            minDate: '01.01.2020',
-            maxDate: '01.01.2025',
-            dateFormat: 'Y-m-d',
-            locale: Russian,
-          }}
-          onChange={(selectedDates, dateStr, instance) => {
-            // console.log(selectedDates === null);
-            // console.log(dateStr);
-            // console.log(instance);
-            // console.log(planDate);
-          }}
-        />
+        <RangeCalendar setIsLoaded={setIsLoaded} doneTasks={doneTasks} />
         <Search
           setTask={setTask}
           inputValue={inputValue}
-          setLInputValue={setLInputValue}
+          setInputValue={setInputValue}
           fetchTasks={fetchTasks}
         />
         {doneMode ? '' : <button onClick={showAddModal}>Створити заявку</button>}

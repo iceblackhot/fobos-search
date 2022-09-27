@@ -1,0 +1,14 @@
+@import '../../scss/vars.scss';
+
+.range-calendar {
+  position: relative;
+
+  &__ico {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1em !important;
+    color: white;
+  }
+}
