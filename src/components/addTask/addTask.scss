@@ -136,14 +136,10 @@
     width: 100%;
 
     & div {
-      width: 50%;
       padding-right: 15px;
-
-      &:last-child {
-        padding-right: 0;
-      }
     }
   }
+
   &__inputs-adress {
     display: flex;
     justify-content: space-between;

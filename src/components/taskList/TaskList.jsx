@@ -11,9 +11,14 @@ import {Tasks} from './tasks/tasks';
 import {PaginationNav} from './pagination/pagination';
 import {SortByOrder} from './sort/sortByOrder';
 import {Search} from './search/search';
-
+import LanIcon from '@mui/icons-material/Lan';
+import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import {Preloader} from '../preloader/preloader';
 import {RangeCalendar} from './rangeCalendar/rangeCalendar';
+import {Faq} from './faq/faq';
+import {DoneFaq} from './faq/doneFaq';
+import {ConnectionType} from './connectionType/connectionType';
 
 export const TaskList = ({
   task,
@@ -39,6 +44,7 @@ export const TaskList = ({
   setWorker,
   setWorkerId,
   editMode,
+  type,
   setType,
   setPriority,
   setEditMode,
@@ -58,6 +64,8 @@ export const TaskList = ({
   totalPage,
   setTotalPage,
   fetchTasks,
+  setConnTypeId,
+  setFaqMode,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -68,6 +76,8 @@ export const TaskList = ({
   const classTask = `task-list${btnActive ? ' active' : ''}`;
 
   const classTaskList = `task-list__list${btnActive ? ' active' : ''}`;
+
+  let disabled = doneMode && 'disabled';
 
   function showDoneTaskModal() {
     // console.log(doneMode);
@@ -89,6 +99,7 @@ export const TaskList = ({
         setFloor(obj.floor);
         setStatus(obj.statusName);
         setStatusId(obj.statusId);
+        setConnTypeId(obj.connTypeId);
         setPlanDate(obj.planDate);
         setAddDate(obj.addDate);
         setComment(obj.comment);
@@ -100,19 +111,28 @@ export const TaskList = ({
     });
   }
 
+  // console.log(type);
+
   function showEditModal() {
+    setModalActive(true);
     // setIsLoaded(false);
-    // console.log(editMode);
+    console.log(editMode);
     fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
-      method: 'get',
+      method: 'post',
       mode: 'cors',
       withCredentials: true,
+      body: JSON.stringify({
+        type: type,
+      }),
+      headers: {
+        'content-type': 'application/json',
+      },
     })
       .then((res) => res.json())
       .then(
         (result) => {
           let res = result.values[0];
-          // console.log(res);
+          // console.log(res.cityName);
           setIsLoaded(true);
           setModalActive(true);
           setFirstName(res.fname);
@@ -130,6 +150,7 @@ export const TaskList = ({
           setFloor(res.floor);
           setStatus(res.statusName);
           setStatusId(res.statusId);
+          setConnTypeId(res.connTypeId);
           setPlanDate(res.planDate);
           setAddDate(res.addDate);
           setComment(res.comment);
@@ -148,25 +169,26 @@ export const TaskList = ({
   function showAddModal() {
     setModalActive(true);
     setEditMode(false);
-    setFirstName('');
-    setLastName('');
-    setPatronymic('');
-    setMobileNum('');
-    setCityId('');
-    setStreetId('');
-    setBuilding('');
-    setSection('');
-    setApartment('');
-    setEntrance('');
-    setFloor('');
-    setStatus('');
-    setStatusId('');
-    setPlanDate('');
-    setComment('');
-    setWorker('');
-    setWorkerId('');
-    setType(0);
-    setPriority(0);
+    // setFirstName('');
+    // setLastName('');
+    // setPatronymic('');
+    // setMobileNum('');
+    // setCityId('');
+    // setStreetId('');
+    // setBuilding('');
+    // setSection('');
+    // setApartment('');
+    // setEntrance('');
+    // setFloor('');
+    // setStatus('');
+    // setStatusId(1);
+    // setConnTypeId(1);
+    // setPlanDate('');
+    // setComment('');
+    // setWorker('');
+    // setWorkerId('');
+    // setType(0);
+    // setPriority(0);
   }
 
   function formatAddDate(date) {
@@ -194,26 +216,57 @@ export const TaskList = ({
         <span>{task.length}</span>
       </div>
       <div className="task-list__add-btn">
-        <RangeCalendar setIsLoaded={setIsLoaded} doneTasks={doneTasks} />
+        <ConnectionType
+          setDoneTasks={setDoneTasks}
+          setDoneMode={setDoneMode}
+          setTask={setTask}
+          setIsLoaded={setIsLoaded}
+        />
+        <DoneFaq
+          setType={setType}
+          setTotalPage={setTotalPage}
+          setDoneTasks={setDoneTasks}
+          setDoneMode={setDoneMode}
+          setTask={setTask}
+          setIsLoaded={setIsLoaded}
+          setFaqMode={setFaqMode}
+        />
+        <Faq
+          setType={setType}
+          setTotalPage={setTotalPage}
+          setDoneTasks={setDoneTasks}
+          setDoneMode={setDoneMode}
+          setTask={setTask}
+          setIsLoaded={setIsLoaded}
+          setFaqMode={setFaqMode}
+        />
+        <RangeCalendar
+          fetchTasks={fetchTasks}
+          setTask={setTask}
+          setIsLoaded={setIsLoaded}
+          doneTasks={doneTasks}
+        />
         <Search
           setTask={setTask}
           inputValue={inputValue}
           setInputValue={setInputValue}
           fetchTasks={fetchTasks}
         />
-        {doneMode ? '' : <button onClick={showAddModal}>Створити заявку</button>}
+        <button disabled={disabled} onClick={showAddModal}>
+          Створити заявку
+        </button>
         <Tasks
-          isLoaded={isLoaded}
-          setIsLoaded={setIsLoaded}
-          setTask={setTask}
-          setDoneMode={setDoneMode}
-          doneTasks={doneTasks}
-          setDoneTasks={setDoneTasks}
+          setType={setType}
           setTotalPage={setTotalPage}
-          page={page}
+          setIsLoaded={setIsLoaded}
+          isLoaded={isLoaded}
+          setDoneMode={setDoneMode}
+          setDoneTasks={setDoneTasks}
           fetchTasks={fetchTasks}
+          setFaqMode={setFaqMode}
         />
         <DoneTasks
+          setType={setType}
           isLoaded={isLoaded}
           setIsLoaded={setIsLoaded}
           setTask={setTask}
@@ -223,6 +276,7 @@ export const TaskList = ({
           setTotalPage={setTotalPage}
           page={page}
           fetchTasks={fetchTasks}
+          setFaqMode={setFaqMode}
         />
         <ReactToPrint
           trigger={() => {
@@ -256,7 +310,46 @@ export const TaskList = ({
             }}>
             <>
               <div id="noPrint" className="task-list__item-cell">
-                {formatAddDate(item.addDate)}
+                <div
+                  style={{
+                    width: '100%',
+                    textAlign: 'start',
+                    color: 'blue',
+                    fontSize: '13px',
+                    color: '#84c4ff',
+                  }}>
+                  {item.connTypeId === 1 && (
+                    <>
+                      <LanIcon
+                        style={{
+                          fontSize: '0.9rem',
+                        }}
+                      />
+                      <span>lan</span>
+                    </>
+                  )}
+                  {item.connTypeId === 2 && (
+                    <>
+                      <SettingsInputComponentIcon
+                        style={{
+                          fontSize: '0.9rem',
+                        }}
+                      />
+                      <span>pon</span>
+                    </>
+                  )}
+                  {item.type === 2 && (
+                    <>
+                      <EngineeringIcon
+                        style={{
+                          fontSize: '0.9rem',
+                        }}
+                      />
+                      <span>faq</span>
+                    </>
+                  )}
+                </div>
+                <div> {formatAddDate(item.addDate)}</div>
               </div>
               <div className="task-list__item-cell">
                 {item.priority === 1 && (

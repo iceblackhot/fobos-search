@@ -15,6 +15,7 @@ function App() {
   const [task, setTask] = useState([]);
   const [doneMode, setDoneMode] = useState(false);
   const [doneTasks, setDoneTasks] = useState(0);
+  const [faqMode, setFaqMode] = useState(false);
   const [taskId, setTaskId] = useState(false);
   const [filtered, setFiltered] = useState(task);
   const [modalActive, setModalActive] = useState(false);
@@ -37,7 +38,8 @@ function App() {
   const [entrance, setEntrance] = useState('');
   const [floor, setFloor] = useState('');
   const [status, setStatus] = useState('');
-  const [statusId, setStatusId] = useState('');
+  const [statusId, setStatusId] = useState(1);
+  const [connTypeId, setConnTypeId] = useState(1);
   const [planDate, setPlanDate] = useState('');
   const [addDate, setAddDate] = useState('');
   const [comment, setComment] = useState('');
@@ -54,18 +56,22 @@ function App() {
   const [cityNames, setCityNames] = useState([]);
   const [streetNames, setStreetNames] = useState([]);
   const [statusList, setStatusList] = useState([]);
+  const [connTypeList, setConnTypeList] = useState([]);
   const [workerNames, setWorkerNames] = useState([]);
 
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(10);
 
   // console.log(doneTasks);
+  // console.log(doneMode);
+  // console.log(type);
 
   const fetchTasks = useCallback(() => {
     setIsLoaded(false);
     // console.log(doneTasks);
     // console.log(doneMode);
-    fetch(process.env.REACT_APP_URL_REQUESTS + doneTasks + page, {
+
+    fetch(process.env.REACT_APP_URL_REQUESTS, {
       method: 'post',
       mode: 'cors',
       withCredentials: true,
@@ -89,55 +95,13 @@ function App() {
           // setError(error);
         },
       );
-
-    if (doneMode) {
-      // console.log(doneMode && doneTasks === 1);
-      fetch(process.env.REACT_APP_URL_COUNT_DONE_REQ, {
-        method: 'get',
-        mode: 'cors',
-        withCredentials: true,
-      })
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            // console.log(result);
-            // console.log(result.values[0]['COUNT(id)']);
-            let totalReq = result.values[0]['COUNT(id)'];
-            let totalPages = Math.ceil(totalReq / 3);
-            setTotalPage(totalPages);
-            setIsLoaded(true);
-          },
-          (error) => {
-            setIsLoaded(true);
-            // setError(error);
-          },
-        );
-    } else {
-      fetch(process.env.REACT_APP_URL_COUNT_RELEVANT_REQ, {
-        method: 'get',
-        mode: 'cors',
-        withCredentials: true,
-      })
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            // console.log(result);
-            // console.log(result.values[0]['COUNT(id)']);
-            let totalReq = result.values[0]['COUNT(id)'];
-            let totalPages = Math.ceil(totalReq / 3);
-            setTotalPage(totalPages);
-            setIsLoaded(true);
-          },
-          (error) => {
-            setIsLoaded(true);
-            // setError(error);
-          },
-        );
-    }
-  }, [page, doneMode, doneTasks]);
+  }, [page, doneTasks]);
 
   useEffect(() => {
-    fetchTasks();
+    if (!faqMode) {
+      fetchTasks();
+    }
+
     fetch(process.env.REACT_APP_URL_CITIES, {
       method: 'get',
       mode: 'cors',
@@ -187,6 +151,26 @@ function App() {
           setIsLoaded(true);
           const statusesObj = result.values;
           setStatusList(statusesObj);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        },
+      );
+
+    fetch(process.env.REACT_APP_URL_CONN_TYPE, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result.values);
+          setIsLoaded(true);
+          const connTypeObj = result.values;
+          // console.log(connTypeObj);
+          setConnTypeList(connTypeObj);
         },
         (error) => {
           setIsLoaded(true);
@@ -244,6 +228,7 @@ function App() {
           streetNames={streetNames}
           cityNames={cityNames}
           workerNames={workerNames}
+          connTypeList={connTypeList}
           task={task}
           setTask={setTask}
           taskId={taskId}
@@ -292,6 +277,8 @@ function App() {
           setType={setType}
           priority={priority}
           setPriority={setPriority}
+          connTypeId={connTypeId}
+          setConnTypeId={setConnTypeId}
           editMode={editMode}
           setEditMode={setEditMode}
           filtered={filtered}
@@ -331,6 +318,7 @@ function App() {
           setType={setType}
           priority={priority}
           setPriority={setPriority}
+          setConnTypeId={setConnTypeId}
           editMode={editMode}
           setEditMode={setEditMode}
           filtered={filtered}
@@ -351,6 +339,7 @@ function App() {
           totalPage={totalPage}
           setTotalPage={setTotalPage}
           fetchTasks={fetchTasks}
+          setFaqMode={setFaqMode}
         />
       </main>
       <Footer />

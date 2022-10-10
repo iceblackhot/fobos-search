@@ -9,6 +9,7 @@ import {PriorityBtns} from './priorityBtns/priorityBtns';
 import {StreetAutoInput} from './streetAutoInput/streetAutoInput';
 import {CityAutoInput} from './cityAutoInput/cityAutoInput';
 import {StatusOption} from './statusOption/statusOption';
+import {ConnectionOption} from './connectionOption/connectionOption';
 
 export const AddTask = ({
   cityNames,
@@ -69,6 +70,9 @@ export const AddTask = ({
   isLoaded,
   setIsLoaded,
   doneMode,
+  connTypeList,
+  connTypeId,
+  setConnTypeId,
 }) => {
   function saveTask() {
     if (!cityId || !lastName || !mobileNum) {
@@ -97,6 +101,7 @@ export const AddTask = ({
           workerId: workerId,
           type: type,
           priority: priority,
+          connTypeId: connTypeId,
         }),
         headers: {
           'content-type': 'application/json',
@@ -149,6 +154,7 @@ export const AddTask = ({
     setPlanDate('');
     setComment('');
     setWorker('');
+    setWorkerId('');
     setType(0);
     setPriority(0);
     setModalActive(false);
@@ -182,6 +188,7 @@ export const AddTask = ({
           workerId: workerId,
           type: type,
           priority: priority,
+          connTypeId: connTypeId,
         }),
         headers: {
           'content-type': 'application/json',
@@ -223,6 +230,7 @@ export const AddTask = ({
                     setComment(res.comment);
                     setType(res.type);
                     setPriority(res.priority);
+                    setConnTypeId(res.connTypeId);
                     task.filter((item) => {
                       if (item.id === editMode) {
                         // console.log(item.id === editMode);
@@ -247,6 +255,7 @@ export const AddTask = ({
                         item.addDate = addDate;
                         item.comment = comment;
                         item.priority = priority;
+                        item.connTypeId = connTypeId;
                         item.type = type;
                       }
                     });
@@ -354,7 +363,7 @@ export const AddTask = ({
         <div className="add-task__title">
           {!editMode & !doneMode ? <h1>Створити запис</h1> : ''}
           {editMode && (!doneMode ? <h1>Редагувати запис</h1> : '')}
-          {editMode & doneMode ? <h1>Перегляд запису</h1> : ''}
+          {doneMode && editMode ? <h1>Перегляд запису</h1> : ''}
         </div>
         <form onSubmit={handleSubmit}>
           <PriorityBtns
@@ -392,7 +401,7 @@ export const AddTask = ({
           </div>
           <div className="add-task__inputs-mobile">
             <input
-              placeholder="Телефон(мобильный)"
+              placeholder="Телефон(мобільний)"
               type="text"
               maxLength={50}
               value={mobileNum}
@@ -425,14 +434,14 @@ export const AddTask = ({
           </div>
           <div className="add-task__inputs-adressdetails">
             <input
-              placeholder="Дом"
+              placeholder="Будинок"
               type="text"
               value={building}
               onChange={(e) => setBuilding(e.target.value)}
               disabled={disabled}
             />
             <input
-              placeholder="Секция"
+              placeholder="Секція"
               type="text"
               value={section}
               onChange={(e) => setSection(e.target.value)}
@@ -446,14 +455,14 @@ export const AddTask = ({
               disabled={disabled}
             />
             <input
-              placeholder="Подьезд"
+              placeholder="Під'їзд"
               type="text"
               value={entrance}
               onChange={(e) => setEntrance(e.target.value)}
               disabled={disabled}
             />
             <input
-              placeholder="Этаж"
+              placeholder="Поверх"
               type="text"
               value={floor}
               onChange={(e) => setFloor(e.target.value)}
@@ -461,6 +470,12 @@ export const AddTask = ({
             />
           </div>
           <div className="add-task__inputs-data">
+            <ConnectionOption
+              disabled={disabled}
+              connTypeList={connTypeList}
+              connTypeId={connTypeId}
+              setConnTypeId={setConnTypeId}
+            />
             <StatusOption
               statusList={statusList}
               setStatus={setStatus}
@@ -469,7 +484,7 @@ export const AddTask = ({
               disabled={disabled}
             />
             <Flatpickr
-              style={{width: '50%'}}
+              style={{width: '40%'}}
               placeholder="Дата"
               data-enable-time
               value={planDate}
@@ -494,7 +509,7 @@ export const AddTask = ({
           </div>
           <div>
             <textarea
-              placeholder="Комментраий"
+              placeholder="Коментр"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               disabled={disabled}
@@ -512,15 +527,15 @@ export const AddTask = ({
           <div className="add-task__action-btn">
             {editMode ? (
               <button onClick={(e) => editTask(e)} disabled={disabled}>
-                Редактировать
+                Редагувати
               </button>
             ) : (
               <button onClick={saveTask} disabled={disabled}>
-                Сохранить
+                Зберегти
               </button>
             )}
             <button onClick={handleCancel} disabled={disabled}>
-              Отмена
+              Відміна
             </button>
             <button onClick={handleClear} disabled={disabled}>
               Сброс

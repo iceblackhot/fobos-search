@@ -78,7 +78,7 @@ export const SortByOrder = ({setTask, doneMode}) => {
     <div className="sort">
       <ul className="sort__table-head">
         <li className="sort__table-title">
-          Дата под.
+          Дата підкл.
           <div className="sort__by-date">
             <span className={classNameArrow} onClick={changeSort}></span>
           </div>

@@ -2,28 +2,48 @@ import React, {useCallback} from 'react';
 import {Preloader} from '../../preloader/preloader';
 
 export const Tasks = ({
-  setTask,
   setDoneMode,
-  doneTasks,
-  setDoneTasks,
-  page,
   setTotalPage,
+  setDoneTasks,
   isLoaded,
   setIsLoaded,
   fetchTasks,
+  setFaqMode,
+  setType,
 }) => {
+  const fetchRelTasks = useCallback(() => {
+    setType(1);
+    setFaqMode(false);
+    setDoneTasks(0);
+    setDoneMode(false);
+    fetch(process.env.REACT_APP_URL_COUNT_RELEVANT_REQ, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result);
+          // console.log(result.values[0]['COUNT(id)']);
+          let totalReq = result.values[0]['COUNT(id)'];
+          let totalPages = Math.ceil(totalReq / 3);
+          setTotalPage(totalPages);
+          setIsLoaded(true);
+        },
+        (error) => {
+          setIsLoaded(true);
+          // setError(error);
+        },
+      );
+    fetchTasks();
+  }, []);
+
   if (!isLoaded) return <Preloader />;
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setDoneTasks(0);
-          setDoneMode(false);
-          fetchTasks();
-        }}>
-        Заявки
-      </button>
+      <button onClick={fetchRelTasks}>Заявки</button>
     </div>
   );
 };

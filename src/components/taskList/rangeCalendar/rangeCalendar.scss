@@ -1,14 +1,59 @@
 @import '../../scss/vars.scss';
 
 .range-calendar {
-  position: relative;
-
-  &__ico {
-    position: absolute;
-    right: 3px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.1em !important;
+  &__input {
+    position: relative;
+    padding: 5px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
     color: white;
+    box-shadow: inset 4px 4px 6px 0px rgba(0, 0, 0, 0.3);
+    background: #84c4ff;
+    margin-left: 15px;
+
+    &::-webkit-input-placeholder {
+      color: $white;
+    }
+
+    &::-moz-placeholder {
+      color: $white;
+    }
+  }
+}
+
+//Date-piker
+.react-datepicker__year-read-view--down-arrow,
+.react-datepicker__month-read-view--down-arrow,
+.react-datepicker__month-year-read-view--down-arrow,
+.react-datepicker__navigation-icon::before {
+  border-color: $lightFobos !important;
+}
+
+.react-datepicker__navigation--next,
+.react-datepicker__navigation--previous {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.react-datepicker__navigation--previous {
+  margin-left: 0 !important;
+}
+
+.react-datepicker__close-icon {
+  background: transparent !important;
+  margin-left: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  margin-right: 2px;
+
+  &::after {
+    background-color: transparent !important;
+    font-size: 22px !important;
+  }
+
+  &:hover {
+    opacity: 1 !important;
+    box-shadow: none !important;
   }
 }

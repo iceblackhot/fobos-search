@@ -5,13 +5,15 @@ export const StatusOption = ({setStatus, statusList, statusId, setStatusId, disa
     e.preventDefault();
     statusList.filter((obj) => {
       if (obj.id.toString() === e.currentTarget.value) {
-        console.log(obj.id);
+        // console.log(obj.id);
         setStatus(obj.statusName);
         setStatusId(obj.id);
         return obj;
       }
     });
   };
+
+  // console.log(statusId);
 
   return (
     <div>

@@ -2,6 +2,7 @@ import React from 'react';
 import {Pagination, Stack} from '@mui/material';
 
 export const PaginationNav = ({setTask, page, setPage, totalPage, setTotalPage}) => {
+  // console.log(page);
   // console.log(totalPage);
   return (
     <div>

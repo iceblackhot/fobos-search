@@ -93,7 +93,7 @@ export const PriorityBtns = ({
     <div className="add-task__options">
       <div className="add-task__options-type">
         <button className={classNameConnection} onClick={setTypeConnection} disabled={disabled}>
-          Подключение
+          Підключення
         </button>
         <button className={classNameFaq} onClick={setTypeFaq} disabled={disabled}>
           Фак
