@@ -13,9 +13,9 @@ function App() {
   const [error, setError] = useState(false);
 
   const [task, setTask] = useState([]);
-  const [doneMode, setDoneMode] = useState(false);
+  const [doneMode, setDoneMode] = useState(0);
   const [doneTasks, setDoneTasks] = useState(0);
-  const [faqMode, setFaqMode] = useState(false);
+
   const [taskId, setTaskId] = useState(false);
   const [filtered, setFiltered] = useState(task);
   const [modalActive, setModalActive] = useState(false);
@@ -26,7 +26,6 @@ function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [patronymic, setPatronymic] = useState('');
-
   const [mobileNum, setMobileNum] = useState('');
   const [city, setCity] = useState('');
   const [cityId, setCityId] = useState('');
@@ -48,9 +47,6 @@ function App() {
 
   const [editMode, setEditMode] = useState(null);
 
-  const [filterCitySelectValue, setFilterCitySelectValue] = useState([]);
-  const [filterStatusSelectValue, setFilterStatusSelectValue] = useState([]);
-
   const [btnActive, setBtnActive] = useState(false);
 
   const [cityNames, setCityNames] = useState([]);
@@ -65,12 +61,10 @@ function App() {
   // console.log(doneTasks);
   // console.log(doneMode);
   // console.log(type);
+  // console.log(doneMode);
 
   const fetchTasks = useCallback(() => {
     setIsLoaded(false);
-    // console.log(doneTasks);
-    // console.log(doneMode);
-
     fetch(process.env.REACT_APP_URL_REQUESTS, {
       method: 'post',
       mode: 'cors',
@@ -78,6 +72,7 @@ function App() {
       body: JSON.stringify({
         done: doneTasks,
         page,
+        type,
       }),
       headers: {
         'content-type': 'application/json',
@@ -95,12 +90,29 @@ function App() {
           // setError(error);
         },
       );
-  }, [page, doneTasks]);
+  }, [page, doneTasks, type]);
 
   useEffect(() => {
-    if (!faqMode) {
-      fetchTasks();
-    }
+    fetch(process.env.REACT_APP_URL_COUNT_RELEVANT_REQ, {
+      method: 'get',
+      mode: 'cors',
+      withCredentials: true,
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result);
+          // console.log(result.values[0]['COUNT(id)']);
+          let totalReq = result.values[0]['COUNT(id)'];
+          let totalPages = Math.ceil(totalReq / 3);
+          setTotalPage(totalPages);
+          setIsLoaded(true);
+        },
+        (error) => {
+          setIsLoaded(true);
+          // setError(error);
+        },
+      );
 
     fetch(process.env.REACT_APP_URL_CITIES, {
       method: 'get',
@@ -196,11 +208,15 @@ function App() {
           setError(error);
         },
       );
-  }, [page, doneTasks, fetchTasks]);
+  }, []);
 
   useEffect(() => {
     setFiltered(task);
   }, [task]);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [page]);
 
   if (!isLoaded) return <Preloader />;
 
@@ -217,10 +233,6 @@ function App() {
           setStreet={setStreet}
           task={task}
           setFiltered={setFiltered}
-          filterCitySelectValue={filterCitySelectValue}
-          setFilterCitySelectValue={setFilterCitySelectValue}
-          filterStatusSelectValue={filterStatusSelectValue}
-          setFilterStatusSelectValue={setFilterStatusSelectValue}
           btnActive={btnActive}
           setBtnActive={setBtnActive}
         />
@@ -339,7 +351,6 @@ function App() {
           totalPage={totalPage}
           setTotalPage={setTotalPage}
           fetchTasks={fetchTasks}
-          setFaqMode={setFaqMode}
         />
       </main>
       <Footer />

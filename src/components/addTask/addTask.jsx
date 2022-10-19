@@ -3,13 +3,13 @@ import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
 import {Russian} from 'flatpickr/dist/l10n/ru.js';
 import Modal from '../modal/modal';
-import './addTask.scss';
 import {WorkerInput} from './workerAutoInput/workerInput';
 import {PriorityBtns} from './priorityBtns/priorityBtns';
 import {StreetAutoInput} from './streetAutoInput/streetAutoInput';
 import {CityAutoInput} from './cityAutoInput/cityAutoInput';
 import {StatusOption} from './statusOption/statusOption';
 import {ConnectionOption} from './connectionOption/connectionOption';
+import './addTask.scss';
 
 export const AddTask = ({
   cityNames,
@@ -110,10 +110,10 @@ export const AddTask = ({
         .then((res) => res.json())
         .then(
           (result) => {
-            // console.log(result);
+            console.log(result.id);
             if (result.status === 200 && result.id) {
               fetch(process.env.REACT_APP_URL_REQUESTS + result.id, {
-                method: 'get',
+                method: 'post',
                 mode: 'cors',
                 withCredentials: true,
               })
@@ -199,7 +199,7 @@ export const AddTask = ({
           (result) => {
             if (result.status === 200 && Number(result.id) === editMode) {
               fetch(process.env.REACT_APP_URL_REQUESTS + editMode, {
-                method: 'get',
+                method: 'post',
                 mode: 'cors',
                 withCredentials: true,
               })
@@ -306,6 +306,7 @@ export const AddTask = ({
     setPlanDate('');
     setComment('');
     setWorker('');
+    setWorkerId('');
     setType(0);
     setPriority(0);
   }
@@ -516,11 +517,9 @@ export const AddTask = ({
             />
           </div>
           <WorkerInput
-            editMode={editMode}
-            worker={worker}
-            workerId={workerId}
             setWorker={setWorker}
             workerNames={workerNames}
+            workerId={workerId}
             setWorkerId={setWorkerId}
             disabled={disabled}
           />
@@ -537,9 +536,13 @@ export const AddTask = ({
             <button onClick={handleCancel} disabled={disabled}>
               Відміна
             </button>
-            <button onClick={handleClear} disabled={disabled}>
-              Сброс
-            </button>
+            {!editMode ? (
+              <button onClick={handleClear} disabled={disabled}>
+                Сброс
+              </button>
+            ) : (
+              ''
+            )}
           </div>
         </form>
       </Modal>

@@ -6,6 +6,7 @@ export const Faq = ({
   setIsLoaded,
   setDoneMode,
   setDoneTasks,
+  fetchTasks,
   setFaqMode,
   setType,
 }) => {
@@ -13,6 +14,7 @@ export const Faq = ({
     setType(2);
     setFaqMode(0);
     setDoneMode(0);
+    setDoneTasks(0);
     fetch(process.env.REACT_APP_URL_COUNT_RELEVANT_FAQ, {
       method: 'get',
       mode: 'cors',
@@ -33,25 +35,26 @@ export const Faq = ({
           // setError(error);
         },
       );
-    fetch(process.env.REACT_APP_URL_FAQ, {
-      method: 'get',
-      mode: 'cors',
-      withCredentials: true,
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          // console.log(result.status);
-          if (result.status === 200) {
-            setTask(result.values);
-          }
-          setIsLoaded(true);
-        },
-        (error) => {
-          setIsLoaded(true);
-          // setError(error);
-        },
-      );
+    fetchTasks();
+    // fetch(process.env.REACT_APP_URL_FAQ, {
+    //   method: 'get',
+    //   mode: 'cors',
+    //   withCredentials: true,
+    // })
+    //   .then((res) => res.json())
+    //   .then(
+    //     (result) => {
+    //       // console.log(result.status);
+    //       if (result.status === 200) {
+    //         setTask(result.values);
+    //       }
+    //       setIsLoaded(true);
+    //     },
+    //     (error) => {
+    //       setIsLoaded(true);
+    //       // setError(error);
+    //     },
+    //   );
   }, []);
 
   return (

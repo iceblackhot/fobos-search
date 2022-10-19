@@ -6,7 +6,7 @@ import './rangeCalendar.scss';
 import uk from 'date-fns/locale/uk';
 registerLocale('uk', uk);
 
-export const RangeCalendar = ({setTask, setIsLoaded, doneTasks, fetchTasks}) => {
+export const RangeCalendar = ({setTask, type, setIsLoaded, doneMode, fetchTasks}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -25,9 +25,10 @@ export const RangeCalendar = ({setTask, setIsLoaded, doneTasks, fetchTasks}) => 
       mode: 'cors',
       withCredentials: true,
       body: JSON.stringify({
-        done: doneTasks,
+        done: doneMode,
         from: from,
         to: to,
+        type: type,
       }),
       headers: {
         'content-type': 'application/json',
@@ -45,7 +46,7 @@ export const RangeCalendar = ({setTask, setIsLoaded, doneTasks, fetchTasks}) => 
           // setError(error);
         },
       );
-  }, [setIsLoaded, setTask, startDate, endDate, doneTasks]);
+  }, [setIsLoaded, setTask, startDate, endDate, doneMode, type]);
 
   const onChangeRange = (dates) => {
     const [start, end] = dates;

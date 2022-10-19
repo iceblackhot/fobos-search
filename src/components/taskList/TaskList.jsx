@@ -23,7 +23,6 @@ import {ConnectionType} from './connectionType/connectionType';
 export const TaskList = ({
   task,
   setTask,
-  modalActive,
   setModalActive,
   setFirstName,
   setLastName,
@@ -65,11 +64,12 @@ export const TaskList = ({
   setTotalPage,
   fetchTasks,
   setConnTypeId,
-  setFaqMode,
 }) => {
   const [open, setOpen] = useState(false);
 
   const [inputValue, setInputValue] = useState('');
+
+  const [faqMode, setFaqMode] = useState(false);
 
   const printContentRef = useRef();
 
@@ -169,26 +169,6 @@ export const TaskList = ({
   function showAddModal() {
     setModalActive(true);
     setEditMode(false);
-    // setFirstName('');
-    // setLastName('');
-    // setPatronymic('');
-    // setMobileNum('');
-    // setCityId('');
-    // setStreetId('');
-    // setBuilding('');
-    // setSection('');
-    // setApartment('');
-    // setEntrance('');
-    // setFloor('');
-    // setStatus('');
-    // setStatusId(1);
-    // setConnTypeId(1);
-    // setPlanDate('');
-    // setComment('');
-    // setWorker('');
-    // setWorkerId('');
-    // setType(0);
-    // setPriority(0);
   }
 
   function formatAddDate(date) {
@@ -223,6 +203,7 @@ export const TaskList = ({
           setIsLoaded={setIsLoaded}
         />
         <DoneFaq
+          fetchTasks={fetchTasks}
           setType={setType}
           setTotalPage={setTotalPage}
           setDoneTasks={setDoneTasks}
@@ -232,6 +213,7 @@ export const TaskList = ({
           setFaqMode={setFaqMode}
         />
         <Faq
+          fetchTasks={fetchTasks}
           setType={setType}
           setTotalPage={setTotalPage}
           setDoneTasks={setDoneTasks}
@@ -241,10 +223,11 @@ export const TaskList = ({
           setFaqMode={setFaqMode}
         />
         <RangeCalendar
+          type={type}
           fetchTasks={fetchTasks}
           setTask={setTask}
           setIsLoaded={setIsLoaded}
-          doneTasks={doneTasks}
+          doneMode={doneMode}
         />
         <Search
           setTask={setTask}
@@ -301,6 +284,7 @@ export const TaskList = ({
             onClick={() => {
               setEditMode(Number(item.id));
               if (item.id === editMode && !doneMode) {
+                // console.log(doneMode);
                 showEditModal(item.id);
                 return item;
               }

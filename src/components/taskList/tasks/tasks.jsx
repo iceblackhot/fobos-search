@@ -15,7 +15,7 @@ export const Tasks = ({
     setType(1);
     setFaqMode(false);
     setDoneTasks(0);
-    setDoneMode(false);
+    setDoneMode(0);
     fetch(process.env.REACT_APP_URL_COUNT_RELEVANT_REQ, {
       method: 'get',
       mode: 'cors',

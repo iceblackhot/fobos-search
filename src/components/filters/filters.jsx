@@ -13,13 +13,12 @@ export const Filters = ({
   workerNames,
   setFiltered,
   task,
-  filterCitySelectValue,
-  setFilterCitySelectValue,
-  filterStatusSelectValue,
-  setFilterStatusSelectValue,
   btnActive,
   setBtnActive,
 }) => {
+  const [filterCitySelectValue, setFilterCitySelectValue] = useState([]);
+  const [filterStatusSelectValue, setFilterStatusSelectValue] = useState([]);
+
   const classDropBtn = `search-filters__drop-btn${btnActive ? ' active' : ''}`;
 
   const classDropViewport = `search-filters__viewport${btnActive ? ' active' : ''}`;

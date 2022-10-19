@@ -13,7 +13,7 @@ export const WorkersMultipleSelect = ({workerNames, task, setFiltered, classDrop
     setFilterWorkerSearchValue(str);
   }
 
-  function onFilterCityReset() {
+  function onFilterWorkerReset() {
     setFilterWorkerSearchValue('');
     setFilterWorkerSelectValue([]);
     setFiltered(task);
@@ -48,7 +48,7 @@ export const WorkersMultipleSelect = ({workerNames, task, setFiltered, classDrop
           type="text"
           value={filterWorkerSearchValue}
           onChange={onChangeWorkerSearchValue}></input>
-        <button onClick={onFilterCityReset}>reset</button>
+        <button onClick={onFilterWorkerReset}>reset</button>
       </div>
       <select
         className={classDropViewport}

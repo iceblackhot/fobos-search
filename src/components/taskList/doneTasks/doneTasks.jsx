@@ -15,7 +15,7 @@ export const DoneTasks = ({
     setType(1);
     setFaqMode(false);
     setDoneTasks(1);
-    setDoneMode(true);
+    setDoneMode(1);
     fetch(process.env.REACT_APP_URL_COUNT_DONE_REQ, {
       method: 'get',
       mode: 'cors',

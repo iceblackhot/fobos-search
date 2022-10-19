@@ -18,7 +18,7 @@ export const Search = ({setTask, inputValue, setInputValue, fetchTasks}) => {
         .then((res) => res.json())
         .then(
           (result) => {
-            console.log(result.values);
+            // console.log(result.values);
             setTask(result.values);
             // setIsLoaded(true);
           },
@@ -27,9 +27,8 @@ export const Search = ({setTask, inputValue, setInputValue, fetchTasks}) => {
             // setError(error);
           },
         );
-      // setTask(searchTask);
     };
-    console.log(inputValue);
+    // console.log(inputValue);
     if (inputValue) {
       fetchCurrTask();
     } else {
