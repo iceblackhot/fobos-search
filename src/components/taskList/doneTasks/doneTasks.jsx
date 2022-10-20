@@ -4,7 +4,6 @@ import {Preloader} from '../../preloader/preloader';
 export const DoneTasks = ({
   setDoneMode,
   setDoneTasks,
-  isLoaded,
   setIsLoaded,
   setTotalPage,
   fetchTasks,
@@ -38,8 +37,6 @@ export const DoneTasks = ({
       );
     fetchTasks();
   }, []);
-
-  if (!isLoaded) return <Preloader />;
 
   return (
     <div>

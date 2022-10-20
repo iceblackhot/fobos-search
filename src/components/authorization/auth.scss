@@ -1,0 +1,185 @@
+@import '../scss/_vars.scss';
+
+.fobos-auth {
+  position: relative;
+}
+
+.fobos-auth__layout {
+  z-index: 5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $fobos;
+}
+
+.fobos-auth {
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: $fobos;
+
+  &__wrapper {
+    padding: 15px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    border-radius: 10px;
+    background: transparent;
+  }
+
+  &_title {
+    text-align: center;
+    padding: 0 40px 40px;
+    color: $white;
+  }
+
+  &__error-title {
+    min-height: 76px;
+    padding: 15px;
+    text-align: center;
+    color: $white;
+  }
+
+  &__input {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  input::placeholder {
+    color: $white;
+  }
+
+  input[type='text'],
+  input[type='password'] {
+    width: 100%;
+    padding: 10px 50px 10px 20px;
+    border-radius: 2em;
+    outline: none;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    color: $white;
+    margin-bottom: 20px;
+  }
+
+  input[type='password'] {
+    margin-bottom: 20px;
+  }
+
+  &__iconoff {
+    position: absolute;
+    top: 7px;
+    right: 12px;
+    cursor: pointer;
+    color: $white;
+
+    &.active {
+      display: none;
+    }
+  }
+
+  &__iconon {
+    opacity: 0;
+    position: absolute;
+    top: 7px;
+    right: 12px;
+    cursor: pointer;
+    color: $white;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  &__iconface {
+    position: absolute;
+    top: 7px;
+    right: 12px;
+    cursor: pointer;
+    color: $white;
+  }
+
+  &__button {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    // margin: 0 auto;
+    border-radius: 2em;
+    outline: none;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    color: $white;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      color: $fobos;
+      background: $white;
+    }
+  }
+}
+
+//Custom checkbox "Remember me"
+.input-holder {
+  margin-bottom: 20px;
+  & > input {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    top: -100vh;
+    left: -100vw;
+
+    &:checked + label:after {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  label {
+    position: relative;
+    font-size: 20px;
+    padding-left: 30px;
+    cursor: pointer;
+    color: $white;
+    font-size: 15px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: 5px;
+      width: 7px;
+      height: 9px;
+      border-right: 2px solid $white;
+      border-bottom: 2px solid $white;
+      transform: translateY(-50%) rotate(45deg) skew(10deg);
+      transition: all ease-in-out 0.3s;
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}

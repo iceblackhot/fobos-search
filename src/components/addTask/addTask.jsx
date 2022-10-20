@@ -67,7 +67,6 @@ export const AddTask = ({
   statusList,
   statusId,
   setStatusId,
-  isLoaded,
   setIsLoaded,
   doneMode,
   connTypeList,

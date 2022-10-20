@@ -51,7 +51,7 @@ export const TaskList = ({
   setStatusId,
   btnActive,
   setError,
-  isLoaded,
+
   setIsLoaded,
   setAddDate,
   doneMode,
@@ -185,8 +185,6 @@ export const TaskList = ({
     return currDate;
   }
 
-  if (!isLoaded) return <Preloader />;
-
   console.log(task);
 
   return (
@@ -242,7 +240,6 @@ export const TaskList = ({
           setType={setType}
           setTotalPage={setTotalPage}
           setIsLoaded={setIsLoaded}
-          isLoaded={isLoaded}
           setDoneMode={setDoneMode}
           setDoneTasks={setDoneTasks}
           fetchTasks={fetchTasks}
@@ -250,7 +247,6 @@ export const TaskList = ({
         />
         <DoneTasks
           setType={setType}
-          isLoaded={isLoaded}
           setIsLoaded={setIsLoaded}
           setTask={setTask}
           setDoneMode={setDoneMode}

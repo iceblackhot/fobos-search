@@ -5,7 +5,6 @@ export const Tasks = ({
   setDoneMode,
   setTotalPage,
   setDoneTasks,
-  isLoaded,
   setIsLoaded,
   fetchTasks,
   setFaqMode,
@@ -38,8 +37,6 @@ export const Tasks = ({
       );
     fetchTasks();
   }, []);
-
-  if (!isLoaded) return <Preloader />;
 
   return (
     <div>
