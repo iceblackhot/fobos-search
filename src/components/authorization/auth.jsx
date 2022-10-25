@@ -1,30 +1,39 @@
-import {React, useCallback, useState} from 'react';
+import {React, useCallback, useState, useRef} from 'react';
 import {useDispatch} from 'react-redux/es/exports';
 import {setUser} from '../store/slices/userSlice';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FaceIcon from '@mui/icons-material/Face';
+import sha256 from 'sha256';
+import bcrypt from 'bcryptjs';
 import './auth.scss';
 
 export const Auth = ({setIsLoaded}) => {
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
+
   const dispatch = useDispatch();
 
-  const [details, setDetails] = useState({email: '', password: ''});
   const [error, setError] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [checked, setChecked] = useState('');
 
-  console.log(details);
-
   const ajaxAuthRequest = useCallback(() => {
+    const email = emailInputRef.current.value;
+    const password = passwordInputRef.current.value;
+    const pwd = sha256(password);
+    const hashedPassword = bcrypt.hashSync(pwd, 12);
+    console.log(hashedPassword);
+
     setIsLoaded(false);
+
     fetch(process.env.REACT_APP_URL_SIGNIN, {
       method: 'post',
       mode: 'cors',
       withCredentials: true,
       body: JSON.stringify({
-        email: details.email,
-        password: details.password,
+        email: email,
+        password: hashedPassword,
       }),
       headers: {
         'content-type': 'application/json',
@@ -40,12 +49,12 @@ export const Auth = ({setIsLoaded}) => {
 
           setIsLoaded(true);
           //set JWT token to local
-          //  localStorage.setItem("token", token);
+          localStorage.setItem('token', token);
 
           dispatch(
             setUser({
               email: email,
-              token: token,
+              token: localStorage.getItem('token', token),
               id: id,
             }),
           );
@@ -55,7 +64,7 @@ export const Auth = ({setIsLoaded}) => {
           // setError(error);
         },
       );
-  }, [details.email, details.password, dispatch, setIsLoaded]);
+  }, [dispatch, setIsLoaded]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -98,11 +107,10 @@ export const Auth = ({setIsLoaded}) => {
                   <FaceIcon className="fobos-auth__iconface" fontSize="small" />
                   <input
                     type="text"
-                    value={details.email}
+                    ref={emailInputRef}
                     placeholder="email"
                     autoComplete="off"
                     required
-                    onChange={(e) => setDetails({...details, email: e.target.value})}
                   />
                 </div>
                 <div className="fobos-auth__input">
@@ -111,11 +119,10 @@ export const Auth = ({setIsLoaded}) => {
                   <input
                     className="pass"
                     type="password"
-                    value={details.password}
+                    ref={passwordInputRef}
                     placeholder="Пароль"
                     autoComplete="off"
                     required
-                    onChange={(e) => setDetails({...details, password: e.target.value})}
                   />
                 </div>
 

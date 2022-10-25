@@ -1,8 +1,11 @@
 import React, {useCallback} from 'react';
 import {useState} from 'react';
+import {useAuth} from '../../hooks/useAuth';
 import './sortByOrder.scss';
 
 export const SortByOrder = ({setTask, doneMode}) => {
+  const {token} = useAuth();
+
   const [arrowActv, setArrowActv] = useState(false);
 
   const classNameArrow = arrowActv ? 'sort__arrow active' : 'sort__arrow';
@@ -19,6 +22,7 @@ export const SortByOrder = ({setTask, doneMode}) => {
       }),
       headers: {
         'content-type': 'application/json',
+        Authorization: token,
       },
     })
       .then((res) => res.json())
@@ -47,6 +51,7 @@ export const SortByOrder = ({setTask, doneMode}) => {
       }),
       headers: {
         'content-type': 'application/json',
+        Authorization: token,
       },
     })
       .then((res) => res.json())

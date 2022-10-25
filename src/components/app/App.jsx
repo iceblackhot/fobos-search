@@ -7,8 +7,8 @@ import {Header} from '../header/header';
 import {TaskList} from '../taskList/TaskList';
 import {Preloader} from '../preloader/preloader';
 import {useAuth} from '../hooks/useAuth';
-import './App.scss';
 import {Auth} from '../authorization/auth';
+import './App.scss';
 
 function App() {
   const {isAuth, token} = useAuth();
@@ -66,6 +66,7 @@ function App() {
   // console.log(doneMode);
   // console.log(type);
   // console.log(doneMode);
+  console.log(token);
 
   const fetchTasks = useCallback(() => {
     setIsLoaded(false);
@@ -80,6 +81,7 @@ function App() {
       }),
       headers: {
         'content-type': 'application/json',
+        Authorization: token,
       },
     })
       .then((res) => res.json())
@@ -101,6 +103,10 @@ function App() {
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(
@@ -122,6 +128,10 @@ function App() {
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(
@@ -140,6 +150,10 @@ function App() {
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(
@@ -159,6 +173,10 @@ function App() {
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(
@@ -178,6 +196,10 @@ function App() {
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(
@@ -198,6 +220,10 @@ function App() {
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(

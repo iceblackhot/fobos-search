@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import {useAuth} from '../../hooks/useAuth';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -25,6 +26,8 @@ export default function FinishTaskModal({
   setModalActive,
   doneMode,
 }) {
+  const {token} = useAuth();
+
   const handleClickOpen = (e) => {
     e.stopPropagation();
     setEditMode(id);
@@ -56,6 +59,7 @@ export default function FinishTaskModal({
       }),
       headers: {
         'content-type': 'application/json',
+        Authorization: token,
       },
     })
       .then((res) => res.json())

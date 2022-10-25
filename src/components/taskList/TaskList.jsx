@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import {useAuth} from '../hooks/useAuth';
 import ReactToPrint from 'react-to-print';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import ReportGmailerrorredRoundedIcon from '@mui/icons-material/ReportGmailerrorredRounded';
@@ -51,7 +52,6 @@ export const TaskList = ({
   setStatusId,
   btnActive,
   setError,
-
   setIsLoaded,
   setAddDate,
   doneMode,
@@ -65,6 +65,8 @@ export const TaskList = ({
   fetchTasks,
   setConnTypeId,
 }) => {
+  const {isAuth, token} = useAuth();
+
   const [open, setOpen] = useState(false);
 
   const [inputValue, setInputValue] = useState('');
@@ -126,6 +128,7 @@ export const TaskList = ({
       }),
       headers: {
         'content-type': 'application/json',
+        Authorization: token,
       },
     })
       .then((res) => res.json())

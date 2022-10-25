@@ -8,6 +8,7 @@ export const Header = () => {
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
+    //Need kill token...
     dispatch(removeUser());
   };
 

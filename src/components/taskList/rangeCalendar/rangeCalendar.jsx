@@ -1,4 +1,5 @@
 import React, {useCallback, useState} from 'react';
+import {useAuth} from '../../hooks/useAuth';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {registerLocale, setDefaultLocale} from 'react-datepicker';
@@ -7,6 +8,8 @@ import uk from 'date-fns/locale/uk';
 registerLocale('uk', uk);
 
 export const RangeCalendar = ({setTask, type, setIsLoaded, doneMode, fetchTasks}) => {
+  const {token} = useAuth();
+
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -32,6 +35,7 @@ export const RangeCalendar = ({setTask, type, setIsLoaded, doneMode, fetchTasks}
       }),
       headers: {
         'content-type': 'application/json',
+        Authorization: token,
       },
     })
       .then((res) => res.json())

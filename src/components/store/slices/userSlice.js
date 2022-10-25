@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   email: null,
-  token: null,
+  token: localStorage.getItem('token'),
   id: null,
 };
 
@@ -17,7 +17,7 @@ const userSlice = createSlice({
     },
     removeUser(state) {
       state.email = null;
-      state.token = null;
+      state.token = localStorage.removeItem('token');
       state.id = null;
     },
   },

@@ -1,8 +1,11 @@
 import React, {useCallback} from 'react';
 import {useState} from 'react';
+import {useAuth} from '../../hooks/useAuth';
 import './connectionType.scss';
 
 export const ConnectionType = ({setTask, setIsLoaded, setDoneMode, setDoneTasks}) => {
+  const {token} = useAuth();
+
   const [value, setValue] = useState(0);
 
   const fetchPonTasks = useCallback(() => {
@@ -12,6 +15,10 @@ export const ConnectionType = ({setTask, setIsLoaded, setDoneMode, setDoneTasks}
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(
@@ -36,6 +43,10 @@ export const ConnectionType = ({setTask, setIsLoaded, setDoneMode, setDoneTasks}
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(

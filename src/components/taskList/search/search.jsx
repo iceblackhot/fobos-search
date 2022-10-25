@@ -1,8 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import {useAuth} from '../../hooks/useAuth';
 import './search.scss';
 
 export const Search = ({setTask, inputValue, setInputValue, fetchTasks}) => {
+  const {token} = useAuth();
+
   useEffect(() => {
     const fetchCurrTask = () => {
       fetch(process.env.REACT_APP_URL_SEARCH_TASK + inputValue, {
@@ -13,6 +16,7 @@ export const Search = ({setTask, inputValue, setInputValue, fetchTasks}) => {
         }),
         headers: {
           'content-type': 'application/json',
+          Authorization: token,
         },
       })
         .then((res) => res.json())

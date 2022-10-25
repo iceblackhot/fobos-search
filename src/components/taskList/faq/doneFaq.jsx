@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react';
+import {useAuth} from '../../hooks/useAuth';
 
 export const DoneFaq = ({
   setTask,
@@ -10,6 +11,8 @@ export const DoneFaq = ({
   setFaqMode,
   setType,
 }) => {
+  const {token} = useAuth();
+
   const fetchDoneFaq = useCallback(() => {
     setType(2);
     setFaqMode(1);
@@ -19,6 +22,10 @@ export const DoneFaq = ({
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(
@@ -36,25 +43,6 @@ export const DoneFaq = ({
         },
       );
     fetchTasks();
-    // fetch(process.env.REACT_APP_URL_DONE_FAQ, {
-    //   method: 'get',
-    //   mode: 'cors',
-    //   withCredentials: true,
-    // })
-    //   .then((res) => res.json())
-    //   .then(
-    //     (result) => {
-    //       // console.log(result.status);
-    //       if (result.status === 200) {
-    //         setTask(result.values);
-    //       }
-    //       setIsLoaded(true);
-    //     },
-    //     (error) => {
-    //       setIsLoaded(true);
-    //       // setError(error);
-    //     },
-    //   );
   }, []);
 
   return (

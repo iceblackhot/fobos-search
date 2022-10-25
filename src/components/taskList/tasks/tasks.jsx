@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react';
 import {Preloader} from '../../preloader/preloader';
+import {useAuth} from '../../hooks/useAuth';
 
 export const Tasks = ({
   setDoneMode,
@@ -10,6 +11,8 @@ export const Tasks = ({
   setFaqMode,
   setType,
 }) => {
+  const {token} = useAuth();
+
   const fetchRelTasks = useCallback(() => {
     setType(1);
     setFaqMode(false);
@@ -19,6 +22,10 @@ export const Tasks = ({
       method: 'get',
       mode: 'cors',
       withCredentials: true,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token,
+      },
     })
       .then((res) => res.json())
       .then(

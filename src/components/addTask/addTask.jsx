@@ -1,4 +1,5 @@
 import React from 'react';
+import {useAuth} from '../hooks/useAuth';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/material_blue.css';
 import {Russian} from 'flatpickr/dist/l10n/ru.js';
@@ -73,6 +74,8 @@ export const AddTask = ({
   connTypeId,
   setConnTypeId,
 }) => {
+  const {token} = useAuth();
+
   function saveTask() {
     if (!cityId || !lastName || !mobileNum) {
       // console.log(cityId);
@@ -104,6 +107,7 @@ export const AddTask = ({
         }),
         headers: {
           'content-type': 'application/json',
+          Authorization: token,
         },
       })
         .then((res) => res.json())
@@ -115,6 +119,10 @@ export const AddTask = ({
                 method: 'post',
                 mode: 'cors',
                 withCredentials: true,
+                headers: {
+                  'content-type': 'application/json',
+                  Authorization: token,
+                },
               })
                 .then((res) => res.json())
                 .then(
@@ -191,6 +199,7 @@ export const AddTask = ({
         }),
         headers: {
           'content-type': 'application/json',
+          Authorization: token,
         },
       })
         .then((res) => res.json())
@@ -201,6 +210,10 @@ export const AddTask = ({
                 method: 'post',
                 mode: 'cors',
                 withCredentials: true,
+                headers: {
+                  'content-type': 'application/json',
+                  Authorization: token,
+                },
               })
                 .then((res) => res.json())
                 .then(
