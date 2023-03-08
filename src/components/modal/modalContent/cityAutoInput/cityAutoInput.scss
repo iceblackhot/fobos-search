@@ -1,0 +1,117 @@
+@import '../../../scss/_vars.scss';
+
+.modal-content__inputs-adress_wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.css-1s2u09g-control {
+  width: 100%;
+}
+
+.custom-select__control--menu-is-open,
+.custom-select__control--is-focused,
+.custom-select__control--is-disabled {
+  width: 100%;
+}
+
+.custom-select__menu {
+  z-index: 4;
+}
+
+.custom-select__input-container {
+  box-shadow: none;
+}
+
+#cityAutoInput,
+#streetAutoInput {
+  width: 48%;
+  border: 1px solid transparent;
+}
+
+#cityAutoInput-error {
+  border-radius: $minRadius;
+  width: 48%;
+  border: 1px solid red;
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .modal-content__inputs-adress_wrapper {
+      #cityAutoInput,
+      #streetAutoInput {
+        box-shadow: 0 0 2pt 0.2pt $grey;
+        border-radius: $minRadius;
+      }
+
+      & .css-1s2u09g-control {
+        background: $darkBlack !important;
+        color: $grey;
+        border-radius: $minRadius;
+      }
+
+      & .css-qc6sy-singleValue {
+        color: $grey;
+      }
+
+      .custom-select__control--menu-is-open,
+      .custom-select__control--is-disabled {
+        background: $darkBlack;
+      }
+
+      .custom-select__control--is-focused {
+        background: $darkBlack !important;
+        box-shadow: 0 0 2pt 0.2pt $grey !important;
+      }
+
+      .custom-select__menu {
+        background: $darkBlack !important;
+        box-shadow: 0 0 2pt 0.2pt $grey !important;
+      }
+
+      .custom-select__input-container {
+        color: $grey;
+      }
+    }
+  }
+}
+
+// react-select-container
+// react-select__control
+// react-select__value-container
+// react-select__indicators
+// react-select__menu
+// react-select__menu-list
+// react-select__option
+
+//Animation when lname & fname is wrong
+.css-1s2u09g-control {
+  width: 100%;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-3px);
+  }
+  20%,
+  30%,
+  60%,
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+.error {
+  animation-name: shake;
+}

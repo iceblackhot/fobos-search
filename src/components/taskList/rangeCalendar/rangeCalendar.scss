@@ -57,3 +57,32 @@
     box-shadow: none !important;
   }
 }
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .range-calendar {
+      &__input {
+        color: $grey;
+        background: #000;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+      }
+
+      input::-webkit-input-placeholder {
+        color: $grey;
+      }
+
+      input::-moz-placeholder {
+        color: $grey;
+      }
+    }
+
+    .react-datepicker__header:not(.react-datepicker__header--has-time-select) {
+      background: $grey;
+    }
+
+    .react-datepicker__month-container {
+      background: $grey;
+    }
+  }
+}

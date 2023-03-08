@@ -5,14 +5,31 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 50px;
+  min-height: 40px;
   padding: 0 20px;
   margin-bottom: 10px;
   border-radius: $minRadius;
   background-color: $white;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
 
-  & button {
+  &__img-wrapper {
+    width: 60px;
+    height: 30px;
+    background-image: url('../assests/fobos_logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  &__title-wrapper {
+    font-size: 10px;
+  }
+
+  &__button-theme {
+    margin-right: 15px;
+  }
+
+  &__button-theme,
+  &__button-logout {
     border: none;
     background: $lightFobos;
     color: $white;
@@ -27,9 +44,27 @@
       box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.5);
     }
   }
+}
 
-  &__img-wrapper {
-    display: flex;
-    width: 70px;
+//Dark mode
+.wrapper {
+  &.dark {
+    .search-header {
+      background-color: $lightBlack;
+      box-shadow: 0 0 5pt 0.5pt $grey;
+      color: $darkText;
+
+      &__button-theme,
+      &__button-logout {
+        background-color: $darkBlack;
+        box-shadow: 0 0 5pt 0.5pt $grey;
+        color: $darkText;
+
+        &:hover {
+          box-shadow: 0 0 5pt 0.5pt $lightFobos;
+          color: $white;
+        }
+      }
+    }
   }
 }

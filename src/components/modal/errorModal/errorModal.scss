@@ -1,0 +1,213 @@
+@import '../../scss/vars.scss';
+
+.error-modal {
+  z-index: 6;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  transition: all ease-in-out 0.3s;
+  pointer-events: none;
+
+  &.active {
+    opacity: 1;
+    z-index: 6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.3s;
+    pointer-events: all;
+  }
+
+  &__btn {
+    border: none;
+    background: #84c4ff;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.3);
+    padding: 5px 15px;
+    margin-right: 15px;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+
+    &:hover {
+      opacity: 0.9;
+      box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    flex-direction: column;
+    padding: 40px;
+    margin: 0 30px;
+    border-radius: $minRadius;
+    color: $fobos;
+    background: rgba(0, 0, 0, 0.8);
+    width: 400px;
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
+      width: 400px;
+      height: 150px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      -moz-animation-name: bounce;
+      -moz-animation-duration: 1s;
+      -moz-animation-fill-mode: backwards;
+      -moz-animation-delay: 0.5s;
+
+      -webkit-animation-name: bounce;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-fill-mode: backwards;
+      -webkit-animation-delay: 0.5s;
+
+      animation-name: bounce;
+      animation-duration: 1s;
+      animation-fill-mode: backwards;
+      animation-delay: 0.5s;
+    }
+
+    @-webkit-keyframes bounce {
+      0% {
+        top: -150px;
+        -webkit-animation-timing-function: ease-in;
+      }
+      37% {
+        top: 500px;
+        -webkit-animation-timing-function: ease-out;
+      }
+      55% {
+        top: 375px;
+        -webkit-animation-timing-function: ease-in;
+      }
+      73% {
+        top: 500px;
+        -webkit-animation-timing-function: ease-out;
+      }
+      82% {
+        top: 465px;
+        -webkit-animation-timing-function: ease-in;
+      }
+      91% {
+        top: 500px;
+        -webkit-animation-timing-function: ease-out;
+      }
+      96% {
+        top: 490px;
+        -webkit-animation-timing-function: ease-in;
+      }
+      100% {
+        top: 500px;
+      }
+    }
+    @-moz-keyframes bounce {
+      0% {
+        top: -150px;
+        -moz-animation-timing-function: ease-in;
+      }
+      37% {
+        top: 500px;
+        -moz-animation-timing-function: ease-out;
+      }
+      55% {
+        top: 375px;
+        -moz-animation-timing-function: ease-in;
+      }
+      73% {
+        top: 500px;
+        -moz-animation-timing-function: ease-out;
+      }
+      82% {
+        top: 465px;
+        -moz-animation-timing-function: ease-in;
+      }
+      91% {
+        top: 500px;
+        -moz-animation-timing-function: ease-out;
+      }
+      96% {
+        top: 490px;
+        -moz-animation-timing-function: ease-in;
+      }
+      100% {
+        top: 500px;
+      }
+    }
+    @keyframes bounce {
+      0% {
+        top: -150px;
+        -moz-animation-timing-function: ease-in;
+      }
+      37% {
+        top: 500px;
+        -moz-animation-timing-function: ease-out;
+      }
+      55% {
+        top: 375px;
+        -moz-animation-timing-function: ease-in;
+      }
+      73% {
+        top: 500px;
+        -moz-animation-timing-function: ease-out;
+      }
+      82% {
+        top: 465px;
+        -moz-animation-timing-function: ease-in;
+      }
+      91% {
+        top: 500px;
+        -moz-animation-timing-function: ease-out;
+      }
+      96% {
+        top: 490px;
+        -moz-animation-timing-function: ease-in;
+      }
+      100% {
+        top: 500px;
+      }
+    }
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .error-modal {
+      &__content {
+        &.active {
+          box-shadow: 0 0 2pt 0.2pt $grey;
+        }
+      }
+
+      &__btn {
+        background: $darkBlack;
+        box-shadow: 0 0 5pt 0.5pt $grey;
+        color: $grey;
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+}

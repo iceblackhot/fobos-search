@@ -1,0 +1,31 @@
+@import '../../scss/vars.scss';
+
+.task-list__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+
+  &_holder {
+    display: flex;
+
+    & h1 {
+      padding-right: 13px;
+      font-weight: 500;
+      font-size: 18px;
+      color: $lightFobos;
+    }
+
+    & span {
+      font-size: 18px;
+      font-weight: 700;
+      color: $lightFobos;
+    }
+  }
+}
+
+@media print {
+  #noPrint {
+    display: none;
+  }
+}

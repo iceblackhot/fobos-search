@@ -1,0 +1,54 @@
+@import '../../scss/vars.scss';
+
+.sort {
+  &__table-head {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(90px, 90px) minmax(150px, 150px) minmax(170px, 1fr) minmax(165px, 1fr)
+        minmax(110px, 120px) minmax(125px, 125px) minmax(100px, 1fr) minmax(120px, 120px)
+    );
+    width: 100%;
+    padding: 5px;
+    background: $lightFobos;
+    border-radius: $minRadius $minRadius 0 0;
+  }
+
+  &__table-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    font-size: 15px;
+    color: $white;
+    width: 100%;
+  }
+
+  &__by-date {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media print {
+  #noPrint {
+    display: none;
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .sort {
+      &__table-head {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+      }
+
+      &__table-title {
+        color: $grey;
+      }
+    }
+  }
+}

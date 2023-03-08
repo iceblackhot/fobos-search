@@ -1,0 +1,23 @@
+@import '../../../scss/_vars.scss';
+
+.modal-content__title {
+  display: flex;
+  font-size: 10px;
+  padding: 10px 15px;
+  width: 100%;
+  background: $white;
+  border-radius: $minRadius;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .modal-content__title {
+      background: $darkBlack;
+      box-shadow: 0 0 2pt 0.2pt #919cb8;
+    }
+  }
+}

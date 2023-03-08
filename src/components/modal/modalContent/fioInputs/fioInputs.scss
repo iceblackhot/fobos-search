@@ -1,0 +1,69 @@
+@import '../../../scss/_vars.scss';
+
+.modal-content__inputs-fio {
+  display: flex;
+  width: 100%;
+
+  & input {
+    width: calc(100% / 3);
+    margin-right: 15px;
+
+    &.error {
+      border: 1px solid red;
+    }
+  }
+
+  & input:last-child {
+    margin-right: 0;
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .modal-content__inputs-fio {
+      & input {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt $grey;
+        color: $grey;
+      }
+      input::-moz-placeholder {
+        color: $grey;
+      }
+      input::-webkit-input-placeholder {
+        color: $grey;
+      }
+    }
+  }
+}
+
+//Animation when lname & fname is wrong
+.modal-content__lname-input,
+.modal-content__fname-input {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-3px);
+  }
+  20%,
+  30%,
+  60%,
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+.error {
+  animation-name: shake;
+}

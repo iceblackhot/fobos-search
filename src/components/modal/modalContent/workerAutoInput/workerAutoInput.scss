@@ -1,0 +1,100 @@
+@import '../../../scss/_vars.scss';
+
+.modal-content__inputs-workers {
+  display: flex;
+  width: 210px;
+  margin-bottom: 20px;
+}
+
+.custom-select__control--menu-is-open,
+.custom-select__control--is-focused,
+.custom-select__control--is-disabled {
+  width: 100%;
+}
+
+#worker-input {
+  width: 100%;
+}
+
+.custom-select {
+  &__control {
+    background-color: transparent;
+    font-size: 13px;
+    border: none !important;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+    outline: none;
+  }
+
+  &--menu-is-open {
+    box-shadow: none !important;
+  }
+
+  &__value-container {
+    cursor: text;
+  }
+
+  &__indicators {
+    cursor: pointer;
+  }
+
+  &__indicator:hover {
+    color: $grey !important;
+  }
+
+  &__menu {
+    font-size: 13px;
+  }
+
+  &__option {
+    cursor: pointer !important;
+    &--is-focused {
+      background-color: $lightFobos !important;
+    }
+
+    &__input-container {
+      color: red !important;
+    }
+  }
+
+  &__input {
+    box-shadow: none !important;
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .modal-content__inputs-workers {
+      & .css-1s2u09g-control {
+        background: $darkBlack !important;
+        box-shadow: 0 0 2pt 0.2pt $grey !important;
+        color: $grey;
+        border-radius: $minRadius;
+      }
+
+      & .css-qc6sy-singleValue {
+        color: $grey;
+      }
+
+      .custom-select__control--menu-is-open,
+      .custom-select__control--is-disabled {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt $grey !important;
+      }
+
+      .custom-select__control--is-focused {
+        background: $darkBlack !important;
+        box-shadow: 0 0 2pt 0.2pt $grey !important;
+      }
+
+      .custom-select__menu {
+        background: $darkBlack !important;
+        box-shadow: 0 0 2pt 0.2pt $grey !important;
+      }
+
+      .custom-select__input-container {
+        color: $grey;
+      }
+    }
+  }
+}

@@ -1,0 +1,114 @@
+@import '../../scss/vars.scss';
+
+.task-list {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow-y: scroll;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 $minRadius $minRadius;
+    padding: 10px 0;
+    transition: 0.3s;
+  }
+
+  &__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(90px, 90px) minmax(150px, 150px) minmax(170px, 1fr) minmax(165px, 1fr)
+        minmax(110px, 120px) minmax(125px, 125px) minmax(100px, 1fr) minmax(120px, 120px)
+        minmax(35px, 35px)
+    );
+    grid-template-rows: auto;
+    width: 99%;
+    min-height: 70px;
+    border: 1px solid $lightFobos;
+    border-bottom: 0;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+
+    &:last-child {
+      border: 1px solid $lightFobos;
+    }
+
+    &:hover {
+      background: #e2f1ff;
+    }
+  }
+
+  &__item-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    font-size: 15px;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid $lightFobos;
+
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(8) {
+      position: relative;
+
+      & svg {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        font-size: 0.9rem;
+      }
+    }
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  &__connection-ico,
+  &__faq-ico {
+    color: $lightFobos;
+
+    & span {
+      position: absolute;
+      top: 0;
+      font-size: 0.7rem;
+      left: 1.1rem;
+    }
+  }
+}
+
+@media print {
+  .task-list__list {
+    overflow-y: hidden;
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .task-list {
+      &__list {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+      }
+
+      & button,
+      & input,
+      .connection-type {
+        color: $grey;
+      }
+
+      &__item {
+        &:hover {
+          background-color: #252a36;
+        }
+      }
+    }
+  }
+}

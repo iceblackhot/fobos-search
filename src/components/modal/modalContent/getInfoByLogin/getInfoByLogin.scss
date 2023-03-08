@@ -1,0 +1,53 @@
+@import '../../../scss/vars.scss';
+
+.login-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__input {
+    width: 100%;
+  }
+
+  &__btn {
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    background: #84c4ff;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      opacity: 0.9;
+      box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .login-info {
+      &__input {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt $grey;
+        color: azure;
+      }
+
+      &__btn {
+        color: $white;
+      }
+
+      input::-moz-placeholder {
+        color: $grey;
+      }
+      input::-webkit-input-placeholder {
+        color: $grey;
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@import '../../../scss/_vars.scss';
+
+.modal-content__inputs-adressdetails {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  & input {
+    width: calc(100% / 5);
+    max-width: 95px;
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .modal-content__inputs-adressdetails {
+      & input {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+        color: $grey;
+      }
+
+      input::-moz-placeholder {
+        color: $grey;
+      }
+
+      input::-webkit-input-placeholder {
+        color: $grey;
+      }
+    }
+  }
+}

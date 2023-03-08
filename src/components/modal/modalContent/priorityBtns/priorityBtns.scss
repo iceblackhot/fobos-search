@@ -1,0 +1,156 @@
+@import '../../../scss/vars.scss';
+
+.modal-content__options {
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+
+  &_type {
+    width: 200px;
+    margin-right: 20px;
+  }
+
+  &_priority {
+    width: 320px;
+  }
+
+  &_type,
+  &_priority {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background: $white;
+    border-radius: $minRadius;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  &_btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+
+    & label {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: $black;
+      cursor: pointer;
+    }
+
+    & input {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      outline: none;
+
+      margin-bottom: 0 !important;
+      background: transparent;
+      color: $white;
+      cursor: pointer;
+    }
+
+    #type_1 {
+      padding: 12px 47px;
+
+      &:checked {
+        background: $green;
+      }
+    }
+
+    #type_2 {
+      padding: 12px 27px;
+
+      &:checked {
+        background: $lightFobos;
+      }
+    }
+
+    #priority_1 {
+      padding: 12px 40px;
+
+      &:checked {
+        background: $green;
+      }
+    }
+
+    #priority_2 {
+      padding: 12px 40px;
+
+      &:checked {
+        background: $important;
+      }
+    }
+
+    #priority_3 {
+      padding: 12px 40px;
+
+      &:checked {
+        background: $critical;
+      }
+    }
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .modal-content__options {
+      &_type,
+      &_priority {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+      }
+
+      & label {
+        color: $white;
+      }
+
+      #type_1 {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+
+        &:checked {
+          background: $green;
+        }
+      }
+
+      #type_2 {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+
+        &:checked {
+          background: $lightFobos;
+        }
+      }
+
+      #priority_1 {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+
+        &:checked {
+          background: $green;
+        }
+      }
+
+      #priority_2 {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+
+        &:checked {
+          background: $important;
+        }
+      }
+
+      #priority_3 {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+        &:checked {
+          background: $critical;
+        }
+      }
+    }
+  }
+}

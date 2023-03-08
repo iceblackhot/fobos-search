@@ -1,0 +1,35 @@
+@import '../../scss/vars.scss';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__btns {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-right: 3px;
+    border-radius: $minRadius;
+    background-color: $lightFobos;
+    color: $white;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: $fobos;
+    }
+
+    &.active {
+      background-color: $fobos;
+    }
+  }
+
+  &__num {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+  }
+}

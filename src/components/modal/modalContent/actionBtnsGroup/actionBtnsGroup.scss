@@ -1,0 +1,44 @@
+@import '../../../scss/_vars.scss';
+
+.modal-content__action-btns {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  & button {
+    margin-right: 15px;
+    border: none;
+    background: $lightGrey;
+    color: $darkBlack;
+    border-radius: 4px;
+    padding: 5px 15px;
+    cursor: pointer;
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.3);
+    transition: all ease-in-out 0.3s;
+
+    &:hover {
+      box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+//Dark mode
+.wrapper {
+  &.dark {
+    .modal-content__action-btns {
+      & button {
+        background: $darkBlack;
+        box-shadow: 0 0 2pt 0.2pt #919cb8;
+        color: $grey;
+
+        &:hover {
+          background: #252a36;
+        }
+      }
+    }
+  }
+}
