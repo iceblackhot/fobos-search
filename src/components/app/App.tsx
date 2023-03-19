@@ -15,11 +15,9 @@ export const App: FC = () => {
       <ThemeProvider>
         <Wrapper>
           <Header />
-          <main>
-            <Filters />
-            <ModalContent />
-            <TaskList />
-          </main>
+          <Filters />
+          <ModalContent />
+          <TaskList />
           <Footer />
         </Wrapper>
       </ThemeProvider>
