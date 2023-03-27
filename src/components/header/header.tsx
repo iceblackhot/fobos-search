@@ -1,7 +1,6 @@
 import {useContext} from 'react';
 import {ThemeContext} from '../../providers/themeProvider';
 import {useAppContext} from '../appContext/appContext';
-import {ErrorModal} from '../modal/errorModal/errorModal';
 import './header.scss';
 
 export const Header = () => {
@@ -19,7 +18,6 @@ export const Header = () => {
         <h1>FOBOS SEARCH</h1>
       </div>
       <div className="search-header__buttons-wrapper">
-        <ErrorModal />
         <button className="search-header__button-theme" onClick={changeTheme}>
           Dark mode
         </button>
