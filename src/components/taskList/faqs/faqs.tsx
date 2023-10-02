@@ -12,8 +12,10 @@ export const Faqs = () => {
     filterTaskDone === 0 && filterTaskType === 2 ? 'faqs-btn' : undefined;
 
   return (
-    <button className={classNameBtn} onClick={getRelFaqs}>
-      FAQ
-    </button>
+    <div className="task-list__controls">
+      <button className={classNameBtn} onClick={getRelFaqs}>
+        FAQ
+      </button>
+    </div>
   );
 };

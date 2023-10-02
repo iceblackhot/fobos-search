@@ -4,12 +4,14 @@ export const CreateNewTask = () => {
   const {setShowModal, setFormData} = useAppContext();
 
   return (
-    <button
-      onClick={() => {
-        setFormData({type: 'RESET'});
-        setShowModal(true);
-      }}>
-      Створити заявку
-    </button>
+    <div className="task-list__controls">
+      <button
+        onClick={() => {
+          setFormData({type: 'RESET'});
+          setShowModal(true);
+        }}>
+        Створити заявку
+      </button>
+    </div>
   );
 };

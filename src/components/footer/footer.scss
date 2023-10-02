@@ -50,11 +50,15 @@
     &__container {
       flex-direction: column;
       flex-wrap: wrap;
+      justify-content: center;
     }
+  }
+}
 
-    &__info > span {
-      padding-top: 0;
-      text-align: center;
+@media screen and (max-width: 600px) {
+  .fobos-footer {
+    &__info {
+      display: none;
     }
   }
 }

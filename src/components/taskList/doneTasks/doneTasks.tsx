@@ -12,8 +12,10 @@ export const DoneTasks = () => {
     filterTaskDone === 1 && filterTaskType === 1 ? 'faqs-btn' : undefined;
 
   return (
-    <button className={classNameBtn} onClick={getDoneRequests}>
-      Виконані заявки
-    </button>
+    <div className="task-list__controls">
+      <button className={classNameBtn} onClick={getDoneRequests}>
+        Виконані заявки
+      </button>
+    </div>
   );
 };

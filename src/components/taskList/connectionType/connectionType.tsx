@@ -11,7 +11,7 @@ export const ConnectionType: React.FC = () => {
   ];
 
   return (
-    <div>
+    <div className="task-list__controls">
       <select
         className="connection-type"
         onChange={(e) => {

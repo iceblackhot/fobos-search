@@ -16,14 +16,20 @@
     height: 619px;
   }
 
+  &__controls {
+    margin: 5px;
+  }
+
   &__nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
     margin-bottom: 10px;
 
     & button,
     select {
       border: none;
+      outline: none;
       background: $lightFobos;
       color: $white;
       border-radius: $minRadius;
@@ -48,6 +54,10 @@
 .task-list__list::-webkit-scrollbar {
   width: 6px;
   background-color: #f5f5f5;
+}
+
+.task-list__list::-webkit-scrollbar:horizontal {
+  height: 6px;
 }
 
 .task-list__list::-webkit-scrollbar-thumb {

@@ -7,6 +7,11 @@ type PrintProps = {
 
 export const PrintTasks = ({reactToPrintRef}: PrintProps) => {
   return (
-    <ReactToPrint trigger={() => <button>Печать</button>} content={() => reactToPrintRef.current} />
+    <div className="task-list__controls">
+      <ReactToPrint
+        trigger={() => <button>Печать</button>}
+        content={() => reactToPrintRef.current}
+      />
+    </div>
   );
 };
